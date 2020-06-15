@@ -6,6 +6,9 @@ export default class Search extends Component {
     super(props);
     this.state = {
       search: "",
+      tracks: [],
+      albums: [],
+      artists:[]
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -21,7 +24,7 @@ export default class Search extends Component {
     let config = {
       headers: { Authorization: `Bearer ${access_token}` },
       params: {
-        q: this.state.search, type: "track,album,artist"
+        q: this.state.search , type: "track,album,artist"
       },
     };
     axios.get("https://api.spotify.com/v1/search", config)
@@ -44,7 +47,23 @@ export default class Search extends Component {
             value={this.state.search}
             onChange={this.handleChange}
           ></input>
+         
           <button onClick={this.addSearch.bind(this)}>Rechercher</button>
+          {this.state.tracks.map((track, index) => {
+            return <div key={index}>
+             {track.name}
+            </div>
+          })}
+          {this.state.albums.map((album, index) => {
+            return <div key={index}>
+              {album.name}
+            </div>
+          })}
+          {this.state.artists.map((artist, index) => {
+            return <div key={index}>
+              {artist.name}
+            </div>
+          })}
         </div>
       </div>
     );
