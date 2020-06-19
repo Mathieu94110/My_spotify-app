@@ -34,7 +34,7 @@ export default class Authentication extends Component {
     return (
       <div>
         <h1>Authentifiez-vous</h1>
-        <a href="https://accounts.spotify.com/authorize?client_id=de2017d063ae4b7d87f7d52b9d8c7d31&response_type=token&redirect_uri=http://localhost:3000/auth">
+        <a href="https://accounts.spotify.com/authorize?client_id=de2017d063ae4b7d87f7d52b9d8c7d31&response_type=token&scope=playlist-modify-public&redirect_uri=http://localhost:3000/auth">
           Me connecter
         </a>
       </div>

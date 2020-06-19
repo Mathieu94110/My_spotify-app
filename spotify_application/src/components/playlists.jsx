@@ -2,35 +2,37 @@ import React, { Component } from "react";
 import queryString from "query-string";
 import axios from "axios";
 
-export default class Tracks extends Component {
+export default class Playlists extends Component {
   constructor(props) {
     super(props);
     this.state = {
       musics: [],
-      playListId:null
+      playListId: null,
     };
   }
   componentDidMount() {
-  
-   let access_token = localStorage.access_token;
-   const config = {
+    let access_token = localStorage.access_token;
+    const config = {
       headers: {
-        Autorization: `Bearer ${access_token}`,
+        Authorization: `Bearer ${access_token}`,
       },
     };
     const params = queryString.parse(this.props.location.search);
-    this.setState({playListId:params.id})
+    this.setState({ playListId: params.id });
+    console.log("PARAMS", params)
     axios
       .get(
         "https://api.spotify.com/v1/playlists/" + params.id + "/tracks",
         config
       )
-        .then((res) => {
-          
-          console.log(res.data.items)
-          this.setState({musics: res.data.items})
+      .then((res) => {
+        console.log(res.data.items)
+        this.setState({ musics: res.data.items })
       });
   }
+
+
+
   render() {
     return (
       <div>

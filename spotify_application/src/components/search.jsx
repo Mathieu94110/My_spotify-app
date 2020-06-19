@@ -59,23 +59,25 @@ export default class Search extends Component {
     let button;
     if (!searchActivated) {
       return (
-        <div style={{display:"flex",justifyContent:"center"}}>
+        <div>
           <form>
             <TextField
               id="outlined-basic"
               label="Album, Titre ou Artiste "
               value={this.state.search}
               onChange={this.handleChange}
+              style={{marginRight:"20px"}}
             />
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={this.addSearch.bind(this)}
+            >
+              Rechercher
+          </Button>
           </form>
 
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={this.addSearch.bind(this)}
-          >
-            Rechercher
-          </Button>
+   
         </div>
       );
     } else {
@@ -88,16 +90,18 @@ export default class Search extends Component {
                  label="Album, Titre ou Artiste "
                  value={this.state.search}
                  onChange={this.handleChange}
+                 style={{ marginRight: "20px" }}
                />
+               <Button
+                 variant="contained"
+                 color="secondary"
+                 onClick={this.addSearch.bind(this)}
+               >
+                 Rechercher
+             </Button>
              </form>
 
-             <Button
-               variant="contained"
-               color="secondary"
-               onClick={this.addSearch.bind(this)}
-             >
-               Rechercher
-             </Button>
+             
 
              <div style={{ display: "flex", width: "100%" }}>
                <div style={{ width: "30%", marginLeft: "5%" }}>
