@@ -33,7 +33,7 @@ export default class Home extends Component {
           config
         )
         .then((res) => {
-          console.log(res.data);
+          console.log(res.data.items);
           this.setState({
             playlists: res.data.items,
           });

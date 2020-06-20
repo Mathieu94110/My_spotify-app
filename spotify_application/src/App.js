@@ -4,6 +4,9 @@ import Authentication from "./components/authentication";
 import Home from "./components/home";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Playlists from "./components/playlists";
+
+
+
 function App() {
   return (
     <Router>
@@ -19,6 +22,7 @@ function App() {
           <Route path="/auth" component={Authentication} />
           <Route path="/playlists" component={Playlists} />
           <Route path="/" component={Home} />
+
         </Switch>
       </div>
     </Router>
