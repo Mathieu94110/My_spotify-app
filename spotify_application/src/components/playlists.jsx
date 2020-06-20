@@ -47,7 +47,7 @@ export default class Playlists extends Component {
                      <div>
                        <h1>{this.state.artist}</h1>
                        <div>
-                         <NewPlaylist playlistId={this.state.playlistId} />
+                         <NewPlaylist playListId={this.state.playListId} />
 
                          <div>
                            {this.state.musics.map((music, index) => {

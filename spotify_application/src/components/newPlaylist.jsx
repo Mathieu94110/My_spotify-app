@@ -15,7 +15,7 @@ export default class newPlaylist extends Component {
     super(props);
     this.state = {
       isCreatingPlaylitst: false,
-      playlist_Id: null,
+      
       research: "",
       albums: [],
       artists: [],
@@ -42,11 +42,11 @@ export default class newPlaylist extends Component {
       });
     });
   };
-
+  createNewPlaylist() {
+    this.setState({ isCreatingPlaylitst: true });
+  }
   addTrack = (track) => {
-    this.setState({
-      isCreatingPlaylitst: true,
-    });
+ 
     console.log(track);
 
     let access_token = localStorage.access_token;
@@ -60,13 +60,14 @@ export default class newPlaylist extends Component {
     axios
       .post(
         "https://api.spotify.com/v1/playlists/" +
-          this.props.playlist_Id +
+        this.props.playListId +
           "/tracks",
         {},
         config
       )
       .then((res) => {
         console.log(res);
+     
       });
 
     console.log(track);
@@ -74,6 +75,7 @@ export default class newPlaylist extends Component {
 
   render() {
     const isCreatingPlaylitst = this.state.isCreatingPlaylitst;
+    let button;
     if (isCreatingPlaylitst) {
       return (
         <div
@@ -123,7 +125,7 @@ export default class newPlaylist extends Component {
               >
                 {this.state.tracks.map((track, index) => {
                   return (
-                    <ListItem button onClick={() => this.addTrack.bind(this)}>
+                    <ListItem button onClick={() => this.addTrack(track)}>
                       <ListItemText primary={track.name} />
                       <button >+</button>
                     </ListItem>
@@ -144,7 +146,7 @@ export default class newPlaylist extends Component {
           startIcon={<CloudUploadIcon />}
           color="primary"
           style={{ margin: "30px 0px" }}
-          onClick={this.addTrack.bind(this)}
+          onClick={this.createNewPlaylist.bind(this)}
         >
           Upload
         </Button>
