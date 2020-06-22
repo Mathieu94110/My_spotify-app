@@ -1,73 +1,80 @@
 import React, { Component } from "react";
 import queryString from "query-string";
 import axios from "axios";
-import NewPlaylist from "./newPlaylist"
+import NewPlaylist from "./newPlaylist";
+import DeletePlaylistItem from "./deletePlaylistItem";
 
+import Button from "@material-ui/core/Button";
 
 export default class Playlists extends Component {
-                 constructor(props) {
-                   super(props);
-                   this.state = {
-                     musics: [],
-                     artist:"",
-                     playListId: null,
-                   };
-                 }
-                 componentDidMount() {
-                   let access_token = localStorage.access_token;
-                   const config = {
-                     headers: {
-                       Authorization: `Bearer ${access_token}`,
-                     },
-                   };
-                   const params = queryString.parse(this.props.location.search);
-                   this.setState({ playListId: params.id });
-                   console.log("PARAMS", params);
-                   axios
-                     .get(
-                       "https://api.spotify.com/v1/playlists/" +
-                         params.id +
-                         "/tracks",
-                       config
-                     )
-                     .then((res) => {
-                       console.log(res.data.items);
-                       console.log(res.data.items[0].track.artists[0].name);
-                       this.setState({ musics: res.data.items });
-                       this.setState({
-                         artist: res.data.items[0].track.artists[0].name,
-                       });
-                     });
-                 }
+  constructor(props) {
+    super(props);
+    this.state = {
+      musics: [],
+      artist: "",
+      playListId: null,
+    };
+  }
 
-                 // <div>{this.state.musics[0].track.artists[0].name}</div>
+  componentDidMount() {
+    this.refresh();
+  }
+  refresh = () => {
+    let access_token = localStorage.access_token;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    };
+    const params = queryString.parse(this.props.location.search);
+    this.setState({ playListId: params.id, artist: params.artist });
+    console.log("PARAMS", params);
+    axios
+      .get(
+        "https://api.spotify.com/v1/playlists/" + params.id + "/tracks",
+        config
+      )
+      .then((res) => {
+        console.log(res.data.items);
+        console.log(res.data.items[0].track.artists[0].name);
+        this.setState({ musics: res.data.items });
+      });
+  };
 
-                 render() {
-                   return (
-                     <div>
-                       <h1>{this.state.artist}</h1>
-                       <div>
-                         <NewPlaylist playListId={this.state.playListId} />
+  // <div>{this.state.musics[0].track.artists[0].name}</div>
 
-                         <div>
-                           {this.state.musics.map((music, index) => {
-                             return (
-                               <div
-                                 key={index}
-                                 style={{
-                                   display: "flex",
-                                   flexDirection: "column",
-                                   justifContent: "space-between",
-                                   height: "50px",
-                                 }}
-                               >
-                                 {music.track.name}
-                               </div>
-                             );
-                           })}
-                         </div>
-                       </div>
-                     </div>
-                   );
-                 }
-               }
+  render() {
+    return (
+      <div>
+        <h1>{this.state.artist}</h1>
+        <div>
+          <NewPlaylist
+            playListId={this.state.playListId}
+            refresh={this.refresh}
+          />
+
+          <div>
+            {this.state.musics.map((music, index) => {
+              return (
+                <div
+                  key={index}
+                  style={{
+                    margin: "auto",
+                  }}
+                >
+                  <div>
+                    {music.track.name}
+                    <DeletePlaylistItem
+                      playListId={this.state.playListId}
+                      track={music.track}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    );
+  }
+}

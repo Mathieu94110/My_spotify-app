@@ -67,7 +67,8 @@ export default class newPlaylist extends Component {
       )
       .then((res) => {
         console.log(res);
-     
+        // on met à jour la liste des tracks
+        this.props.refresh()
       });
 
     console.log(track);
@@ -82,15 +83,10 @@ export default class newPlaylist extends Component {
           style={{
             alignItems: "center",
             textAlign: "center",
-            margin: "auto",
           }}
         >
           <form
-            style={{
-              display: "flex",
-
-              margin: "auto",
-            }}
+          style={{position:"relative"}}
           >
             <TextField
               id="standard-basic"
@@ -106,13 +102,15 @@ export default class newPlaylist extends Component {
               onClick={this.searchArtist.bind(this)}
               variant="contained"
               color="primary"
+              style={{ position: "absolute", top: "50%", transform: "translateY(-50%)",marginLeft:"20px" }}
             >
               Rechercher
             </Button>
           </form>
 
           <Grid container spacing={2}>
-            <Grid item xs={8}>
+            <Grid item xs={4}></Grid>
+            <Grid item xs={4}>
               {this.state.tracks.length > 0 ? (
                 <Typography variant="h4" component="h4">
                   Tracks
@@ -125,14 +123,16 @@ export default class newPlaylist extends Component {
               >
                 {this.state.tracks.map((track, index) => {
                   return (
-                    <ListItem button onClick={() => this.addTrack(track)}>
+                    <ListItem>
                       <ListItemText primary={track.name} />
-                      <button >+</button>
+                      <button onClick={() => this.addTrack(track)} >+</button>
                     </ListItem>
                   );
                 })}
               </List>
             </Grid>
+            <Grid item xs={4}></Grid>
+
           </Grid>
         </div>
       );

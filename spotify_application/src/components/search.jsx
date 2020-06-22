@@ -11,6 +11,13 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import { Input } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
+import List from '@material-ui/core/List';
+
+
+
+
+
+
 export default class Search extends Component {
   constructor(props) {
     super(props);
@@ -59,8 +66,8 @@ export default class Search extends Component {
     let button;
     if (!searchActivated) {
       return (
-        <div>
-          <form>
+        <div style={{position:"relative"}}>
+       
             <TextField
               id="outlined-basic"
               label="Album, Titre ou Artiste "
@@ -72,10 +79,11 @@ export default class Search extends Component {
               variant="contained"
               color="secondary"
               onClick={this.addSearch.bind(this)}
+            style={{ position: "absolute", top: "50%", transform:"translateY(-50%)"}}
             >
               Rechercher
           </Button>
-          </form>
+          
 
    
         </div>
@@ -84,7 +92,7 @@ export default class Search extends Component {
        return (
          <div>
            <div>
-             <form>
+  
                <TextField
                  id="outlined-basic"
                  label="Album, Titre ou Artiste "
@@ -96,47 +104,68 @@ export default class Search extends Component {
                  variant="contained"
                  color="secondary"
                  onClick={this.addSearch.bind(this)}
+                 
                >
                  Rechercher
              </Button>
-             </form>
+      
 
              
 
              <div style={{ display: "flex", width: "100%" }}>
-               <div style={{ width: "30%", marginLeft: "5%" }}>
+               <div style={{ width: "30%", marginLeft: "5%",textAlign: "center", maxHeight: "600px", overflow: 'auto' }}>
                  <h2>Titres</h2>
                  {this.state.tracks.map((track, index) => {
                    return (
-                     <Card key={index} style={{ textAlign: "left" }}>
-                       <CardContent style={{ fontStyle: "bold" }}>
-                         {track.name}
-                       </CardContent>
-                     </Card>
+                     <List>
+                       <ul>
+                     <ListItem textAlign="center" key={index}>
+                       <ListItemText primary={track.name}></ListItemText>
+                         </ListItem>
+                       </ul>
+                         </List>
+                         
                    );
                  })}
                </div>
-               <div style={{ width: "30%" }}>
+               <div style={{ width: "30%" ,textAlign: "center", maxHeight: "600px", overflow: 'auto' }}>
                  <h2>Album</h2>
                  {this.state.albums.map((album, index) => {
                    return (
-                     <ListItem alignItems="flex-start" key={index}>
+                     <List>
+                     <ul>
+                     <ListItem  key={index}>
                        <ListItemAvatar>
-                         <Avatar alt="Remy Sharp" src={album.images[2].url} />
+                         <Avatar alt="album image" src={album.images[2].url} />
                        </ListItemAvatar>
                        <ListItemText primary={album.name} />
                      </ListItem>
-                   );
+                     </ul>
+                     </List>
+                   )
+  
+                     
+                     
+                     
+                     
+                     
+                   
                  })}
                </div>
 
-               <div style={{ width: "30%", marginRight: "5%" }}>
+               <div style={{ width: "30%", marginRight: "5%",textAlign: "center", maxHeight: "600px", overflow: 'auto' }}>
                  <h2>Artiste(s)</h2>
                  {this.state.artists.map((artist, index) => {
                    return (
-                     <Card key={index} style={{ textAlign: "left" }}>
-                       <CardContent>{artist.name}</CardContent>
-                     </Card>
+                     <List>
+                       <ul>
+                     <ListItem textAlign="center" key={index}>
+             
+                       <ListItemText primary={artist.name} />
+                         </ListItem>
+                        
+                       </ul>
+                     </List>
                    );
                  })}
                </div>
