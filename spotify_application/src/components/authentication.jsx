@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 
 export default class Authentication extends Component {
-  constructor(props) {
-    super(props);
-  }
+ 
   componentDidMount() {
 
     // on récupère la châine de caractère dans l'URL qui correspond au hash (#)

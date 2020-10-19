@@ -41,14 +41,14 @@ export default class createPlaylist extends Component {
     };
     render() {
         return (
-            <div style={{position:"relative"}}>
+            <div style={{display:"flex",flexDirection:"column",justifyContent:"space-between",margin:'100px auto'}}>
                 <TextField
                     id="outlined-basic"
                     label="Nom de la playlist"
                     name="name"
                     value={this.state.name}
                     onChange={this.handleChange}
-                    style={{ marginRight: "20px" }}
+                    style={{ }}
                 />
                 <TextField
                     id="outlined-basic"
@@ -56,13 +56,13 @@ export default class createPlaylist extends Component {
                     label="Description de la playlist"
                     value={this.state.description}
                     onChange={this.handleChange}
-                    style={{ marginRight: "20px" }}
+                    style={{ }}
                 />
                 <Button
                     variant="contained"
                     color="secondary"
                     onClick={this.create}
-                    style={{ position: "absolute", top: "50%", transform: "translateY(-50%)" }}
+
                 >
                     Créer la playlist
           </Button>

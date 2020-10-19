@@ -9,6 +9,14 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import { CardMedia } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import CreatePlaylist from "./createPlaylist";
+import { makeStyles } from '@material-ui/core/styles';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import IconButton from '@material-ui/core/IconButton';
+import InfoIcon from '@material-ui/icons/Info';
+import background_img1 from './images/spotify_homepage_img.jpg'
 
 export default class Home extends Component {
   constructor(props) {
@@ -18,6 +26,7 @@ export default class Home extends Component {
     };
   }
   componentDidMount() {
+    
     let access_token = localStorage.access_token;
     let userId = localStorage.id;
     if (access_token && userId) {
@@ -40,59 +49,53 @@ export default class Home extends Component {
     }
   }
 
-  render() {
-    return (
-      <div>
-        <h1>Bienvenue sur votre plateforme Spotify, vous êtes bien connecté</h1>
-        <div
-          style={{ display: "flex", justifyContent: "center", margin: "5%" }}
-        >
-          {this.state.playlists.map((playlist, index) => {
-            return (
-              <Card key={index} style={{ margin: "5px" }}>
-                <CardActionArea>
-                  {playlist.images[0] && (
-                    <CardMedia
-                      image={playlist.images[0].url}
-                      style={{ height: "200px" }}
-                    />
-                  )}
 
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {playlist.name}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-                <CardActions>
-                  <Button
-                    size="small"
-                    color="primary"
-                    onClick={() =>
-                      (window.location =
-                        "/playlists?id=" +
-                        playlist.id +
-                        "&artist=" +
-                        playlist.name)
-                    }
-                  >
-                    Voir les titres
-                  </Button>
-                </CardActions>
-              </Card>
-            );
-          })}
-        </div>
-        <div
-          style={{ display: "flex", justifyContent: "center", margin: "2.5%" }}
-        >
-        <CreatePlaylist />
-        </div>
-        <div
-          style={{ display: "flex", justifyContent: "center", marginBottom: "2.5%" }}
-        >
-        <Search />
-        </div>
+  render() {
+    return (<div>
+     <h1 style={{margin:"2vh auto", color:"gold"}}>Bienvenue sur votre plateforme Spotify, vous êtes bien connecté</h1>
+      <div style={{ display: "flex",justifyContent:"space-around", width: "100%", height:"600px"}}>
+            <div style={{
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+   
+  }}>
+      <GridList cellHeight={180} style={{width: 500,
+    height: 450,}}>
+        <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
+          <ListSubheader component="div">Playlists actuelles</ListSubheader>
+        </GridListTile>
+        {this.state.playlists.map((playlist, index) => (
+           <GridListTile key={index}>
+                   {playlist.images[0] && (
+            <img src={playlist.images[0].url} alt={playlist.title} />)}
+            <GridListTileBar
+         title={playlist.name}
+     
+              actionIcon={
+                <IconButton aria-label={`Voir titres`} style={{    color: 'rgba(255, 255, 255, 0.54)',}}>
+                  <InfoIcon onClick={() =>
+                    (window.location =
+                      "/playlists?id=" +
+                      playlist.id +
+                      "&artist=" +
+                      playlist.name)} />
+                </IconButton>
+              }
+            />
+          </GridListTile>
+        ))}
+      </GridList>
+
+    </div>
+        <div style={{ display: "flex", width: "20%", height:"600px" }}>
+              <CreatePlaylist />
+          </div>
+        <div style={{ display: "flex", width: "40%", height:"600px"  }}>
+                 <Search />
+          </div>
+     </div>
       </div>
     );
   }

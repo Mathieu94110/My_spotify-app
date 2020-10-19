@@ -4,7 +4,6 @@ import axios from "axios";
 import NewPlaylist from "./newPlaylist";
 import DeletePlaylistItem from "./deletePlaylistItem";
 
-import Button from "@material-ui/core/Button";
 
 export default class Playlists extends Component {
   constructor(props) {
@@ -46,14 +45,14 @@ export default class Playlists extends Component {
   render() {
     return (
       <div>
-        <h1>{this.state.artist}</h1>
+        <h1 style={{color:"gold"}}>{this.state.artist}</h1>
         <div>
           <NewPlaylist
             playListId={this.state.playListId}
             refresh={this.refresh}
           />
 
-          <div>
+          <div style={{height:"500px",margin:"auto",textAlign:"left" , width:"500px", overflow:"auto"}}>
             {this.state.musics.map((music, index) => {
               return (
                 <div

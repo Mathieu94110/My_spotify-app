@@ -5,7 +5,6 @@ import axios from "axios";
 import TextField from "@material-ui/core/TextField";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -50,7 +49,7 @@ export default class newPlaylist extends Component {
     console.log(track);
 
     let access_token = localStorage.access_token;
-    let userId = localStorage.id;
+
 
     const config = {
       headers: { Authorization: `Bearer ${access_token}` },
@@ -140,16 +139,15 @@ export default class newPlaylist extends Component {
     }
     return (
       <div>
-        <Button
-          variant="contained"
-          color="default"
-          startIcon={<CloudUploadIcon />}
-          color="primary"
-          style={{ margin: "30px 0px" }}
-          onClick={this.createNewPlaylist.bind(this)}
-        >
+   
+
+<label htmlFor="contained-button-file">
+        <Button variant="contained" color="primary" component="span" style={{ margin: "30px 0px" }}
+          onClick={this.createNewPlaylist.bind(this)}       startIcon={<CloudUploadIcon />} >
           Upload
         </Button>
+      </label>
+
       </div>
     );
   }
