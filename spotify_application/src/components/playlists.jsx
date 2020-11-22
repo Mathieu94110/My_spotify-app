@@ -16,9 +16,33 @@ export default class Playlists extends Component {
   }
 
   componentDidMount() {
-    this.refresh();
+    this.refreshAdd();
+    this.refreshSub();
   }
-  refresh = () => {
+
+  refreshSub = () => {
+   
+    const params = queryString.parse(this.props.location.search);
+    const supvar = params.id;
+    let miam = this.state.musics.filter((_music) => {
+      return _music != supvar
+    })
+
+ this.setState({ musics: miam });
+      };
+
+
+
+
+
+
+
+
+
+
+
+
+  refreshAdd = () => {
     let access_token = localStorage.access_token;
     const config = {
       headers: {
@@ -49,7 +73,7 @@ export default class Playlists extends Component {
         <div>
           <NewPlaylist
             playListId={this.state.playListId}
-            refresh={this.refresh}
+            refreshAdd={this.refreshAdd}
           />
 
           <div style={{height:"500px",margin:"auto",textAlign:"left" , width:"500px", overflow:"auto"}}>
@@ -66,6 +90,7 @@ export default class Playlists extends Component {
                     <DeletePlaylistItem
                       playListId={this.state.playListId}
                       track={music.track}
+                      refreshSub={this.refreshSub}
                     />
                   </div>
                 </div>

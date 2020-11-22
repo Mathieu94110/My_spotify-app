@@ -67,7 +67,7 @@ export default class newPlaylist extends Component {
       .then((res) => {
         console.log(res);
         // on met à jour la liste des tracks
-        this.props.refresh()
+        this.props.refreshAdd()
       });
 
     console.log(track);
