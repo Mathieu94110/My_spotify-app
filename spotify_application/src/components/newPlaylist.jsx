@@ -70,7 +70,7 @@ export default class newPlaylist extends Component {
         this.props.refreshAdd()
       });
 
-    console.log(track);
+    console.log("newPlaylists track=",track);
   };
 
   render() {

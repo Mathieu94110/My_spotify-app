@@ -25,7 +25,7 @@ export default class Playlists extends Component {
     const params = queryString.parse(this.props.location.search);
     const supvar = params.id;
     let miam = this.state.musics.filter((_music) => {
-      return _music != supvar
+      return _music !== supvar
     })
 
  this.setState({ musics: miam });
@@ -51,14 +51,14 @@ export default class Playlists extends Component {
     };
     const params = queryString.parse(this.props.location.search);
     this.setState({ playListId: params.id, artist: params.artist });
-    console.log("PARAMS", params);
+    console.log("Playlists params=", params);
     axios
       .get(
         "https://api.spotify.com/v1/playlists/" + params.id + "/tracks",
         config
       )
       .then((res) => {
-        console.log(res.data.items);
+        console.log("Playlists data items=",res.data.items);
         console.log(res.data.items[0].track.artists[0].name);
         this.setState({ musics: res.data.items });
       });

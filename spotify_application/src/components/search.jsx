@@ -50,7 +50,7 @@ export default class Search extends Component {
                 axios
                   .get("https://api.spotify.com/v1/search", config)
                   .then((res) => {
-                    console.log(res.data);
+                    console.log("Search data=",res.data);
                     this.setState({
                       artists: res.data.artists.items,
                       albums: res.data.albums.items,

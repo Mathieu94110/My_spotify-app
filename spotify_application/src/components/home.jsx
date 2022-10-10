@@ -1,13 +1,7 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import Search from "./search";
 import Card from "@material-ui/core/Card";
-import Typography from "@material-ui/core/Typography";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import { CardMedia } from "@material-ui/core";
-import { Button } from "@material-ui/core";
 import CreatePlaylist from "./createPlaylist";
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
@@ -16,43 +10,65 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
-import background_img1 from './images/spotify_homepage_img.jpg'
+import background_img1 from './images/spotify_homepage_img.jpg';
+import {
+  setAccessToken,
+} from './authentication/authentication';
+import {
+  selectDisplayName,
+  userId
+} from './user/userSlice';
+import { useSelector } from 'react-redux';
+import {
+  Navigate,
+} from "react-router-dom";
 
-export default class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      playlists: [],
-    };
-  }
-  componentDidMount() {
-    
-    let access_token = localStorage.access_token;
-    let userId = localStorage.id;
-    if (access_token && userId) {
-      const config = {
-        headers: { Authorization: `Bearer ${access_token}` },
-      };
-      axios
-        .get(
-          "https://api.spotify.com/v1/users/" + userId + "/playlists",
-          config
-        )
-        .then((res) => {
-          console.log(res.data.items);
-          this.setState({
-            playlists: res.data.items,
-          });
-        });
-    } else {
-      this.props.history.push("/auth");
+const Home = () => {
+  const [playlists, setPlaylists] = useState({});
+  const [playlistsLoading, setPlaylistsLoading] = useState(false);
+
+
+  const userName = useSelector(selectDisplayName);
+
+// const accessToken = tokenObject.payload.authorization.accessToken;
+
+  useEffect(() => {
+
+    const loadData = async () => {
+      setPlaylistsLoading(true);
+     const result = getUserPlaylists();
+     setPlaylists(result);
+     setPlaylistsLoading( false);
     }
+    loadData();
+ 
+  },[]);
+
+ const getUserPlaylists = () => {
+  const user = localStorage.getItem('userId');
+  const token = localStorage.getItem('accessToken');
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    axios
+      .get(
+        "https://api.spotify.com/v1/users/" + user + "/playlists",
+        config
+      )
+      .then((response) => {
+        setPlaylists(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
 
-  render() {
     return (<div>
-     <h1 style={{margin:"2vh auto", color:"gold"}}>Bienvenue sur votre plateforme Spotify, vous êtes bien connecté</h1>
+ 
+      {playlistsLoading && <div>Loading...</div>}
+   
+      { playlists && <div> <h1 style={{margin:"2vh auto", color:"gold"}}>Bienvenue {userName}, vous êtes bien connecté sur votre plateforme Spotify</h1>
       <div style={{ display: "flex",justifyContent:"space-around", width: "100%", height:"600px"}}>
             <div style={{
     display: 'flex',
@@ -66,7 +82,7 @@ export default class Home extends Component {
         <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
           <ListSubheader component="div">Playlists actuelles</ListSubheader>
         </GridListTile>
-        {this.state.playlists.map((playlist, index) => (
+        {playlists?.items ? playlists.items.map((playlist, index) => (
            <GridListTile key={index}>
                    {playlist.images[0] && (
             <img src={playlist.images[0].url} alt={playlist.title} />)}
@@ -85,7 +101,7 @@ export default class Home extends Component {
               }
             />
           </GridListTile>
-        ))}
+        )) : null}
       </GridList>
 
     </div>
@@ -95,8 +111,12 @@ export default class Home extends Component {
         <div style={{ display: "flex", width: "40%", height:"600px"  }}>
                  <Search />
           </div>
-     </div>
+     </div>  
+
       </div>
-    );
+    }
+    </div>
+    )
   }
-}
+
+export default Home;

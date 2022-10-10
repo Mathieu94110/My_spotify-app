@@ -1,5 +1,12 @@
 {
     "env": {
-        "jest": true
+        "commonjs": true,
+        "es2021": true,
+        "node": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 13
+    },
+    "rules": {
     }
 }

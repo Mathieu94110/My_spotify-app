@@ -26,7 +26,7 @@ export default class deletePlaylistItem extends Component {
         config
       )
       .then((res) =>
-        { console.log(res);
+        { console.log("Delete Playlists=",res);
               this.props.refreshSub()} )
       .catch((e) => console.log(e));
   };
