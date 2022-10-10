@@ -22,6 +22,7 @@ import { useSelector } from 'react-redux';
 import {
   Navigate,
 } from "react-router-dom";
+import Sidebar from './SideBar/SideBar';
 
 const Home = () => {
   const [playlists, setPlaylists] = useState({});
@@ -64,8 +65,11 @@ const Home = () => {
   }
 
 
-    return (<div>
- 
+    return (<div style={{width: "100%",
+      height: "100vh", display: "flex"}}>
+
+ <Sidebar/>
+
       {playlistsLoading && <div>Loading...</div>}
    
       { playlists && <div> <h1 style={{margin:"2vh auto", color:"gold"}}>Bienvenue {userName}, vous êtes bien connecté sur votre plateforme Spotify</h1>

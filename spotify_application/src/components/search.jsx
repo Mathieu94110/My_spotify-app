@@ -39,9 +39,9 @@ export default class Search extends Component {
                
                 });
                
-                let access_token = localStorage.access_token;
+                let Token = localStorage.accessToken;
                 let config = {
-                  headers: { Authorization: `Bearer ${access_token}` },
+                  headers: { Authorization: `Bearer ${Token}` },
                   params: {
                     q: this.state.search,
                     type: "track,album,artist",
