@@ -8,11 +8,6 @@ import Avatar from "@material-ui/core/Avatar";
 import TextField from "@material-ui/core/TextField";
 import List from '@material-ui/core/List';
 
-
-
-
-
-
 export default class Search extends Component {
   constructor(props) {
     super(props);

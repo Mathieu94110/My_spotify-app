@@ -3,6 +3,7 @@ import "./SideBar.css";
 import spotifyLogo from "../images/spotify-logo.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome, faMagnifyingGlass, faFolder } from '@fortawesome/free-solid-svg-icons'
+import {NavLink} from "react-router-dom";
 
 export default function Sidebar() {
   return (
@@ -17,18 +18,21 @@ export default function Sidebar() {
         <ul>
           <li>
           <FontAwesomeIcon icon={faHome} />
-            <span>Accueil</span>
+          <NavLink to="/home" 
+          className="nav-link">Accueil</NavLink>
           </li>
           <li>
             
  
  
 <FontAwesomeIcon icon={faMagnifyingGlass}/>
-            <span>Rechercher</span>
+<NavLink to="/search" 
+          className="nav-link">Rechercher</NavLink>
           </li>
           <li>
           <FontAwesomeIcon icon={faFolder} />
-            <span>Vos playlists</span>
+          <NavLink to="/playlists" 
+          className="nav-link">Vos playlists</NavLink>
           </li>
         </ul>
       </div>
