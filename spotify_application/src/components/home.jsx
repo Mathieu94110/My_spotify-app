@@ -4,13 +4,12 @@ import Search from "./search";
 import Card from "@material-ui/core/Card";
 import CreatePlaylist from "./createPlaylist";
 import { makeStyles } from '@material-ui/core/styles';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
+import { ImageList } from '@material-ui/core'
+import { ImageListItem } from '@material-ui/core';
+import { ImageListItemBar } from '@material-ui/core'
 import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
-import background_img1 from './images/spotify_homepage_img.jpg';
 import {
   setAccessToken,
 } from './authentication/authentication';
@@ -22,7 +21,7 @@ import { useSelector } from 'react-redux';
 import {
   Navigate,
 } from "react-router-dom";
-import Sidebar from './SideBar/SideBar';
+// import Sidebar from './SideBar/SideBar';
 
 const Home = () => {
   const [playlists, setPlaylists] = useState({});
@@ -65,10 +64,9 @@ const Home = () => {
   }
 
 
-    return (<div style={{width: "100%",
-      height: "100vh", display: "flex"}}>
+    return (<div style={{width: "calc(100% -200px)",
+      height: "100%", display: "flex"}}>
 
- <Sidebar/>
 
       {playlistsLoading && <div>Loading...</div>}
    
@@ -81,16 +79,16 @@ const Home = () => {
     overflow: 'hidden',
    
   }}>
-      <GridList cellHeight={180} style={{width: 500,
+      <ImageList rowHeight={180} style={{width: 500,
     height: 450,}}>
-        <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
+        <ImageListItem key="Subheader" cols={2} style={{ height: 'auto' }}>
           <ListSubheader component="div">Playlists actuelles</ListSubheader>
-        </GridListTile>
+        </ImageListItem>
         {playlists?.items ? playlists.items.map((playlist, index) => (
-           <GridListTile key={index}>
+           <ImageListItem key={index}>
                    {playlist.images[0] && (
             <img src={playlist.images[0].url} alt={playlist.title} />)}
-            <GridListTileBar
+            <ImageListItemBar
          title={playlist.name}
      
               actionIcon={
@@ -104,9 +102,9 @@ const Home = () => {
                 </IconButton>
               }
             />
-          </GridListTile>
+          </ImageListItem>
         )) : null}
-      </GridList>
+      </ImageList>
 
     </div>
         <div style={{ display: "flex", width: "20%", height:"600px" }}>

@@ -12,6 +12,7 @@ import { getHashParams, removeHashParamsFromUrl } from '../../utils/hashUtils';
 import {
   Navigate,
 } from "react-router-dom";
+import "./authentication.css";
 
 // Here we register url values when getAuthorizeHref get the data from spotify api
 const hashParams = getHashParams();
@@ -36,11 +37,10 @@ const Authentication = () => {
   }, []);
 
   return (
-    <div>
-      <div>
+      <div className="login-page">
         {!isLoggedIn &&
           <button
-         
+          className="login-button"
           aria-label="Log in using OAuth 2.0"
           onClick={() => window.open(getAuthorizeHref(), '_self')}
           >
@@ -50,7 +50,6 @@ const Authentication = () => {
         //When logged we navigate to home
         isLoggedIn && <Navigate replace to="/home" />}
       </div>
-    </div>
   );
 }
 
