@@ -1,10 +1,10 @@
 import React from "react";
 import "./App.css";
-import Authentication from "./components/authentication/authentication";
-import Home from "./components/home";
+import Authentication from "./pages/authentication/authentication";
+import Home from "./pages/home/home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Playlists from "./components/playlists";
-import Search from "./components/search/search";
+import Playlists from "./pages/playlists/playlists";
+import Search from "./pages/search/search";
 import Sidebar from "./components/SideBar/SideBar";
 import { selectIsLoggedIn } from "./components/authentication/authenticationSlice";
 import { useSelector } from "react-redux";

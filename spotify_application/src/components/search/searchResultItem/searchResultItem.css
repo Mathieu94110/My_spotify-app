@@ -1,25 +1,25 @@
-.search-container{
-    background-color: black;
-    height: 200px;
-    width: 200px;
-    justify-self: center;
-    padding: 10px;
-    box-shadow: 0 4px 8px 0 rgba(219, 205, 205, 0.19), 0 6px 20px 0 rgba(219, 205, 205, 0.19);
+.search-container {
+  background-color: black;
+  height: 200px;
+  width: 200px;
+  justify-self: center;
+  padding: 10px;
+  box-shadow: 0 4px 8px 0 rgba(219, 205, 205, 0.19),
+    0 6px 20px 0 rgba(219, 205, 205, 0.19);
 }
-.image{
-    height: 64px;
-    width: 64px;
-}
-
-.song{
-margin: 1rem 0;
+.image {
+  height: 64px;
+  width: 64px;
 }
 
-.text{
-    color: #fff;
+.song {
+  margin: 1rem 0;
 }
 
+.text {
+  color: #fff;
+}
 
-.artist{
-    color: #f5f5f5;
+.artist {
+  color: #f5f5f5;
 }

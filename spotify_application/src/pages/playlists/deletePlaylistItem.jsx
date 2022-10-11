@@ -9,25 +9,25 @@ export default class deletePlaylistItem extends Component {
   }
 
   deleteIcon = () => {
-
     let access_token = localStorage.access_token;
     const config = {
       headers: {
         Authorization: `Bearer ${access_token}`,
-        ContentType:"application/json"//rajout
+        ContentType: "application/json", //rajout
       },
       data: { tracks: [{ uri: this.props.track.uri }] },
     };
     axios
       .delete(
         "https://api.spotifty.com/v1/playlists/" +
-        this.props.playListId +
-        "/tracks",
+          this.props.playListId +
+          "/tracks",
         config
       )
-      .then((res) =>
-        { console.log("Delete Playlists=",res);
-              this.props.refreshSub()} )
+      .then((res) => {
+        console.log("Delete Playlists=", res);
+        this.props.refreshSub();
+      })
       .catch((e) => console.log(e));
   };
   render() {

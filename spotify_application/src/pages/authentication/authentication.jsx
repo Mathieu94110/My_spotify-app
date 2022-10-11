@@ -1,17 +1,15 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   setLoggedIn,
   setAccessToken,
   setTokenExpiryDate,
   selectIsLoggedIn,
-} from './authenticationSlice';
-import { setUserProfileAsync } from '../user/userSlice';
-import { getAuthorizeHref } from '../../oauthConfig';
-import { getHashParams, removeHashParamsFromUrl } from '../../utils/hashUtils';
-import {
-  Navigate,
-} from "react-router-dom";
+} from "../../components/authentication/authenticationSlice";
+import { setUserProfileAsync } from "../../components/user/userSlice";
+import { getAuthorizeHref } from "../../oauthConfig";
+import { getHashParams, removeHashParamsFromUrl } from "../../utils/hashUtils";
+import { Navigate } from "react-router-dom";
 import "./authentication.css";
 
 // Here we register url values when getAuthorizeHref get the data from spotify api
@@ -28,7 +26,7 @@ const Authentication = () => {
   useEffect(() => {
     if (access_token) {
       // We sending access Token to localStorage and other values to reducers
-      localStorage.setItem("accessToken",access_token )
+      localStorage.setItem("accessToken", access_token);
       dispatch(setLoggedIn(true));
       dispatch(setAccessToken(access_token));
       dispatch(setTokenExpiryDate(Number(expires_in)));
@@ -37,20 +35,22 @@ const Authentication = () => {
   }, []);
 
   return (
-      <div className="login-page">
-        {!isLoggedIn &&
-          <button
+    <div className="login-page">
+      {!isLoggedIn && (
+        <button
           className="login-button"
           aria-label="Log in using OAuth 2.0"
-          onClick={() => window.open(getAuthorizeHref(), '_self')}
-          >
+          onClick={() => window.open(getAuthorizeHref(), "_self")}
+        >
           Se connecter
-          </button>}
-        {
+        </button>
+      )}
+      {
         //When logged we navigate to home
-        isLoggedIn && <Navigate replace to="/home" />}
-      </div>
+        isLoggedIn && <Navigate replace to="/home" />
+      }
+    </div>
   );
-}
+};
 
 export default Authentication;

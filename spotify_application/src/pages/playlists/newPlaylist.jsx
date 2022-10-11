@@ -14,7 +14,7 @@ export default class newPlaylist extends Component {
     super(props);
     this.state = {
       isCreatingPlaylitst: false,
-      
+
       research: "",
       albums: [],
       artists: [],
@@ -45,11 +45,9 @@ export default class newPlaylist extends Component {
     this.setState({ isCreatingPlaylitst: true });
   }
   addTrack = (track) => {
- 
     console.log(track);
 
     let access_token = localStorage.access_token;
-
 
     const config = {
       headers: { Authorization: `Bearer ${access_token}` },
@@ -59,7 +57,7 @@ export default class newPlaylist extends Component {
     axios
       .post(
         "https://api.spotify.com/v1/playlists/" +
-        this.props.playListId +
+          this.props.playListId +
           "/tracks",
         {},
         config
@@ -67,10 +65,10 @@ export default class newPlaylist extends Component {
       .then((res) => {
         console.log(res);
         // on met à jour la liste des tracks
-        this.props.refreshAdd()
+        this.props.refreshAdd();
       });
 
-    console.log("newPlaylists track=",track);
+    console.log("newPlaylists track=", track);
   };
 
   render() {
@@ -84,9 +82,7 @@ export default class newPlaylist extends Component {
             textAlign: "center",
           }}
         >
-          <form
-          style={{position:"relative"}}
-          >
+          <form style={{ position: "relative" }}>
             <TextField
               id="standard-basic"
               label="Artiste , musique ou album"
@@ -101,7 +97,12 @@ export default class newPlaylist extends Component {
               onClick={this.searchArtist.bind(this)}
               variant="contained"
               color="primary"
-              style={{ position: "absolute", top: "50%", transform: "translateY(-50%)",marginLeft:"20px" }}
+              style={{
+                position: "absolute",
+                top: "50%",
+                transform: "translateY(-50%)",
+                marginLeft: "20px",
+              }}
             >
               Rechercher
             </Button>
@@ -124,14 +125,13 @@ export default class newPlaylist extends Component {
                   return (
                     <ListItem>
                       <ListItemText primary={track.name} />
-                      <button onClick={() => this.addTrack(track)} >+</button>
+                      <button onClick={() => this.addTrack(track)}>+</button>
                     </ListItem>
                   );
                 })}
               </List>
             </Grid>
             <Grid item xs={4}></Grid>
-
           </Grid>
         </div>
       );
@@ -139,15 +139,18 @@ export default class newPlaylist extends Component {
     }
     return (
       <div>
-   
-
-<label htmlFor="contained-button-file">
-        <Button variant="contained" color="primary" component="span" style={{ margin: "30px 0px" }}
-          onClick={this.createNewPlaylist.bind(this)}       startIcon={<CloudUploadIcon />} >
-          Upload
-        </Button>
-      </label>
-
+        <label htmlFor="contained-button-file">
+          <Button
+            variant="contained"
+            color="primary"
+            component="span"
+            style={{ margin: "30px 0px" }}
+            onClick={this.createNewPlaylist.bind(this)}
+            startIcon={<CloudUploadIcon />}
+          >
+            Upload
+          </Button>
+        </label>
       </div>
     );
   }
