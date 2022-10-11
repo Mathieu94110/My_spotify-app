@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./SideBar.css";
-import spotifyLogo from "../images/spotify-logo.png";
+import spotifyLogo from "../../assets/images/spotify-logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,

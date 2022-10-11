@@ -9,7 +9,7 @@ import { ImageListItemBar } from "@material-ui/core";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from "@material-ui/icons/Info";
-import { selectDisplayName } from "../../components/user/userSlice";
+import { selectDisplayName } from "../../store/user/userSlice";
 import { useSelector } from "react-redux";
 import "./playlists.css";
 

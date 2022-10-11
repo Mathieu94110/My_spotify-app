@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Playlists from "./pages/playlists/playlists";
 import Search from "./pages/search/search";
 import Sidebar from "./components/SideBar/SideBar";
-import { selectIsLoggedIn } from "./components/authentication/authenticationSlice";
+import { selectIsLoggedIn } from "./store/authentication/authenticationSlice";
 import { useSelector } from "react-redux";
 
 function App() {

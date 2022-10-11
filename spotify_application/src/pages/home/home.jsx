@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { selectDisplayName } from "../../components/user/userSlice";
+import { selectDisplayName } from "../../store/user/userSlice";
 import { useSelector } from "react-redux";
 import "./home.css";
 

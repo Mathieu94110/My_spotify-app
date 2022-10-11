@@ -5,8 +5,8 @@ import {
   setAccessToken,
   setTokenExpiryDate,
   selectIsLoggedIn,
-} from "../../components/authentication/authenticationSlice";
-import { setUserProfileAsync } from "../../components/user/userSlice";
+} from "../../store/authentication/authenticationSlice";
+import { setUserProfileAsync } from "../../store/user/userSlice";
 import { getAuthorizeHref } from "../../oauthConfig";
 import { getHashParams, removeHashParamsFromUrl } from "../../utils/hashUtils";
 import { Navigate } from "react-router-dom";
