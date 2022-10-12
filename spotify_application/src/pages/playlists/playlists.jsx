@@ -1,18 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Card from "@material-ui/core/Card";
 import CreatePlaylist from "./createPlaylist";
-import { makeStyles } from "@material-ui/core/styles";
-import { ImageList } from "@material-ui/core";
-import { ImageListItem } from "@material-ui/core";
-import { ImageListItemBar } from "@material-ui/core";
-import ListSubheader from "@material-ui/core/ListSubheader";
-import IconButton from "@material-ui/core/IconButton";
-import InfoIcon from "@material-ui/icons/Info";
 import { selectDisplayName } from "../../store/user/userSlice";
 import { useSelector } from "react-redux";
 import "./playlists.css";
-
+import Card from "../../layout/card/card";
 const Playlists = () => {
   const [playlists, setPlaylists] = useState({});
   const [playlistsLoading, setPlaylistsLoading] = useState(false);
@@ -39,6 +31,7 @@ const Playlists = () => {
       .get("https://api.spotify.com/v1/users/" + user + "/playlists", config)
       .then((response) => {
         setPlaylists(response.data);
+        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -47,7 +40,20 @@ const Playlists = () => {
 
   return (
     <div className="playlists-container">
-      {playlistsLoading && <div>Loading...</div>}
+      <ul>
+        {playlists?.items &&
+          playlists.items.map((item, index) => (
+            <div key={index}>
+              <Card
+               image={item.images[0] && item.images[0].url}
+               uri={item.uri}
+               name={item.name}
+               description={item.description}
+                />
+            </div>
+          ))}
+      </ul>
+      {/* {playlistsLoading && <div>Loading...</div>}
 
       {playlists && (
         <div className="playlists-content">
@@ -99,7 +105,7 @@ const Playlists = () => {
             <CreatePlaylist />
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
