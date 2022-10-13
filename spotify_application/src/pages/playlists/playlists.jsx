@@ -1,48 +1,57 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import CreatePlaylist from "./createPlaylist";
+import { useState,  useEffect  } from "react";
+// import axios from "axios";
+// import CreatePlaylist from "./createPlaylist";
 import { selectDisplayName } from "../../store/user/userSlice";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import "./playlists.css";
 import Card from "../../layout/card/card";
+import { selectplaylistsItems, getUserPlaylists } from "../../store/playlists/playlistsSlice";
+
+
 const Playlists = () => {
-  const [playlists, setPlaylists] = useState({});
+
   const [playlistsLoading, setPlaylistsLoading] = useState(false);
 
   const userName = useSelector(selectDisplayName);
+  const playlists = useSelector(selectplaylistsItems);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const loadData = async () => {
-      setPlaylistsLoading(true);
-      const result = getUserPlaylists();
-      setPlaylists(result);
-      setPlaylistsLoading(false);
-    };
-    loadData();
+      dispatch(getUserPlaylists());
+    
   }, []);
+  // useEffect(() => {
+  //   const loadData = async () => {
+  //     setPlaylistsLoading(true);
+  //     const result = getUserPlaylists();
+  //     setPlaylists(result);
+  //     setPlaylistsLoading(false);
+  //   };
+  //   loadData();
+  // }, []);
 
-  const getUserPlaylists = () => {
-    const user = localStorage.getItem("userId");
-    const token = localStorage.getItem("accessToken");
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
-    axios
-      .get("https://api.spotify.com/v1/users/" + user + "/playlists", config)
-      .then((response) => {
-        setPlaylists(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  // const getUserPlaylists = () => {
+  //   const user = localStorage.getItem("userId");
+  //   const token = localStorage.getItem("accessToken");
+  //   const config = {
+  //     headers: { Authorization: `Bearer ${token}` },
+  //   };
+  //   axios
+  //     .get("https://api.spotify.com/v1/users/" + user + "/playlists", config)
+  //     .then((response) => {
+  //       setPlaylists(response.data);
+  //       console.log(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 
   return (
-    <div className="playlists-container">
-      <ul>
-        {playlists?.items &&
-          playlists.items.map((item, index) => (
+    <div className="playlists-container"> 
+
+        {playlists &&
+          playlists.map((item, index) => (
             <div key={index}>
               <Card
                image={item.images[0] && item.images[0].url}
@@ -52,7 +61,7 @@ const Playlists = () => {
                 />
             </div>
           ))}
-      </ul>
+         
       {/* {playlistsLoading && <div>Loading...</div>}
 
       {playlists && (
