@@ -1,0 +1,13 @@
+.playlist-avatar-container {
+  width: 300px;
+  height: 80%;
+}
+.playlist-avatar-title {
+  height: 10%;
+  text-align: center;
+}
+.playlist-avatar-content {
+  height: 90%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}

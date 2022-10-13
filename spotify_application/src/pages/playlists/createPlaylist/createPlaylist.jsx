@@ -1,38 +1,36 @@
-import React, { Component } from "react";
+import { useState } from "react";
 import axios from "axios";
+import "./createPlaylist.scss";
 
-export default class createPlaylist extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: "",
-      description: "",
-      albums: [],
-    };
-  }
+const initialFormValues = {
+  name: "",
+  description: "",
+  image: "",
+};
+export default function createPlaylist({ handleClick }) {
+  const [albums, setAlbums] = useState([]);
+  const [values, setValues] = useState(initialFormValues);
 
-  searchImage = () => {
-    let accessToken = localStorage.accessToken;
+  const searchImage = () => {
+    let accessToken = localStorage.getItem("accessToken");
     let config = {
       headers: { Authorization: `Bearer ${accessToken}` },
       params: {
-        q: this.state.description,
+        q: description,
         type: "album",
         limit: 3,
       },
     };
     axios.get("https://api.spotify.com/v1/search", config).then((res) => {
       console.log("create Playlists =", res.data);
-      this.setState({
-        albums: res.data.albums.items[0].images[0].url,
-      });
+      setAlbums(res.data.albums.items[0].images[0].url);
       alert(JSON.stringify(this.state.albums));
     });
   };
 
-  create = () => {
-    let accessToken = localStorage.accessToken;
-    let userId = localStorage.userId;
+  const create = () => {
+    let accessToken = localStorage.getItem("accessToken");
+    let userId = localStorage.getItem("userId");
     if (accessToken && userId) {
       const config = {
         headers: { Authorization: `Bearer ${accessToken}` },
@@ -41,14 +39,14 @@ export default class createPlaylist extends Component {
         .post(
           "https://api.spotify.com/v1/users/" + userId + "/playlists",
           {
-            name: this.state.name,
+            name: name,
 
-            description: this.state.description,
+            description: description,
             images: [
               {
                 KEY: "image_description",
                 height: 640,
-                url: `${JSON.stringify(this.state.albums)}`,
+                url: `${JSON.stringify(albums)}`,
                 width: 640,
               },
             ],
@@ -64,70 +62,84 @@ export default class createPlaylist extends Component {
     }
   };
 
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-      [e.target.description]: e.target.value,
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setValues({
+      ...values,
+      [name]: value,
     });
+    if (e.target.name === "image") {
+      handleClick(e.target.value);
+    }
   };
-  render() {
-    return (
-      <div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            margin: "100px auto",
-          }}
-        >
-          <TextField
-            id="outlined-basic"
-            label="Nom de la playlist"
-            name="name"
-            value={this.state.name}
-            onChange={this.handleChange}
-            style={{}}
-          />
-          <TextField
-            id="outlined-basic"
-            name="description"
-            label="Image(Nom d'un album)"
-            value={this.state.description}
-            onChange={this.handleChange}
-            style={{}}
-          />
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={this.searchImage}
-          >
-            Valider l'album
-          </Button>
-          <Button variant="contained" color="secondary" onClick={this.create}>
-            Créer la playlist
-          </Button>
-        </div>
-        <div style={{ height: "480px" }}>
-          <h2 style={{color:"red"}}>En cours de rénovation</h2>
-          {this.state.albums.map((album, index) => {
-            return (
-              <div>
-                <ul>
-                  <ListItem key={index}>
-                    <ListItemAvatar>
-                      <Avatar alt="album image" src={album.images[2].url} />
-                    </ListItemAvatar>
-                    <ListItemText primary={album.name} />
-                  </ListItem>
-                </ul>
-              </div>
-            );
-          })}
-        </div>
+  return (
+    <div className="create-playlists-container">
+      <div className="create-playlist-title">
+        {" "}
+        <h2>Créer une playlist</h2>
       </div>
-    );
-  }
+      <div className="create-playlist-form-container">
+        <form>
+          <label>
+            Nom:
+            <input
+              type="text"
+              id="outlined-basic"
+              name="name"
+              value={values.name}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            Description:
+            <textarea
+              type="text"
+              id="outlined-basic"
+              name="description"
+              value={values.description}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            Image:
+            <textarea
+              type="text"
+              id="outlined-basic"
+              name="image"
+              placeholder="Rechercher par artiste"
+              value={values.image}
+              onChange={handleInputChange}
+            />
+            handleInputChange
+          </label>
+          <button variant="contained" color="secondary" onClick={searchImage}>
+            Valider l'album
+          </button>
+          <button variant="contained" color="secondary" onClick={create}>
+            Créer la playlist
+          </button>
+        </form>
+      </div>
+    </div>
+    //   <div style={{ height: "480px" }}>
+
+    //     {this.state.albums.map((album, index) => {
+    //       return (
+    //         <div>
+    //           <ul>
+    //             <li key={index}>
+    //               <div>
+    //                 <img alt="album image" src={album.images[2].url} />
+    //               </div>
+    //               <p>{album.name}</p>
+    //             </li>
+    //           </ul>
+    //         </div>
+    //       );
+    //     })}
+    //   </div>
+    // </div>
+  );
 }
 
 /*

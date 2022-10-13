@@ -72,6 +72,12 @@ body {
     linear-gradient(to right, #1c062d, #b8205d);
 }
 
+input,
+textarea {
+  padding: 0;
+  margin: 0;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

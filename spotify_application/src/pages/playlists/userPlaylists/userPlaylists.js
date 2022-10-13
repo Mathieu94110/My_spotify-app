@@ -1,79 +1,23 @@
 import { useState, useEffect } from "react";
-// import axios from "axios";
-// import CreatePlaylist from "./createPlaylist";
-import { selectDisplayName } from "../../store/user/userSlice";
+import { selectDisplayName } from "../../../store/user/userSlice";
 import { useSelector, useDispatch } from "react-redux";
-import "./playlists.css";
-import Card from "../../layout/card/card";
+import "./userPlaylists.css";
+import Card from "../../../layout/card/card";
 import {
   selectplaylistsItems,
   getUserPlaylists,
-} from "../../store/playlists/playlistsSlice";
-import UserPlaylists from "./userPlaylists/userPlaylists";
-import CreatePlaylist from "./createPlaylist/createPlaylist";
-import axios from "axios";
-import PlaylistAvatar from "./playlistAvatar/playlistAvatar";
+} from "../../../store/playlists/playlistsSlice";
 
-const Playlists = () => {
+const UserPlaylists = () => {
   const [playlistsLoading, setPlaylistsLoading] = useState(false);
-  const [searchImage, setSearchImage] = useState("");
-  const [imageResult, setImageResult] = useState([]);
+
   const userName = useSelector(selectDisplayName);
   const playlists = useSelector(selectplaylistsItems);
-  const accessToken = localStorage.getItem("accessToken");
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getUserPlaylists());
   }, []);
-
-  useEffect(() => {
-    if (!searchImage) return setSearchImage([]);
-
-    let config = {
-      headers: { Authorization: `Bearer ${accessToken}` },
-      params: {
-        q: searchImage,
-        type: "artist",
-      },
-    };
-    // axios.get("https://api.spotify.com/v1/search", config).then((res) => {
-    //   console.log("ici =", res.data);
-    //   setImageResult(
-    //     res.data.artists.items.map((artist) => {
-    //       const smallestAlbumImage = artist.images.reduce((smallest, image) => {
-    //         if (image.height < smallest.height) return image;
-    //         return smallest;
-    //       }, artist.images[0]);
-
-    //       if (smallestAlbumImage.url && smallestAlbumImage.url !== undefined) {
-    //         return {
-    //           uri: artist.uri,
-    //           image: smallestAlbumImage.url,
-    //         };
-    //       }
-    //     })
-    //   );
-    // });
-    axios.get("https://api.spotify.com/v1/search", config).then((res) => {
-      const images = res.data.artists.items.map((artist) => {
-        const smallestAlbumImage = artist.images.reduce((smallest, image) => {
-          if (image.height < smallest.height) return image;
-          return smallest;
-        }, artist.images[0]);
-        return {
-          uri: artist.uri,
-          picture: smallestAlbumImage?.url,
-        };
-      });
-      const validImages = images.filter((image) => image.picture !== undefined);
-      setImageResult(validImages);
-    });
-  }, [searchImage]);
-
-  const handleClick = (value) => {
-    setSearchImage(value);
-  };
   // useEffect(() => {
   //   const loadData = async () => {
   //     setPlaylistsLoading(true);
@@ -102,12 +46,21 @@ const Playlists = () => {
   // };
 
   return (
-    <div className="playlists-container">
-      <div className="playlists-content">
-        <UserPlaylists />
-        <CreatePlaylist handleClick={handleClick} />
-        <PlaylistAvatar imageResult={imageResult} />
-      </div>
+    <div className="user-playlists-container">
+           <div className="user-playlists-title"> <h2>Vos playlists</h2></div>
+           <div className="user-playlists-content">
+      {playlists &&
+        playlists.map((item, index) => (
+          <div key={index}>
+            <Card
+              image={item.images[0] && item.images[0].url}
+              uri={item.uri}
+              name={item.name}
+              description={item.description}
+            />
+          </div>
+        ))}
+</div>
       {/* {playlistsLoading && <div>Loading...</div>}
 
       {playlists && (
@@ -165,4 +118,4 @@ const Playlists = () => {
   );
 };
 
-export default Playlists;
+export default UserPlaylists;

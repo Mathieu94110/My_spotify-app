@@ -1,114 +1,14 @@
 .playlists-container {
   width: 100%;
   height: 100%;
-  display:flex;
+  display: flex;
+  margin: 0 40px;
+flex-direction: column;
+justify-content: center;
 }
 .playlists-content {
-  display: flex;
-  justify-content: space-around;
   width: 100%;
-  height: 600px;
-}
-.user-playlists {
+  height: 100%;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  overflow: "hidden";
-}
-.image-list {
-  width: 500px;
-  height: 450px;
-}
-.image-list-subheader-item {
-  height: auto;
-}
-.icon-button-color {
-  color: rgba(255, 255, 255, 0.54);
-}
-.create-playlist-container {
-  display: flex;
-  width: 20%;
-  height: 600px;
-}
-/**/
 
-.swiper-slide{
-  background-position: center;
-  background-size:cover;
-  width:300px;
-  height:400px;
-  @media(max-width:768px){
-      width:250px;
-      height:auto;
-  }
-}
-.swiper-slide img{
-  display:block;
-  width:100%;
-  height:100%;
-  object-fit: cover;
-}
-
-.container{
-  position:relative;
-  width:100%;
-  height:60vh;
-  background-color:#000;
-  display:block;
-  .swiper-container{
-      width:70%;
-      position: absolute;
-      left:50%;
-      bottom:-16vw;
-      transform:translateX(-50%);
-      z-index: 2;
-      padding-bottom:3vw;
-      @media(max-width:768px){
-          bottom:-58vw;
-          padding-bottom:8vw;
-      }
-  }
-}
-
-.title_wrapper{
-  display:flex;
-  justify-content: center;
-  align-content: center;
-  padding:3vw 0 2vw 0;
-  @media(max-width:768px){
-      padding-top:13vw;
-  }
-  .reactLogo{
-      width:5vw;
-      height:5vw;
-      margin-right:1vw;
-      @media(max-width:768px){
-          width:25vw;
-          height:25vw;
-      }
-      img{
-          width:100%;
-          height:100%;
-          object-fit:cover;
-      }
-  }
-  .title_{
-      color:#fff;
-      text-align: left;
-      font-size:2vw;
-      @media(max-width:768px){
-          font-size:7vw;
-      }
-      span{
-          display:block;
-      }
-  }
-}
-.swiper-pagination-fraction{
-  bottom:0;
-}
-.swiper-pagination-bullet{
-  width:25px;
-  height:5px;
-  border-radius: 5px;
 }

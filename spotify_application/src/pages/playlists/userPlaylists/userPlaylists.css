@@ -1,0 +1,14 @@
+.user-playlists-container {
+  width: 600px;
+  height: 80%;
+}
+.user-playlists-title {
+  height: 10%;
+  text-align: center;
+}
+.user-playlists-content {
+  height: 90%;
+  display: flex;
+  display: grid;
+  overflow-x: hidden;
+}
