@@ -1,13 +1,14 @@
 .create-playlists-container {
   width: 200px;
-  height: 100%;
+  height: calc(100% - 40px);
   margin: 0 20px;
 }
 .create-playlist-title {
-  height: 10%;
+  height: 15%;
+  text-align: center;
 }
 .create-playlist-form-container {
-  height: 80%;
+  height: 85%;
 }
 form {
   display: flex;
@@ -35,11 +36,35 @@ button {
   padding: 5px;
   font-weight: 600;
   font-size: 1rem;
-
   &:hover {
     cursor: pointer;
-    background-color: #2d1896;
-    border: #fff;
-    color: #fff;
+  }
+}
+.create-button {
+  padding: 6px;
+  background: purple;
+  color: #fff;
+  width: 100%;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.validate-button {
+  padding: 6px;
+  background: green;
+  color: #fff;
+  width: 100%;
+  &:hover {
+    cursor: pointer;
+  }
+}
+.cancel-button {
+  padding: 6px;
+  background: red;
+  color: #fff;
+  width: 100%;
+  &:hover {
+    cursor: pointer;
   }
 }

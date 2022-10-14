@@ -2,7 +2,7 @@ import React from "react";
 import "./card.scss";
 
 const Card = (props) => {
-  const { image, uri, name, description } = props;
+  const { image, uri, name, description, details } = props;
   const style = {
     background: "url(" + image + ") center center no-repeat",
     maxWidth: "100%",
@@ -20,10 +20,11 @@ const Card = (props) => {
         <p className="body-content">
           {description ? description : "Aucune description"}
         </p>
-
-        <button className="button button-primary">
-          <i className="fa fa-chevron-right"></i> Voir le détail
-        </button>
+        {details && (
+          <button className="button button-primary">
+            <i className="fa fa-chevron-right"></i> Voir le détail
+          </button>
+        )}
       </div>
     </div>
   );

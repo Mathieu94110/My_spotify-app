@@ -1,25 +1,26 @@
 import { useState, useEffect } from "react";
-// import axios from "axios";
-// import CreatePlaylist from "./createPlaylist";
 import { selectDisplayName } from "../../store/user/userSlice";
 import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 import "./playlists.css";
-import Card from "../../layout/card/card";
+// import Card from "../../layout/card/card";
 import {
   selectplaylistsItems,
   getUserPlaylists,
 } from "../../store/playlists/playlistsSlice";
-import UserPlaylists from "./userPlaylists/userPlaylists";
-import CreatePlaylist from "./createPlaylist/createPlaylist";
-import axios from "axios";
-import PlaylistAvatar from "./playlistAvatar/playlistAvatar";
+
+import UserPlaylists from "../../components/playlists/userPlaylists/userPlaylists";
+import CreatePlaylist from "../../components/playlists/createPlaylist/createPlaylist";
+import PlaylistAvatar from "../../components/playlists/playlistAvatar/playlistAvatar";
+import CreatePlaylistModel from "../../components/playlists/createPlaylistModel/createPlaylistModel";
 
 const Playlists = () => {
   const [playlistsLoading, setPlaylistsLoading] = useState(false);
   const [searchImage, setSearchImage] = useState("");
   const [imageResult, setImageResult] = useState([]);
-  const userName = useSelector(selectDisplayName);
-  const playlists = useSelector(selectplaylistsItems);
+  const [clickedImage, setClickedImage] = useState("");
+  const [createdPlaylistInfo, setCreatedPlaylistInfo] = useState({});
+  const [isCreateButtonDisabled, setIsCreateButtonDisabled] = useState(false);
   const accessToken = localStorage.getItem("accessToken");
   const dispatch = useDispatch();
 
@@ -37,24 +38,6 @@ const Playlists = () => {
         type: "artist",
       },
     };
-    // axios.get("https://api.spotify.com/v1/search", config).then((res) => {
-    //   console.log("ici =", res.data);
-    //   setImageResult(
-    //     res.data.artists.items.map((artist) => {
-    //       const smallestAlbumImage = artist.images.reduce((smallest, image) => {
-    //         if (image.height < smallest.height) return image;
-    //         return smallest;
-    //       }, artist.images[0]);
-
-    //       if (smallestAlbumImage.url && smallestAlbumImage.url !== undefined) {
-    //         return {
-    //           uri: artist.uri,
-    //           image: smallestAlbumImage.url,
-    //         };
-    //       }
-    //     })
-    //   );
-    // });
     axios.get("https://api.spotify.com/v1/search", config).then((res) => {
       const images = res.data.artists.items.map((artist) => {
         const smallestAlbumImage = artist.images.reduce((smallest, image) => {
@@ -73,6 +56,19 @@ const Playlists = () => {
 
   const handleClick = (value) => {
     setSearchImage(value);
+  };
+  const setPlaylistImage = (value) => {
+    console.log("here", console.log(value));
+    setClickedImage(value);
+  };
+  const validatePlaylist = (value) => {
+    // console.log(value);
+    setCreatedPlaylistInfo(value);
+  };
+
+  const cancelPlaylistCreation = () => {
+    setCreatedPlaylistInfo({});
+    setImageResult([]);
   };
   // useEffect(() => {
   //   const loadData = async () => {
@@ -105,8 +101,28 @@ const Playlists = () => {
     <div className="playlists-container">
       <div className="playlists-content">
         <UserPlaylists />
-        <CreatePlaylist handleClick={handleClick} />
-        <PlaylistAvatar imageResult={imageResult} />
+        <CreatePlaylist
+          handleClick={handleClick}
+          playlistImage={clickedImage}
+          createPlayList={validatePlaylist}
+          cancelPlaylistCreation={cancelPlaylistCreation}
+          setCreateDisabled={isCreateButtonDisabled}
+        />
+
+        {imageResult.length > 0 && (
+          <PlaylistAvatar
+            imageResult={imageResult}
+            setPlaylistImage={setPlaylistImage}
+          />
+        )}
+        {createdPlaylistInfo.name && (
+          <CreatePlaylistModel
+            name={createdPlaylistInfo.name}
+            description={createdPlaylistInfo.description}
+            image={createdPlaylistInfo.image?.picture}
+            uri={createdPlaylistInfo.image?.uri}
+          />
+        )}
       </div>
       {/* {playlistsLoading && <div>Loading...</div>}
 

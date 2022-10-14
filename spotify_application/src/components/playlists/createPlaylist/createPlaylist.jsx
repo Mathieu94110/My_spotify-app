@@ -1,66 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import "./createPlaylist.scss";
 
 const initialFormValues = {
-  name: "",
+  title: "",
   description: "",
   image: "",
 };
-export default function createPlaylist({ handleClick }) {
+export default function createPlaylist({
+  handleClick,
+  createPlayList,
+  playlistImage,
+  cancelPlaylistCreation,
+  isCreateButtonDisabled,
+}) {
   const [albums, setAlbums] = useState([]);
   const [values, setValues] = useState(initialFormValues);
-
-  const searchImage = () => {
-    let accessToken = localStorage.getItem("accessToken");
-    let config = {
-      headers: { Authorization: `Bearer ${accessToken}` },
-      params: {
-        q: description,
-        type: "album",
-        limit: 3,
-      },
-    };
-    axios.get("https://api.spotify.com/v1/search", config).then((res) => {
-      console.log("create Playlists =", res.data);
-      setAlbums(res.data.albums.items[0].images[0].url);
-      alert(JSON.stringify(this.state.albums));
-    });
-  };
-
-  const create = () => {
-    let accessToken = localStorage.getItem("accessToken");
-    let userId = localStorage.getItem("userId");
-    if (accessToken && userId) {
-      const config = {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      };
-      axios
-        .post(
-          "https://api.spotify.com/v1/users/" + userId + "/playlists",
-          {
-            name: name,
-
-            description: description,
-            images: [
-              {
-                KEY: "image_description",
-                height: 640,
-                url: `${JSON.stringify(albums)}`,
-                width: 640,
-              },
-            ],
-          },
-          config
-        )
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    }
-  };
+  const [isPlaylistCreated, setIsPlaylistCreated] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -71,15 +27,31 @@ export default function createPlaylist({ handleClick }) {
     if (e.target.name === "image") {
       handleClick(e.target.value);
     }
+    const { title, description, image } = value;
+    console.log("name =", title !== "");
+    console.log("dessc =", description === "");
+    console.log("image =", image);
   };
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    const createdPlaylist = { ...values, image: playlistImage };
+    createPlayList(createdPlaylist);
+    setIsPlaylistCreated(true);
+  };
+
+  const reset = () => {
+    cancelPlaylistCreation();
+    setIsPlaylistCreated(false);
+  };
+
   return (
     <div className="create-playlists-container">
       <div className="create-playlist-title">
-        {" "}
         <h2>Créer une playlist</h2>
       </div>
       <div className="create-playlist-form-container">
-        <form>
+        <form onSubmit={handleSubmit}>
           <label>
             Nom:
             <input
@@ -101,7 +73,7 @@ export default function createPlaylist({ handleClick }) {
             />
           </label>
           <label>
-            Image:
+            Avatar:
             <textarea
               type="text"
               id="outlined-basic"
@@ -109,15 +81,30 @@ export default function createPlaylist({ handleClick }) {
               placeholder="Rechercher par artiste"
               value={values.image}
               onChange={handleInputChange}
-            />
-            handleInputChange
+            ></textarea>
           </label>
-          <button variant="contained" color="secondary" onClick={searchImage}>
-            Valider l'album
-          </button>
-          <button variant="contained" color="secondary" onClick={create}>
-            Créer la playlist
-          </button>
+          {isPlaylistCreated ? (
+            <>
+              <input
+                className="validate-button"
+                type="button"
+                value="Valider la playlist"
+              />
+              <input
+                className="cancel-button"
+                type="button"
+                value="Annuler"
+                onClick={() => reset()}
+              />
+            </>
+          ) : (
+            <input
+              className="create-button"
+              type="submit"
+              value="Créer la playlist"
+              disabled={isCreateButtonDisabled}
+            />
+          )}
         </form>
       </div>
     </div>

@@ -4,6 +4,7 @@
   margin: 60px auto;
   box-shadow: 10px 5px 40px 20px darken(#341cac, 5%);
   transition: 0.25s;
+  min-height: 410px;
   &:hover {
     box-shadow: 10px 5px 40px 20px darken(#341cac, 10%);
     cursor: pointer;
@@ -28,6 +29,7 @@
 .card-body {
   padding: 15px 15px 0;
   background-color: #fff;
+  min-height: 280px;
 }
 
 .date {

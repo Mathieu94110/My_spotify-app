@@ -8,7 +8,7 @@ import {
   getUserPlaylists,
 } from "../../../store/playlists/playlistsSlice";
 
-const UserPlaylists = () => {
+const UserPlaylists = (details) => {
   const [playlistsLoading, setPlaylistsLoading] = useState(false);
 
   const userName = useSelector(selectDisplayName);
@@ -47,20 +47,24 @@ const UserPlaylists = () => {
 
   return (
     <div className="user-playlists-container">
-           <div className="user-playlists-title"> <h2>Vos playlists</h2></div>
-           <div className="user-playlists-content">
-      {playlists &&
-        playlists.map((item, index) => (
-          <div key={index}>
-            <Card
-              image={item.images[0] && item.images[0].url}
-              uri={item.uri}
-              name={item.name}
-              description={item.description}
-            />
-          </div>
-        ))}
-</div>
+      <div className="user-playlists-title">
+        {" "}
+        <h2>Vos playlists</h2>
+      </div>
+      <div className="user-playlists-content">
+        {playlists &&
+          playlists.map((item, index) => (
+            <div key={index}>
+              <Card
+                image={item.images[0] && item.images[0].url}
+                uri={item.uri}
+                name={item.name}
+                description={item.description}
+                details="true"
+              />
+            </div>
+          ))}
+      </div>
       {/* {playlistsLoading && <div>Loading...</div>}
 
       {playlists && (
