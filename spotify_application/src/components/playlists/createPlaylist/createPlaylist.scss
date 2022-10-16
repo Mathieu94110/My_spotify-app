@@ -18,18 +18,19 @@ form {
 label {
   color: #fff;
 }
-input,
-textarea,
+
 label {
   width: inherit;
   display: inline-block;
   border: 0px;
 }
-input,
-textarea {
+.form-inputs {
   margin: 10px 0;
   width: calc(100% - 8px);
   padding: 4px;
+  width: inherit;
+  display: inline-block;
+  border: 0px;
 }
 button {
   margin: 5px 0;
@@ -50,21 +51,4 @@ button {
   }
 }
 
-.validate-button {
-  padding: 6px;
-  background: green;
-  color: #fff;
-  width: 100%;
-  &:hover {
-    cursor: pointer;
-  }
-}
-.cancel-button {
-  padding: 6px;
-  background: red;
-  color: #fff;
-  width: 100%;
-  &:hover {
-    cursor: pointer;
-  }
-}
+

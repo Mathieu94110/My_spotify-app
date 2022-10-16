@@ -88,3 +88,23 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+.validate-button {
+  padding: 6px;
+  background: green;
+  color: #fff;
+  width: 100%;
+  margin: 10px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+.cancel-button {
+  padding: 6px;
+  background: red;
+  color: #fff;
+  width: 100%;
+  margin: 10px;
+  &:hover {
+    cursor: pointer;
+  }
+}

@@ -43,6 +43,7 @@ export default function createPlaylist({
             <input
               type="text"
               id="outlined-basic"
+              className="form-inputs"
               name="name"
               value={name}
               onChange={(event) => setName(event.target.value)}
@@ -54,6 +55,7 @@ export default function createPlaylist({
             <textarea
               type="text"
               id="outlined-basic"
+              className="form-inputs"
               name="description"
               value={description}
               onChange={(event) => setDescription(event.target.value)}

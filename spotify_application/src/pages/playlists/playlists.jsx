@@ -1,10 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import "./playlists.css";
-import {
-  getUserPlaylists,
-  createPlaylist,
-} from "../../store/playlists/playlistsSlice";
+import { createPlaylist } from "../../store/playlists/playlistsSlice";
 
 import UserPlaylists from "../../components/playlists/userPlaylists/userPlaylists";
 import CreatePlaylist from "../../components/playlists/createPlaylist/createPlaylist";
@@ -15,10 +12,6 @@ const Playlists = () => {
   const [isCreateButtonDisabled, setIsCreateButtonDisabled] = useState(false);
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getUserPlaylists());
-  }, []);
 
   const validatePlaylist = (value) => {
     setCreatedPlaylistInfo(value);
