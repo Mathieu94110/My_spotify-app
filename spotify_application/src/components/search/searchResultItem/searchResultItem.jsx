@@ -2,9 +2,9 @@ import React from "react";
 import "./searchResultItem.css";
 
 const SearchResultItem = ({ track, modalCallback }) => {
-  function handleParentCallback(e) {
-    modalCallback(e);
-  }
+  const handleParentCallback = () => {
+    modalCallback(track.uri);
+  };
 
   return (
     <div className="search-container">

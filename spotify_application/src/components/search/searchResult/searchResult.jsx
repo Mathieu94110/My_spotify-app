@@ -5,10 +5,10 @@ import SearchResultItem from "../searchResultItem/searchResultItem";
 const SearchResult = ({ searchResults, modalCallback }) => {
   return (
     <div className="search-result">
-      {searchResults.map((track) => (
+      {searchResults.map((track, index) => (
         <SearchResultItem
           track={track}
-          key={track.uri}
+          key={index}
           modalCallback={modalCallback}
         />
       ))}

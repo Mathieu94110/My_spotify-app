@@ -14,7 +14,7 @@ const Search = () => {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-
+  const [trackUri, setTrackUri] = useState("");
   const playlists = useSelector(selectplaylistsItems);
   const dispatch = useDispatch();
 
@@ -22,7 +22,8 @@ const Search = () => {
     dispatch(getUserPlaylists());
   }, []);
 
-  const isModalOpen = () => {
+  const isModalOpen = (value) => {
+    setTrackUri(value);
     return isOpen === false ? setIsOpen(true) : setIsOpen(false);
   };
 
@@ -68,7 +69,13 @@ const Search = () => {
       />
       <SearchResult searchResults={searchResults} modalCallback={isModalOpen} />
 
-      {isOpen && <Modal setIsOpen={isModalOpen} playlists={playlists}/>}
+      {isOpen && (
+        <Modal
+          setIsOpen={isModalOpen}
+          playlists={playlists}
+          trackUri={trackUri}
+        />
+      )}
     </div>
   );
 };

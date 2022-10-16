@@ -79,4 +79,30 @@ export const createPlaylist = (value) => (dispatch) => {
   );
 };
 
+export const addTrack = (uris) => (dispatch) => {
+  const { trackUri, checkedPlaylist } = uris;
+  console.log("track =", trackUri);
+  console.log("playlist =", checkedPlaylist);
+
+  const accessToken = getAccessToken();
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", "Bearer " + accessToken);
+
+  fetch(`https://api.spotify.com/v1/playlists/${checkedPlaylist}/tracks`, {
+    method: "POST",
+    headers: myHeaders,
+    body: JSON.stringify({ uris: trackUri }),
+  }).then(
+    (response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error("Request failed!");
+    },
+    (networkError) => {
+      console.log(networkError.message);
+    }
+  );
+};
+
 export default playlistsSlice.reducer;
