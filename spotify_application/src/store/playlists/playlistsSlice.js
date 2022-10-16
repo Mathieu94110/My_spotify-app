@@ -56,9 +56,7 @@ export const getUserPlaylists = () => (dispatch) => {
 };
 
 export const createPlaylist = (value) => (dispatch) => {
-  const { name, description, image } = value;
-  const { picture, uris } = image;
-  console.log("name ", name, "description", description, "uri", uris);
+  const { name, description } = value;
   const accessToken = getAccessToken();
   const userId = getUserId();
 
@@ -69,42 +67,17 @@ export const createPlaylist = (value) => (dispatch) => {
     method: "POST",
     headers: myHeaders,
     body: JSON.stringify({ name: name, description: description }),
-  })
-    .then(
-      (response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error("Request failed!");
-      },
-      (networkError) => {
-        console.log(networkError.message);
+  }).then(
+    (response) => {
+      if (response.ok) {
+        return response.json();
       }
-    )
-    .then((jsonResponse) => {
-      console.log("jsonResponse", jsonResponse);
-      const playlistId = jsonResponse.id;
-      return fetch(
-        `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks`,
-        {
-          method: "POST",
-          headers: myHeaders,
-          body: JSON.stringify({ uris: uris }),
-        }
-      )
-        .then(
-          (response) => {
-            if (response.ok) {
-              return response.json();
-            }
-            throw new Error("Request failed!");
-          },
-          (networkError) => {
-            console.log(networkError.message);
-          }
-        )
-        .then((jsonResponse) => jsonResponse);
-    });
+      throw new Error("Request failed!");
+    },
+    (networkError) => {
+      console.log(networkError.message);
+    }
+  );
 };
 
 export default playlistsSlice.reducer;

@@ -1,42 +1,29 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import "./createPlaylist.scss";
 export default function createPlaylist({
   createPlayList,
-  playlistImage,
   cancelPlaylistCreation,
   confirmPlaylistCreation,
 }) {
-  const [albums, setAlbums] = useState([]);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
   const [isPlaylistCreated, setIsPlaylistCreated] = useState(false);
-  const [isImageValid, setIsImageValid] = useState(false);
-  useState(false);
-  const name = useRef(null);
-  const description = useRef(null);
-
-  useEffect(() => {
-    playlistImage.picture !== undefined && playlistImage.uri !== undefined
-      ? setIsImageValid(true)
-      : setIsImageValid(false);
-  }, [playlistImage]);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    console.log(name.current.value);
     const createdPlaylist = {
-      name: name.current.value,
-      description: description.current.value,
-      image: playlistImage,
+      name: name,
+      description: description,
     };
     createPlayList(createdPlaylist);
     setIsPlaylistCreated(true);
   };
 
   const reset = () => {
-    name.current.value = null;
-    description.current.value = null;
+    setName("")
+    setDescription("")
     cancelPlaylistCreation();
     setIsPlaylistCreated(false);
-    setIsImageValid(false);
   };
 
   return (
@@ -52,7 +39,8 @@ export default function createPlaylist({
               type="text"
               id="outlined-basic"
               name="name"
-              ref={name}
+              value={name}
+              onChange={(event) => setName(event.target.value)}
               disabled={isPlaylistCreated}
             />
           </label>
@@ -62,30 +50,11 @@ export default function createPlaylist({
               type="text"
               id="outlined-basic"
               name="description"
-              ref={description}
+              value={description}
+              onChange={(event) => setDescription(event.target.value)}
               disabled={isPlaylistCreated}
             />
           </label>
-          {isImageValid && (
-            <div>
-              <label>Image</label>
-              <input
-                type="text"
-                id="outlined-basic"
-                name="picture"
-                value={playlistImage.picture}
-                disabled
-              />
-              <label>Lien de l'image</label>
-              <input
-                type="text"
-                id="outlined-basic"
-                name="uri"
-                value={playlistImage.uri}
-                disabled
-              />
-            </div>
-          )}
           {isPlaylistCreated ? (
             <>
               <input
@@ -106,7 +75,7 @@ export default function createPlaylist({
               className="create-button"
               type="submit"
               value="Créer la playlist"
-              disabled={!isImageValid}
+              disabled={!name || !description}
             />
           )}
         </form>
