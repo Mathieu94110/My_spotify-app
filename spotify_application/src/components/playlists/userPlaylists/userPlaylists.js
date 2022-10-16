@@ -14,7 +14,7 @@ const UserPlaylists = () => {
 
   useEffect(() => {
     dispatch(getUserPlaylists());
-  }, [playlists]);
+  }, []);
 
   return (
     <div className="user-playlists-container">

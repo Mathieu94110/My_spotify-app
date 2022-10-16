@@ -19,9 +19,14 @@ export default function createPlaylist({
     setIsPlaylistCreated(true);
   };
 
+  const confirmCreation = () => {
+    confirmPlaylistCreation();
+    reset();
+  };
+
   const reset = () => {
-    setName("")
-    setDescription("")
+    setName("");
+    setDescription("");
     cancelPlaylistCreation();
     setIsPlaylistCreated(false);
   };
@@ -61,7 +66,7 @@ export default function createPlaylist({
                 className="validate-button"
                 type="button"
                 value="Valider la playlist"
-                onClick={() => confirmPlaylistCreation()}
+                onClick={() => confirmCreation()}
               />
               <input
                 className="cancel-button"

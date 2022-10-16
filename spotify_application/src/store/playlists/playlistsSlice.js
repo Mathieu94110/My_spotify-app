@@ -46,7 +46,6 @@ export const getUserPlaylists = () => (dispatch) => {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       dispatch(setPlaylistsItem(data.items));
       dispatch(setTotal(data.total));
     })
