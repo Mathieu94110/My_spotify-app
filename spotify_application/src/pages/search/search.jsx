@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import SearchResult from "../../components/search/searchResult/searchResult";
-import Modal from "../../components/modal/modal";
-import "./search.css";
+import SearchResult from "../../components/search/searchResult/SearchResult";
+import AddTrackModal from "../../components/modal/AddTrackModal";
+import "./Search.scss";
 import {
   selectplaylistsItems,
   getUserPlaylists,
+  addTrackToPlaylist,
 } from "../../store/playlists/playlistsSlice";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -38,6 +39,7 @@ const Search = () => {
       },
     };
     axios.get("https://api.spotify.com/v1/search", config).then((res) => {
+      console.log("Ici =", res);
       setSearchResults(
         res.data.tracks.items.map((track) => {
           const smallestAlbumImage = track.album.images.reduce(
@@ -58,10 +60,16 @@ const Search = () => {
     });
   }, [search]);
 
+  const addTrack = (trackUri, checkedPlaylist) => {
+    dispatch(addTrackToPlaylist({ trackUri, checkedPlaylist })).then((res) => {
+      console.log(res);
+    });
+  };
+
   return (
-    <div className="search-wrapper">
+    <div className="search">
       <input
-        className="search-input"
+        className="search__input"
         type="search"
         placeholder="Rechercher un titre"
         value={search}
@@ -70,10 +78,11 @@ const Search = () => {
       <SearchResult searchResults={searchResults} modalCallback={isModalOpen} />
 
       {isOpen && (
-        <Modal
+        <AddTrackModal
           setIsOpen={isModalOpen}
           playlists={playlists}
           trackUri={trackUri}
+          addTrackToPlaylist={addTrack}
         />
       )}
     </div>

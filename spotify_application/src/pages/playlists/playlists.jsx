@@ -1,11 +1,10 @@
 import { useState } from "react";
+import "./Playlists.scss";
 import { useDispatch } from "react-redux";
-import "./playlists.css";
 import { createPlaylist } from "../../store/playlists/playlistsSlice";
-
-import UserPlaylists from "../../components/playlists/userPlaylists/userPlaylists";
-import CreatePlaylist from "../../components/playlists/createPlaylist/createPlaylist";
-import CreatePlaylistModel from "../../components/playlists/createPlaylistModel/createPlaylistModel";
+import UserPlaylists from "../../components/playlists/userPlaylists/UserPlaylists";
+import CreatePlaylist from "../../components/playlists/createPlaylist/CreatePlaylist";
+import CreatePlaylistModel from "../../components/playlists/createPlaylistModel/CreatePlaylistModel";
 
 const Playlists = () => {
   const [createdPlaylistInfo, setCreatedPlaylistInfo] = useState({});
@@ -24,8 +23,8 @@ const Playlists = () => {
   };
 
   return (
-    <div className="playlists-container">
-      <div className="playlists-content">
+    <div className="playlists">
+      <div className="playlists__content">
         <UserPlaylists />
         <CreatePlaylist
           createPlayList={validatePlaylist}

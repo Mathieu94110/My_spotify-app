@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
-import { selectDisplayName } from "../../../store/user/userSlice";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import "./userPlaylists.css";
-import Card from "../../../layout/card/card";
+import "./UserPlaylists.scss";
+import Card from "../../../layout/card/Card";
 import {
   selectplaylistsItems,
   getUserPlaylists,
@@ -17,12 +16,12 @@ const UserPlaylists = () => {
   }, []);
 
   return (
-    <div className="user-playlists-container">
-      <div className="user-playlists-title">
+    <div className="user-playlists">
+      <div className="user-playlists__title">
         {" "}
         <h2>Vos playlists</h2>
       </div>
-      <div className="user-playlists-content">
+      <div className="user-playlists__content">
         {playlists &&
           playlists.map((item, index) => (
             <div key={index}>

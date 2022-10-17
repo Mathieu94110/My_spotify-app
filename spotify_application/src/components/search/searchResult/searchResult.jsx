@@ -1,6 +1,6 @@
 import React from "react";
-import "./searchResult.css";
-import SearchResultItem from "../searchResultItem/searchResultItem";
+import "./SearchResult.scss";
+import SearchResultItem from "../searchResultItem/SearchResultItem";
 
 const SearchResult = ({ searchResults, modalCallback }) => {
   return (

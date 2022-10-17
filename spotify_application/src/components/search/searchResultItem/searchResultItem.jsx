@@ -1,5 +1,5 @@
 import React from "react";
-import "./searchResultItem.css";
+import "./SearchResultItem.scss";
 
 const SearchResultItem = ({ track, modalCallback }) => {
   const handleParentCallback = () => {
@@ -7,14 +7,25 @@ const SearchResultItem = ({ track, modalCallback }) => {
   };
 
   return (
-    <div className="search-container">
-      <span className="image">
+    <div className="search-result-item">
+      <span className="search-result-item__image">
         <img src={track.albumUrl} />{" "}
       </span>
-      <div className="song">
-        <span className="text">{track.title}</span>
-        <span className="artist">{track.artist}</span>
-        <button onClick={handleParentCallback}>+</button>
+      <div>
+        <div>
+          {" "}
+          <span className="search-result-item__text">{track.title}</span>
+        </div>
+        <div>
+          {" "}
+          <span className="search-result-item__artist">{track.artist}</span>
+        </div>
+        <button
+          className="search-result-item__button"
+          onClick={handleParentCallback}
+        >
+          +
+        </button>
       </div>
     </div>
   );

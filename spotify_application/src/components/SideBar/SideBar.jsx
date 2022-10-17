@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./SideBar.css";
+import "./SideBar.scss";
 import spotifyLogo from "../../assets/images/spotify-logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -18,17 +18,25 @@ export default function Sidebar() {
   };
   return (
     <div>
-      <div className={open ? "sidebar" : "sidebar sidebar-closed"}>
-        <div className="top-links">
-          <div className="logo">
+      <div className={open ? "sidebar" : "sidebar sidebar--closed"}>
+        <div className="sidebar__top-links">
+          <div className="sidebar__logo">
             <img
               src={spotifyLogo}
               alt="spotify"
-              className={open ? "logo-img" : "logo-img-closed"}
+              className={
+                open
+                  ? "sidebar__logo-img"
+                  : "sidebar__logo-img sidebar__logo-img--closed"
+              }
             />
           </div>
           <button
-            className={open ? "menu-toggle" : "menu-toggle menu-toggle-closed"}
+            className={
+              open
+                ? "sidebar__menu-toggle"
+                : "sidebar__menu-toggle sidebar__menu-toggle--closed"
+            }
             onClick={toggleOpen}
           >
             {open ? (
@@ -37,23 +45,35 @@ export default function Sidebar() {
               <KeyboardDoubleArrowRightIcon />
             )}
           </button>
-          <ul>
+          <ul className="sidebar__list-items">
             <li>
-              <NavLink to="/home" className="nav-link">
+              <NavLink to="/home" className="sidebar__nav-link">
                 <span>
                   <FontAwesomeIcon icon={faHome} />
                 </span>
-                <span className={open ? "margin-left" : "display-none"}>
+                <span
+                  className={
+                    open
+                      ? "sidebar__text-display"
+                      : "sidebar__text-display-none"
+                  }
+                >
                   Accueil
                 </span>
               </NavLink>
             </li>
             <li>
-              <NavLink to="/search" className="nav-link">
+              <NavLink to="/search" className="sidebar__nav-link">
                 <span>
                   <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </span>
-                <span className={open ? "margin-left" : "display-none"}>
+                <span
+                  className={
+                    open
+                      ? "sidebar__text-display"
+                      : "sidebar__text-display-none"
+                  }
+                >
                   Rechercher
                 </span>
               </NavLink>
@@ -63,7 +83,13 @@ export default function Sidebar() {
                 <span>
                   <FontAwesomeIcon icon={faFolder} />
                 </span>
-                <span className={open ? "margin-left" : "display-none"}>
+                <span
+                  className={
+                    open
+                      ? "sidebar__text-display"
+                      : "sidebar__text-display-none"
+                  }
+                >
                   {" "}
                   Vos playlists
                 </span>

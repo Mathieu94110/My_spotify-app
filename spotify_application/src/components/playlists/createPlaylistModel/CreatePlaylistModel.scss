@@ -1,0 +1,10 @@
+.create-playlist-model {
+  height: calc(100% - 40px);
+
+  &__title {
+    height: 15%;
+  }
+  &__content {
+    height: 85%;
+  }
+}

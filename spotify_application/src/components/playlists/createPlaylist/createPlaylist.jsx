@@ -1,5 +1,6 @@
 import { useState } from "react";
-import "./createPlaylist.scss";
+import "./CreatePlaylist.scss";
+
 export default function createPlaylist({
   createPlayList,
   cancelPlaylistCreation,
@@ -32,30 +33,30 @@ export default function createPlaylist({
   };
 
   return (
-    <div className="create-playlists-container">
-      <div className="create-playlist-title">
+    <div className="create-playlist">
+      <div className="create-playlist__title">
         <h2>Créer une playlist</h2>
       </div>
-      <div className="create-playlist-form-container">
-        <form onSubmit={handleSubmit}>
-          <label>
+      <div className="create-playlist__form-container">
+        <form className="create-playlist__form" onSubmit={handleSubmit}>
+          <label className="create-playlist__form-label">
             Nom:
             <input
               type="text"
               id="outlined-basic"
-              className="form-inputs"
+              className="create-playlist__form-inputs"
               name="name"
               value={name}
               onChange={(event) => setName(event.target.value)}
               disabled={isPlaylistCreated}
             />
           </label>
-          <label>
+          <label className="create-playlist__form-label">
             Description:
             <textarea
               type="text"
               id="outlined-basic"
-              className="form-inputs"
+              className="create-playlist__form-inputs"
               name="description"
               value={description}
               onChange={(event) => setDescription(event.target.value)}
@@ -65,13 +66,13 @@ export default function createPlaylist({
           {isPlaylistCreated ? (
             <>
               <input
-                className="validate-button"
+                className="create-playlist__button create-playlist__button-validate"
                 type="button"
                 value="Valider la playlist"
                 onClick={() => confirmCreation()}
               />
               <input
-                className="cancel-button"
+                className="create-playlist__button create-playlist__button-cancel"
                 type="button"
                 value="Annuler"
                 onClick={() => reset()}
@@ -79,7 +80,7 @@ export default function createPlaylist({
             </>
           ) : (
             <input
-              className="create-button"
+              className="create-playlist__button create-playlist__button-create"
               type="submit"
               value="Créer la playlist"
               disabled={!name || !description}

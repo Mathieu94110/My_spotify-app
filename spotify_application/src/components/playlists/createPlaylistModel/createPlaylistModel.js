@@ -1,15 +1,15 @@
-import "./createPlaylistModel.css";
-import Card from "../../../layout/card/card";
+import "./CreatePlaylistModel.scss";
+import Card from "../../../layout/card/Card";
 
 const CreatePlaylistModel = (props) => {
   const { name, description, image, uri, details } = props;
   return (
     <div className="create-playlist-model">
-      <div className="create-playlist-title">
+      <div className="create-playlist-model__title">
         {" "}
         <h2>Récapitulatif</h2>
       </div>
-      <div className="create-playlist-content">
+      <div className="create-playlist-model__content">
         <Card
           image={image}
           uri={uri}

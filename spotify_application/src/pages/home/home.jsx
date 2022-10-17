@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import { selectDisplayName } from "../../store/user/userSlice";
 import { useSelector } from "react-redux";
-import "./home.css";
+import "./Home.scss";
 
 const Home = () => {
   const userName = useSelector(selectDisplayName);
   return (
-    <div className="home-container">
-      <h1 className="home-title">
+    <div className="home">
+      <h1 className="home__title">
         Bienvenue {userName.charAt(0).toUpperCase() + userName.slice(1)}, vous
         êtes bien connecté sur votre plateforme Spotify
       </h1>
-      <div className="in-stagging-container">
+      <div className="home__in-stagging">
         <p>
           Page Home actuellement en rénovation, ajout des tendances globales et
           par catégories de genre, bientôt disponible
