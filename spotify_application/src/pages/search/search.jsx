@@ -9,13 +9,16 @@ import {
   addTrackToPlaylist,
 } from "../../store/playlists/playlistsSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Search = () => {
   const accessToken = localStorage.getItem("accessToken");
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [trackUri, setTrackUri] = useState("");
+  // const [trackUri, setTrackUri] = useState("");
+  const [track, setTrack] = useState("");
   const playlists = useSelector(selectplaylistsItems);
   const dispatch = useDispatch();
 
@@ -24,8 +27,8 @@ const Search = () => {
   }, []);
 
   const isModalOpen = (value) => {
-    setTrackUri(value);
-    return isOpen === false ? setIsOpen(true) : setIsOpen(false);
+    setTrack(value);
+    return setIsOpen(!isOpen);
   };
 
   useEffect(() => {
@@ -39,7 +42,6 @@ const Search = () => {
       },
     };
     axios.get("https://api.spotify.com/v1/search", config).then((res) => {
-      console.log("Ici =", res);
       setSearchResults(
         res.data.tracks.items.map((track) => {
           const smallestAlbumImage = track.album.images.reduce(
@@ -60,10 +62,24 @@ const Search = () => {
     });
   }, [search]);
 
-  const addTrack = (trackUri, checkedPlaylist) => {
-    dispatch(addTrackToPlaylist({ trackUri, checkedPlaylist })).then((res) => {
-      console.log(res);
-    });
+  const addTrack = (track, checkedPlaylist) => {
+    const { title, uri, ...trackRest } = track;
+    const { id, name, ...playlistRest } = checkedPlaylist;
+
+    dispatch(addTrackToPlaylist({ uri, id }))
+      .then(() => {
+        toast.success(`${title} a bien été ajouté à ${name} !`, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      })
+      .catch((error) => {
+        toast.error(`${error.message} !`, {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      })
+      .finally(() => {
+        isModalOpen();
+      });
   };
 
   return (
@@ -81,10 +97,13 @@ const Search = () => {
         <AddTrackModal
           setIsOpen={isModalOpen}
           playlists={playlists}
-          trackUri={trackUri}
+          // trackUri={trackUri}
+          track={track}
           addTrackToPlaylist={addTrack}
         />
       )}
+      {/* Tag below is necessary to display toast message*/}
+      <ToastContainer />
     </div>
   );
 };

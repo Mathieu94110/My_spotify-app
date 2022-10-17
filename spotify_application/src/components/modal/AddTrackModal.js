@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import "./AddTrackModal.scss";
 
-const AddTrackModal = ({
-  setIsOpen,
-  playlists,
-  trackUri,
-  addTrackToPlaylist,
-}) => {
+const AddTrackModal = ({ setIsOpen, playlists, track, addTrackToPlaylist }) => {
   const [checkedPlaylist, setCheckedPlaylist] = useState(false);
 
   const handleChange = (value) => {
@@ -14,7 +9,7 @@ const AddTrackModal = ({
   };
 
   const AddTrackCallback = () => {
-    addTrackToPlaylist(trackUri, checkedPlaylist);
+    addTrackToPlaylist(track, checkedPlaylist);
   };
 
   return (
@@ -38,8 +33,8 @@ const AddTrackModal = ({
                     <input
                       type="checkbox"
                       value={playlist.id}
-                      checked={checkedPlaylist === playlist.id}
-                      onChange={() => handleChange(playlist.id)}
+                      checked={checkedPlaylist === playlist}
+                      onChange={() => handleChange(playlist)}
                     ></input>
                   </div>
                 );
