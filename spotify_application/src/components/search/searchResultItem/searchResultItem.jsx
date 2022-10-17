@@ -3,7 +3,7 @@ import "./SearchResultItem.scss";
 
 const SearchResultItem = ({ track, modalCallback }) => {
   const handleParentCallback = () => {
-    modalCallback(track.uri);
+    modalCallback(track);
   };
 
   return (

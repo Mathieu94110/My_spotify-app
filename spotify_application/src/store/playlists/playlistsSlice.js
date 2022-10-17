@@ -62,7 +62,7 @@ export const createPlaylist = (value) => (dispatch) => {
   const myHeaders = new Headers();
   myHeaders.append("Authorization", "Bearer " + accessToken);
 
-  fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
+  return fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
     method: "POST",
     headers: myHeaders,
     body: JSON.stringify({ name: name, description: description }),
@@ -80,17 +80,13 @@ export const createPlaylist = (value) => (dispatch) => {
 };
 
 export const addTrackToPlaylist = (uris) => (dispatch) => {
-  const { trackUri, checkedPlaylist } = uris;
-  console.log("checkedPlaylist =", checkedPlaylist);
-  console.log("track =", trackUri);
-  console.log("playlist =", checkedPlaylist);
-
+  const { uri, id } = uris;
   const accessToken = getAccessToken();
   const myHeaders = new Headers();
   myHeaders.append("Authorization", "Bearer " + accessToken);
 
   return fetch(
-    `https://api.spotify.com/v1/playlists/${checkedPlaylist}/tracks?uris=${trackUri}`,
+    `https://api.spotify.com/v1/playlists/${id}/tracks?uris=${uri}`,
     {
       method: "POST",
       headers: myHeaders,

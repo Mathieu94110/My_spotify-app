@@ -5,6 +5,8 @@ import { createPlaylist } from "../../store/playlists/playlistsSlice";
 import UserPlaylists from "../../components/playlists/userPlaylists/UserPlaylists";
 import CreatePlaylist from "../../components/playlists/createPlaylist/CreatePlaylist";
 import CreatePlaylistModel from "../../components/playlists/createPlaylistModel/CreatePlaylistModel";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Playlists = () => {
   const [createdPlaylistInfo, setCreatedPlaylistInfo] = useState({});
@@ -16,7 +18,17 @@ const Playlists = () => {
     setCreatedPlaylistInfo(value);
   };
   const confirmPlaylistCreation = () => {
-    dispatch(createPlaylist(createdPlaylistInfo));
+    dispatch(createPlaylist(createdPlaylistInfo))
+      .then(() => {
+        toast.success("La playlist a bien été créee !", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      })
+      .catch((error) => {
+        toast.error(`${error.message} !`, {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      });
   };
   const cancelPlaylistCreation = () => {
     setCreatedPlaylistInfo({});
@@ -39,6 +51,8 @@ const Playlists = () => {
           />
         )}
       </div>
+      {/* Tag below is necessary to display toast message*/}
+      <ToastContainer />
     </div>
   );
 };
