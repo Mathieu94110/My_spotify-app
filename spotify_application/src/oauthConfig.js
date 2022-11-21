@@ -5,6 +5,8 @@ export const getAuthorizeHref = () => {
     "user-read-private",
     "playlist-modify-public",
     "playlist-modify-private",
+    "user-read-recently-played",
+    "user-top-read",
   ];
   const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
   const redirectUri = process.env.REACT_APP_REDIRECT_URI;

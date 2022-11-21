@@ -13,7 +13,7 @@ const Playlists = () => {
   const [isCreateButtonDisabled, setIsCreateButtonDisabled] = useState(false);
 
   const dispatch = useDispatch();
-
+  
   const validatePlaylist = (value) => {
     setCreatedPlaylistInfo(value);
   };

@@ -1,0 +1,28 @@
+.recently-played {
+  width: 400px;
+  color: #fff;
+  &__title {
+    padding: 20px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+  &__content {
+    height: calc(100vh - 300px);
+    padding: 20px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    overflow: auto;
+  }
+  &__items {
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 500;
+  }
+  &__track-name {
+    max-width: 100px;
+    word-break: break-word;
+  }
+}
