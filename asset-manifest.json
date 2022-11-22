@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/static/css/main.4b83ff9f.chunk.css",
-    "main.js": "/static/js/main.e55bc3ee.chunk.js",
-    "main.js.map": "/static/js/main.e55bc3ee.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.406b0e9e.js",
-    "runtime-main.js.map": "/static/js/runtime-main.406b0e9e.js.map",
-    "static/css/2.2c4e78b8.chunk.css": "/static/css/2.2c4e78b8.chunk.css",
-    "static/js/2.05f89d43.chunk.js": "/static/js/2.05f89d43.chunk.js",
-    "static/js/2.05f89d43.chunk.js.map": "/static/js/2.05f89d43.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/2.2c4e78b8.chunk.css.map": "/static/css/2.2c4e78b8.chunk.css.map",
-    "static/css/main.4b83ff9f.chunk.css.map": "/static/css/main.4b83ff9f.chunk.css.map",
-    "static/js/2.05f89d43.chunk.js.LICENSE.txt": "/static/js/2.05f89d43.chunk.js.LICENSE.txt",
-    "static/media/spotify-logo.056948ef.png": "/static/media/spotify-logo.056948ef.png"
+    "main.css": "/My_spotify-app/static/css/main.4b83ff9f.chunk.css",
+    "main.js": "/My_spotify-app/static/js/main.e35f6df4.chunk.js",
+    "main.js.map": "/My_spotify-app/static/js/main.e35f6df4.chunk.js.map",
+    "runtime-main.js": "/My_spotify-app/static/js/runtime-main.01ab2da3.js",
+    "runtime-main.js.map": "/My_spotify-app/static/js/runtime-main.01ab2da3.js.map",
+    "static/css/2.2c4e78b8.chunk.css": "/My_spotify-app/static/css/2.2c4e78b8.chunk.css",
+    "static/js/2.05f89d43.chunk.js": "/My_spotify-app/static/js/2.05f89d43.chunk.js",
+    "static/js/2.05f89d43.chunk.js.map": "/My_spotify-app/static/js/2.05f89d43.chunk.js.map",
+    "index.html": "/My_spotify-app/index.html",
+    "static/css/2.2c4e78b8.chunk.css.map": "/My_spotify-app/static/css/2.2c4e78b8.chunk.css.map",
+    "static/css/main.4b83ff9f.chunk.css.map": "/My_spotify-app/static/css/main.4b83ff9f.chunk.css.map",
+    "static/js/2.05f89d43.chunk.js.LICENSE.txt": "/My_spotify-app/static/js/2.05f89d43.chunk.js.LICENSE.txt",
+    "static/media/spotify-logo.056948ef.png": "/My_spotify-app/static/media/spotify-logo.056948ef.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.406b0e9e.js",
+    "static/js/runtime-main.01ab2da3.js",
     "static/css/2.2c4e78b8.chunk.css",
     "static/js/2.05f89d43.chunk.js",
     "static/css/main.4b83ff9f.chunk.css",
-    "static/js/main.e55bc3ee.chunk.js"
+    "static/js/main.e35f6df4.chunk.js"
   ]
 }
