@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from 'react';
 // import { selectDisplayName } from '../../store/user/userSlice';
 import './Home.scss';
-// import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { connect } from 'react-redux';
 import {
   lastActivityIsLoadingSelector,
   lastActivityListSelector,
 } from '../../store/selectors';
-import { getLastActivity } from '../../store/actions';
+// import { fetchRecentlyPlayed } from '../../store/redux/actions';
+import { fetchRecentlyPlayed } from '../../store/user/user.actions';
 import Recentlyplayed from '../../components/home/recentlyPlayed/recentlyPlayed/RecentlyPlayed';
 import Loading from '../../components/utils/Loading';
 
 const Home = (props) => {
-  // const [topArtists, setTopArtists] = useState([]);
   // const dispatch = useDispatch();
+  // const [topArtists, setTopArtists] = useState([]);
 
   // const userName = useSelector(selectDisplayName);
   useEffect(() => {
-    props.getLastActivity();
+    props.fetchRecentlyPlayed();
   }, []);
   return (
     <>
@@ -30,7 +31,7 @@ const Home = (props) => {
             {/* {userName.charAt(0).toUpperCase() + userName.slice(1)} */}, vous
             êtes bien connecté sur votre plateforme Spotify
           </h1>
-          <Recentlyplayed songs={props.user} />
+          <Recentlyplayed songs={props.recentlyPlayed} />
         </div>
       )}
     </>
@@ -40,9 +41,9 @@ const Home = (props) => {
 export default connect(
   (state) => ({
     isLoading: lastActivityIsLoadingSelector(state),
-    user: lastActivityListSelector(state),
+    recentlyPlayed: lastActivityListSelector(state),
   }),
   {
-    getLastActivity,
+    fetchRecentlyPlayed,
   }
 )(Home);

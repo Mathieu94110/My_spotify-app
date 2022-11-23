@@ -9,5 +9,5 @@ export const lastActivityIsLoadingSelector = createSelector(
 
 export const lastActivityListSelector = createSelector(
   [lastActivitySelector],
-  (user) => user.data
+  (user) => user.recentlyPlayed
 );

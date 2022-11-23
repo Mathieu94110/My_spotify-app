@@ -1,18 +1,18 @@
-import React from "react";
-import "./App.scss";
-import Authentication from "./pages/authentication/Authentication";
-import Home from "./pages/home/Home";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Playlists from "./pages/playlists/Playlists";
-import Search from "./pages/search/Search";
-import Sidebar from "./components/SideBar/SideBar";
-import { selectIsLoggedIn } from "./store/authentication/authenticationSlice";
-import { useSelector } from "react-redux";
+import React from 'react';
+import './App.scss';
+import Authentication from './pages/authentication/authentication';
+import Home from './pages/home/home';
+import { HashRouter, Routes, Route } from 'react-router-dom';
+import Playlists from './pages/playlists/Playlists';
+import Search from './pages/search/Search';
+import Sidebar from './components/SideBar/SideBar';
+import { selectIsLoggedIn } from './store/authentication/authenticationSlice';
+import { useSelector } from 'react-redux';
 
 function App() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   return (
-    <Router>
+    <HashRouter>
       <div className="App">
         {isLoggedIn ? <Sidebar /> : null}
         <Routes>
@@ -22,7 +22,7 @@ function App() {
           <Route exact path="/search" element={<Search />} />
         </Routes>
       </div>
-    </Router>
+    </HashRouter>
   );
 }
 

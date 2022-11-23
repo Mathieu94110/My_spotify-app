@@ -2,7 +2,7 @@ import * as actions from './user.actions';
 
 export default (
   state = {
-    data: [],
+    recentlyPlayed: [],
     isLoading: false,
     error: null,
   },
@@ -20,7 +20,7 @@ export default (
         ...state,
         isLoading: false,
         error: null,
-        data: [...action.user],
+        recentlyPlayed: action.recentlyPlayed,
       };
     }
 

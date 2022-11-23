@@ -9,9 +9,9 @@ export const requestRecentActivity = () => ({
   type: REQUEST_LAST_ACTIVITY,
 });
 
-export const fetchRecentActivitySuccess = (user) => ({
+export const fetchRecentActivitySuccess = (recentlyPlayed) => ({
   type: FETCH_LAST_ACTIVITY_SUCCESS,
-  user,
+  recentlyPlayed,
 });
 
 export const fetchRecentActivityError = (error) => ({
@@ -19,10 +19,37 @@ export const fetchRecentActivityError = (error) => ({
   error,
 });
 
-export const getLastActivity = () => (dispatch) => {
+// export const getLastActivity = () => (dispatch) => {
+export const fetchRecentlyPlayed = () => (dispatch) => {
   dispatch(requestRecentActivity());
   return apiUserRequest.getLastActivity().then(
-    (user) => dispatch(fetchRecentActivitySuccess(user)),
-    (error) => dispatch(fetchRecentActivityError(error))
+     (recentlyPlayed) => dispatch(fetchRecentActivitySuccess(recentlyPlayed)),
+     (error) => dispatch(fetchRecentActivityError(error))
   );
 };
+
+// export const fetchRecentlyPlayed = () => (dispatch) => {
+//   dispatch(requestRecentActivity());
+//   return apiUserRequest.getLastActivity().then(async (response) => {
+//     try {
+//       const recentlyPlayed = [];
+//       const map = new Map();
+//       console.log(response);
+//       for (let item of response) {
+//         if (!map.has(item.track.name)) {
+//           map.set(item.track.name, true);
+//           recentlyPlayed.push({
+//             name: item.track.name,
+//             artist: item.track.artists[0].name,
+//             album: item.track.album.name,
+//             albumArt: item.track.album.images[0].url,
+//           });
+//         }
+//       }
+//       dispatch(fetchRecentActivitySuccess(recentlyPlayed));
+//     } catch (error) {
+//       dispatch(fetchRecentActivityError(error));
+//       console.log(error);
+//     }
+//   });
+// };
