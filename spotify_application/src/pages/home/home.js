@@ -31,7 +31,9 @@ const Home = (props) => {
             {/* {userName.charAt(0).toUpperCase() + userName.slice(1)} */}, vous
             êtes bien connecté sur votre plateforme Spotify
           </h1>
+          <div className="home__recent-container">
           <Recentlyplayed songs={props.recentlyPlayed} />
+          </div>
         </div>
       )}
     </>

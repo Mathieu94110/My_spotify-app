@@ -16,9 +16,11 @@
     background-color: rgba(0, 0, 0, 0.4);
     overflow: auto;
   }
-  &__recent {
-    height: 100%;
+  &__recent-container {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     flex-grow: 2;
+    height: calc(100vh - 200px);
   }
 }

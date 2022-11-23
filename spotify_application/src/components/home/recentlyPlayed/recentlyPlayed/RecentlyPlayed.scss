@@ -1,27 +1,28 @@
 .recently-played {
-  width: 400px;
+  width: 100%;
   color: #fff;
+  height: 600px;
+  width: 500px;
   &__title {
-    padding: 20px;
+    padding: 20px 0;
     width: 100%;
     background-color: rgba(255, 255, 255, 0.4);
   }
   &__content {
-    height: calc(100vh - 300px);
-    padding: 20px;
-    width: 100%;
     background-color: rgba(0, 0, 0, 0.4);
     overflow: auto;
+    padding: 20px;
+    height: 500px;
   }
   &__items {
-    height: 100px;
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     font-weight: 500;
   }
-  &__track-name {
+  &__track-name,
+  &__track-artist,
+  &__track-album {
     max-width: 100px;
     word-break: break-word;
   }
