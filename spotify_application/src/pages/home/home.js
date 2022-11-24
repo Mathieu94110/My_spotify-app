@@ -32,7 +32,7 @@ const Home = (props) => {
             êtes bien connecté sur votre plateforme Spotify
           </h1>
           <div className="home__recent-container">
-          <Recentlyplayed songs={props.recentlyPlayed} />
+            <Recentlyplayed songs={props.recentlyPlayed} />
           </div>
         </div>
       )}

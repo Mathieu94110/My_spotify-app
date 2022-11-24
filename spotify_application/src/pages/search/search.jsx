@@ -1,29 +1,29 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import SearchResult from "../../components/search/searchResult/SearchResult";
-import AddTrackModal from "../../components/modal/AddTrackModal";
-import "./Search.scss";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import SearchResult from '../../components/search/searchResult/SearchResult';
+import AddTrackModal from '../../components/modal/AddTrackModal';
+import './Search.scss';
 import {
   selectplaylistsItems,
-  getUserPlaylists,
   addTrackToPlaylist,
-} from "../../store/playlists/playlistsSlice";
-import { useSelector, useDispatch } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+} from '../../store/playlists/playlistsSlice';
+import { getPlaylists } from '../../store/playlists/playlists.actions';
+import { useSelector, useDispatch } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Search = () => {
-  const accessToken = localStorage.getItem("accessToken");
-  const [search, setSearch] = useState("");
+  const accessToken = localStorage.getItem('accessToken');
+  const [search, setSearch] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   // const [trackUri, setTrackUri] = useState("");
-  const [track, setTrack] = useState("");
+  const [track, setTrack] = useState('');
   const playlists = useSelector(selectplaylistsItems);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUserPlaylists());
+    dispatch(getPlaylists());
   }, []);
 
   const isModalOpen = (value) => {
@@ -38,10 +38,10 @@ const Search = () => {
       headers: { Authorization: `Bearer ${accessToken}` },
       params: {
         q: search,
-        type: "track",
+        type: 'track',
       },
     };
-    axios.get("https://api.spotify.com/v1/search", config).then((res) => {
+    axios.get('https://api.spotify.com/v1/search', config).then((res) => {
       setSearchResults(
         res.data.tracks.items.map((track) => {
           const smallestAlbumImage = track.album.images.reduce(

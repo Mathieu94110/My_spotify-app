@@ -11,7 +11,6 @@ const initialState = {
   displayName: "",
   userId: "",
   product: "",
-  recentlyPlayed: [],
 };
 
 export const userSlice = createSlice({
@@ -64,26 +63,6 @@ export const setUserProfileAsync = (accessToken) => (dispatch) => {
           dispatch(setLoggedIn(false));
         }
       }
-    });
-};
-
-export const getRecentlyPlayed = () => (dispatch) => {
-  const accessToken = getAccessToken();
-
-  const myHeaders = new Headers();
-  myHeaders.append("Authorization", "Bearer " + accessToken);
-
-  fetch("https://api.spotify.com/v1/me/player/recently-played", {
-    method: "GET",
-    headers: myHeaders,
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      dispatch(setRecentlyPlayed(data));
-    })
-    .catch((error) => {
-      console.log(error);
     });
 };
 

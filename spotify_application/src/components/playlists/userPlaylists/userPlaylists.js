@@ -1,32 +1,19 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import "./UserPlaylists.scss";
-import Card from "../../../layout/card/Card";
-import {
-  selectplaylistsItems,
-  getUserPlaylists,
-} from "../../../store/playlists/playlistsSlice";
+import './UserPlaylists.scss';
+import Card from '../../../layout/card/Card';
 
-const UserPlaylists = () => {
-  const playlists = useSelector(selectplaylistsItems);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getUserPlaylists());
-  }, []);
-
+const UserPlaylists = (props) => {
   return (
     <div className="user-playlists">
       <div className="user-playlists__title">
-        {" "}
+        {' '}
         <h2>Vos playlists</h2>
       </div>
       <div className="user-playlists__content">
-        {playlists &&
-          playlists.map((item, index) => (
+        {props.playlists &&
+          props.playlists.map((item, index) => (
             <div key={index}>
               <Card
-                image={item.images[0] && item.images[0].url}
+                image={item.images}
                 uri={item.uri}
                 name={item.name}
                 description={item.description}
