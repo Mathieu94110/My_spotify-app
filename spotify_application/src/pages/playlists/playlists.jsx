@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import './Playlists.scss';
 import { useDispatch } from 'react-redux';
-import { createPlaylist } from '../../store/playlists/playlistsSlice';
 import UserPlaylists from '../../components/playlists/userPlaylists/UserPlaylists';
 import CreatePlaylist from '../../components/playlists/createPlaylist/CreatePlaylist';
 import CreatePlaylistModel from '../../components/playlists/createPlaylistModel/CreatePlaylistModel';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getPlaylists } from '../../store/playlists/playlists.actions';
+import {
+  getPlaylists,
+  createPlaylist,
+} from '../../store/playlists/playlists.actions';
 import { connect } from 'react-redux';
 import {
   getPlaylistsIsLoadingSelector,
@@ -17,15 +19,21 @@ import Loading from '../../components/utils/Loading';
 
 const Playlists = (props) => {
   const [createdPlaylistInfo, setCreatedPlaylistInfo] = useState({});
-  const [isCreateButtonDisabled, setIsCreateButtonDisabled] = useState(false);
 
   const dispatch = useDispatch();
+
   useEffect(() => {
     props.getPlaylists();
   }, []);
+
   const validatePlaylist = (value) => {
     setCreatedPlaylistInfo(value);
   };
+
+  const cancelPlaylistCreation = () => {
+    setCreatedPlaylistInfo({});
+  };
+
   const confirmPlaylistCreation = () => {
     dispatch(createPlaylist(createdPlaylistInfo))
       .then(() => {
@@ -39,9 +47,6 @@ const Playlists = (props) => {
         });
       });
   };
-  const cancelPlaylistCreation = () => {
-    setCreatedPlaylistInfo({});
-  };
 
   return (
     <div className="playlists">
@@ -54,7 +59,6 @@ const Playlists = (props) => {
         <CreatePlaylist
           createPlayList={validatePlaylist}
           cancelPlaylistCreation={cancelPlaylistCreation}
-          setCreateDisabled={isCreateButtonDisabled}
           confirmPlaylistCreation={confirmPlaylistCreation}
         />
         {createdPlaylistInfo.name && (
@@ -70,7 +74,6 @@ const Playlists = (props) => {
   );
 };
 
-// export default Playlists;
 export default connect(
   (state) => ({
     isLoading: getPlaylistsIsLoadingSelector(state),

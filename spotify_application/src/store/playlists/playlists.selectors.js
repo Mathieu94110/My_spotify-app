@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-export const getUserPLaylistsSelector = (state) => state.getPlaylists;
+export const getUserPLaylistsSelector = (state) => state.playlists;
 
 export const getPlaylistsIsLoadingSelector = createSelector(
   [getUserPLaylistsSelector],

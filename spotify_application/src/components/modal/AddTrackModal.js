@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import "./AddTrackModal.scss";
+import React, { useState } from 'react';
+import './AddTrackModal.scss';
 
 const AddTrackModal = ({ setIsOpen, playlists, track, addTrackToPlaylist }) => {
   const [checkedPlaylist, setCheckedPlaylist] = useState(false);
@@ -29,7 +29,7 @@ const AddTrackModal = ({ setIsOpen, playlists, track, addTrackToPlaylist }) => {
               playlists.map((playlist, index) => {
                 return (
                   <div key={index} className="add-track-modal__playlists-items">
-                    <span>{playlist.name}</span>{" "}
+                    <span>{playlist.name}</span>{' '}
                     <input
                       type="checkbox"
                       value={playlist.id}

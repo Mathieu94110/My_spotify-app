@@ -3,16 +3,19 @@ import axios from 'axios';
 import SearchResult from '../../components/search/searchResult/SearchResult';
 import AddTrackModal from '../../components/modal/AddTrackModal';
 import './Search.scss';
+import { selectplaylistsItems } from '../../store/playlists/playlistsSlice';
+
 import {
-  selectplaylistsItems,
+  getPlaylists,
   addTrackToPlaylist,
-} from '../../store/playlists/playlistsSlice';
-import { getPlaylists } from '../../store/playlists/playlists.actions';
+} from '../../store/playlists/playlists.actions';
 import { useSelector, useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getPlaylistsListSelector } from '../../store/selectors';
+import { connect } from 'react-redux';
 
-const Search = () => {
+const Search = (props) => {
   const accessToken = localStorage.getItem('accessToken');
   const [search, setSearch] = useState('');
   const [searchResults, setSearchResults] = useState([]);
@@ -23,7 +26,7 @@ const Search = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getPlaylists());
+    props.getPlaylists();
   }, []);
 
   const isModalOpen = (value) => {
@@ -65,7 +68,6 @@ const Search = () => {
   const addTrack = (track, checkedPlaylist) => {
     const { title, uri, ...trackRest } = track;
     const { id, name, ...playlistRest } = checkedPlaylist;
-
     dispatch(addTrackToPlaylist({ uri, id }))
       .then(() => {
         toast.success(`${title} a bien été ajouté à ${name} !`, {
@@ -96,7 +98,7 @@ const Search = () => {
       {isOpen && (
         <AddTrackModal
           setIsOpen={isModalOpen}
-          playlists={playlists}
+          playlists={props.userPlaylists}
           // trackUri={trackUri}
           track={track}
           addTrackToPlaylist={addTrack}
@@ -108,4 +110,11 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default connect(
+  (state) => ({
+    userPlaylists: getPlaylistsListSelector(state),
+  }),
+  {
+    getPlaylists,
+  }
+)(Search);

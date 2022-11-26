@@ -1,13 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const getAccessToken = () => {
-  if (localStorage.getItem("accessToken")) {
-    return localStorage.getItem("accessToken");
+  if (localStorage.getItem('accessToken')) {
+    return localStorage.getItem('accessToken');
   }
 };
 const getUserId = () => {
-  if (localStorage.getItem("userId")) {
-    return localStorage.getItem("userId");
+  if (localStorage.getItem('userId')) {
+    return localStorage.getItem('userId');
   }
 };
 const initialState = {
@@ -16,7 +16,7 @@ const initialState = {
 };
 
 export const playlistsSlice = createSlice({
-  name: "playlists",
+  name: 'playlists',
   initialState,
   reducers: {
     setPlaylistsItem: (state, action) => {
@@ -33,43 +33,16 @@ export const { setPlaylistsItem, setTotal } = playlistsSlice.actions;
 export const selectplaylistsItems = (state) => state.playlists.playlistsItems;
 export const selectplaylistsTotal = (state) => state.playlists.total;
 
-
-
-export const createPlaylist = (value) => (dispatch) => {
-  const { name, description } = value;
-  const accessToken = getAccessToken();
-  const userId = getUserId();
-
-  const myHeaders = new Headers();
-  myHeaders.append("Authorization", "Bearer " + accessToken);
-
-  return fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
-    method: "POST",
-    headers: myHeaders,
-    body: JSON.stringify({ name: name, description: description }),
-  }).then(
-    (response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error("Request failed!");
-    },
-    (networkError) => {
-      console.log(networkError.message);
-    }
-  );
-};
-
-export const addTrackToPlaylist = (uris) => (dispatch) => {
+export const addTrackToPlaylist = (uris) => {
   const { uri, id } = uris;
   const accessToken = getAccessToken();
   const myHeaders = new Headers();
-  myHeaders.append("Authorization", "Bearer " + accessToken);
+  myHeaders.append('Authorization', 'Bearer ' + accessToken);
 
   return fetch(
     `https://api.spotify.com/v1/playlists/${id}/tracks?uris=${uri}`,
     {
-      method: "POST",
+      method: 'POST',
       headers: myHeaders,
     }
   ).then(
@@ -77,10 +50,10 @@ export const addTrackToPlaylist = (uris) => (dispatch) => {
       if (response.ok) {
         return response.json();
       }
-      throw new Error("Request failed!");
+      throw new Error('Request failed!');
     },
     (networkError) => {
-      console.log(networkError.message);
+      console.error(networkError.message);
     }
   );
 };
