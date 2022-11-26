@@ -2,13 +2,36 @@ import * as actions from './user.actions';
 
 export default (
   state = {
-    data: [],
+    lastActivityList: [],
+    userInfos: {},
     isLoading: false,
+    userInfosIsLoading: false,
     error: null,
   },
   action
 ) => {
   switch (action.type) {
+    case actions.REQUEST_FETCH_USER_INFOS: {
+      return {
+        ...state,
+        userInfosIsLoading: true,
+      };
+    }
+    case actions.FETCH_USER_INFOS_SUCCESS: {
+      return {
+        ...state,
+        userInfosIsLoading: false,
+        error: null,
+        userInfos: { ...action.userInfos },
+      };
+    }
+    case actions.FETCH_USER_INFOS_ERROR: {
+      return {
+        ...state,
+        userInfosIsLoading: false,
+        error: action.error,
+      };
+    }
     case actions.REQUEST_LAST_ACTIVITY: {
       return {
         ...state,
@@ -20,7 +43,7 @@ export default (
         ...state,
         isLoading: false,
         error: null,
-        data: [ ...action.recentlyPlayed ]
+        lastActivityList: [...action.recentlyPlayed],
       };
     }
 

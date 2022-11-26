@@ -17,6 +17,18 @@ export const RecentActivityMap = (item) => ({
 });
 
 export default {
+  setUserProfileAsync: (accessToken) => {
+    apiSpotify.interceptors.request.use((req) => {
+      req.headers['Authorization'] = `Bearer ${accessToken}`;
+      return req;
+    });
+
+    return apiSpotify
+      .get('me')
+      .then((response) => response.data)
+      .then((data) => data);
+  },
+
   getLastActivity: () => {
     const accessToken = getAccessToken();
     apiSpotify.interceptors.request.use((req) => {

@@ -1,13 +1,23 @@
 import { createSelector } from 'reselect';
 
-export const lastActivitySelector = (state) => state.user;
+export const userSelector = (state) => state.user;
 
 export const lastActivityIsLoadingSelector = createSelector(
-  [lastActivitySelector],
+  [userSelector],
   (user) => user.isLoading
 );
 
 export const lastActivityListSelector = createSelector(
-  [lastActivitySelector],
-  (recentlyPlayed) => recentlyPlayed.data
+  [userSelector],
+  (recentlyPlayed) => recentlyPlayed.lastActivityList
+);
+
+export const userInfosIsLoadingSelector = createSelector(
+  [userSelector],
+  (user) => user.userInfosIsLoading
+);
+
+export const userInfosSelector = createSelector(
+  [userSelector],
+  (user) => user.userInfos
 );

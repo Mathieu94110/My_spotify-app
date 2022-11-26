@@ -3,8 +3,6 @@ import axios from 'axios';
 import SearchResult from '../../components/search/searchResult/SearchResult';
 import AddTrackModal from '../../components/modal/AddTrackModal';
 import './Search.scss';
-import { selectplaylistsItems } from '../../store/playlists/playlistsSlice';
-
 import {
   getPlaylists,
   addTrackToPlaylist,
@@ -20,9 +18,7 @@ const Search = (props) => {
   const [search, setSearch] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  // const [trackUri, setTrackUri] = useState("");
   const [track, setTrack] = useState('');
-  const playlists = useSelector(selectplaylistsItems);
   const dispatch = useDispatch();
 
   useEffect(() => {
