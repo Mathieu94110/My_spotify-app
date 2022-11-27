@@ -1,15 +1,11 @@
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import {
-  setLoggedIn,
-  setAccessToken,
-  setTokenExpiryDate,
-  selectIsLoggedIn,
-} from '../../store/authentication/authenticationSlice';
-import { getUserProfile } from '../../store/user/user.actions';
+import { useDispatch } from 'react-redux';
+import { getUserProfile, setTokenInfo } from '../../store/actions';
+import { userIsLoggedIn } from '../../store/selectors';
 import { getAuthorizeHref } from '../../oauthConfig';
 import { getHashParams, removeHashParamsFromUrl } from '../../utils/hashUtils';
 import { Navigate } from 'react-router-dom';
+import { connect } from 'react-redux';
 import './Authentication.scss';
 
 // Here we register url values when getAuthorizeHref get the data from spotify api
@@ -19,24 +15,23 @@ const expires_in = hashParams.expires_in;
 // We clean hash
 removeHashParamsFromUrl();
 
-const Authentication = () => {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+const Authentication = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (access_token) {
       // We sending access Token to localStorage and other values to reducers
-      localStorage.setItem('accessToken', access_token);
-      dispatch(setLoggedIn(true));
-      dispatch(setAccessToken(access_token));
-      dispatch(setTokenExpiryDate(Number(expires_in)));
+      // localStorage.setItem('accessToken', access_token);
+      // dispatch(setLoggedIn(true));
+      dispatch(setTokenInfo(access_token, Date.now(expires_in)));
+      // dispatch(setTokenExpiryDate(Number(expires_in)));
       dispatch(getUserProfile(access_token));
     }
   }, []);
 
   return (
     <div className="login">
-      {!isLoggedIn && (
+      {!props.isLoggedIn ? (
         <button
           className="login__button"
           aria-label="Log in using OAuth 2.0"
@@ -44,13 +39,16 @@ const Authentication = () => {
         >
           Se connecter
         </button>
+      ) : (
+        <Navigate replace to="/home" />
       )}
-      {
-        //When logged we navigate to home
-        isLoggedIn && <Navigate replace to="/home" />
-      }
     </div>
   );
 };
 
-export default Authentication;
+export default connect(
+  (state) => ({
+    isLoggedIn: userIsLoggedIn(state),
+  }),
+  {}
+)(Authentication);

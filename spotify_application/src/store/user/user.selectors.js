@@ -21,3 +21,8 @@ export const userInfosSelector = createSelector(
   [userSelector],
   (user) => user.userInfos
 );
+
+export const userIsLoggedIn = createSelector(
+  [userSelector],
+  (user) => user.isUserLoggedIn
+);

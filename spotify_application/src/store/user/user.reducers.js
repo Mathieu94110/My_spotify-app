@@ -2,10 +2,11 @@ import * as actions from './user.actions';
 
 export default (
   state = {
-    lastActivityList: [],
     userInfos: {},
-    isLoading: false,
+    lastActivityList: [],
     userInfosIsLoading: false,
+    isUserLoggedIn: false,
+    isLoading: false,
     error: null,
   },
   action
@@ -23,6 +24,7 @@ export default (
         userInfosIsLoading: false,
         error: null,
         userInfos: { ...action.userInfos },
+        isUserLoggedIn: true,
       };
     }
     case actions.FETCH_USER_INFOS_ERROR: {

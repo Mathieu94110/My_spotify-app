@@ -7,10 +7,9 @@ import {
   userInfosIsLoadingSelector,
   userInfosSelector,
 } from '../../store/selectors';
-import { fetchRecentlyPlayed } from '../../store/user/user.actions';
+import { fetchRecentlyPlayed } from '../../store/actions';
 import Recentlyplayed from '../../components/home/recentlyPlayed/recentlyPlayed/RecentlyPlayed';
 import Loading from '../../components/utils/Loading';
-
 const Home = (props) => {
   useEffect(() => {
     props.fetchRecentlyPlayed();

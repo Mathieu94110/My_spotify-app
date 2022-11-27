@@ -1,8 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const getAccessToken = () => {
-  if (localStorage.getItem("accessToken")) {
-    return localStorage.getItem("accessToken");
+  if (localStorage.getItem('accessToken')) {
+    return localStorage.getItem('accessToken');
   }
 };
 
@@ -10,7 +10,7 @@ const initialState = {
   topUserArtist: [],
 };
 export const artistsSlice = createSlice({
-  name: "artists",
+  name: 'artists',
   initialState,
   reducers: {
     setTopUserArtist: (state, action) => {

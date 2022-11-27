@@ -1,20 +1,19 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import SearchResult from '../../components/search/searchResult/SearchResult';
 import AddTrackModal from '../../components/modal/AddTrackModal';
-import './Search.scss';
+import { getPlaylists, addTrackToPlaylist } from '../../store/actions';
 import {
-  getPlaylists,
-  addTrackToPlaylist,
-} from '../../store/playlists/playlists.actions';
-import { useSelector, useDispatch } from 'react-redux';
+  selectAccessToken,
+  getPlaylistsListSelector,
+} from '../../store/selectors';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
+import apiUserSearchRequest from '../../conf/api.search';
+import './Search.scss';
 import 'react-toastify/dist/ReactToastify.css';
-import { getPlaylistsListSelector } from '../../store/selectors';
-import { connect } from 'react-redux';
 
 const Search = (props) => {
-  const accessToken = localStorage.getItem('accessToken');
+  const accessToken = useSelector(selectAccessToken);
   const [search, setSearch] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -40,7 +39,7 @@ const Search = (props) => {
         type: 'track',
       },
     };
-    axios.get('https://api.spotify.com/v1/search', config).then((res) => {
+    apiUserSearchRequest.searchTracks(config).then((res) => {
       setSearchResults(
         res.data.tracks.items.map((track) => {
           const smallestAlbumImage = track.album.images.reduce(

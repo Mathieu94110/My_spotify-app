@@ -4,18 +4,15 @@ import { useDispatch } from 'react-redux';
 import UserPlaylists from '../../components/playlists/userPlaylists/UserPlaylists';
 import CreatePlaylist from '../../components/playlists/createPlaylist/CreatePlaylist';
 import CreatePlaylistModel from '../../components/playlists/createPlaylistModel/CreatePlaylistModel';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import {
-  getPlaylists,
-  createPlaylist,
-} from '../../store/playlists/playlists.actions';
-import { connect } from 'react-redux';
+import Loading from '../../components/utils/Loading';
+import { getPlaylists, createPlaylist } from '../../store/actions';
 import {
   getPlaylistsIsLoadingSelector,
   getPlaylistsListSelector,
 } from '../../store/selectors';
-import Loading from '../../components/utils/Loading';
+import { connect } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Playlists = (props) => {
   const [createdPlaylistInfo, setCreatedPlaylistInfo] = useState({});
