@@ -10,8 +10,8 @@ import './Authentication.scss';
 
 // Here we register url values when getAuthorizeHref get the data from spotify api
 const hashParams = getHashParams();
-const access_token = hashParams.access_token;
-const expires_in = hashParams.expires_in;
+const access_token_params = hashParams.access_token;
+const expires_in_params = hashParams.expires_in;
 // We clean hash
 removeHashParamsFromUrl();
 
@@ -19,13 +19,15 @@ const Authentication = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (access_token) {
-      // We sending access Token to localStorage and other values to reducers
-      // localStorage.setItem('accessToken', access_token);
-      // dispatch(setLoggedIn(true));
-      dispatch(setTokenInfo(access_token, Date.now(expires_in)));
-      // dispatch(setTokenExpiryDate(Number(expires_in)));
-      dispatch(getUserProfile(access_token));
+    if (!access_token_params || !expires_in_params) {
+      console.error('There was an error during the authentication');
+    } else {
+      const tokenExpirationSec = new Date().getTime() / 1000 + 3600,
+        tokenExpirationTime = new Date(tokenExpirationSec * 1000);
+      localStorage.setItem('accessToken', access_token_params);
+      localStorage.setItem('spotifyExpiresIn', tokenExpirationTime);
+      dispatch(setTokenInfo(access_token_params, tokenExpirationTime));
+      dispatch(getUserProfile(access_token_params));
     }
   }, []);
 
