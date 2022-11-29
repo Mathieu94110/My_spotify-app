@@ -2,100 +2,82 @@ import apiUserBrowseRequest from '../../conf/api.browse';
 
 export const FETCH_NEW_RELEASES_SUCCESS = 'request fetch new releases success';
 export const FETCH_NEW_RELEASES_ERROR = 'request fetch new releases error';
+export const FETCH_CATEGORIES_SUCCESS = 'request fetch categories success';
+export const FETCH_CATEGORIES_ERROR = 'request fetch categories error';
+export const FETCH_FEATURED_SUCCESS = 'request fetch featured success';
+export const FETCH_FEATURED_ERROR = 'request fetch featured error';
+export const UPDATE_CATEGORY_TYPE = 'request update categories type';
 
 //New releases
-export const fetchNewReleasesSuccess = (newReleases) => {
+export const getNewReleasesSuccess = (newReleases) => {
   return {
     type: FETCH_NEW_RELEASES_SUCCESS,
     newReleases,
   };
 };
 
-export const fetchNewReleasesError = (error) => {
+export const getNewReleasesError = (error) => {
   return {
     type: FETCH_NEW_RELEASES_ERROR,
-    error
+    error,
   };
 };
 
 export const getNewReleases = () => (dispatch) => {
   return apiUserBrowseRequest.fetchNewReleases().then(
-    (newReleases) => dispatch(fetchNewReleasesSuccess(newReleases)),
-    (error) => dispatch(fetchNewReleasesError(error))
+    (newReleases) => dispatch(getNewReleasesSuccess(newReleases)),
+    (error) => dispatch(getNewReleasesError(error))
   );
 };
 
-//
+//////////////
+//Get Browse categories
 
-export const fetchCategoriesSuccess = (categories) => {
+export const getCategoriesSuccess = (categories) => {
   return {
-    type: 'FETCH_CATEGORIES_SUCCESS',
+    type: FETCH_CATEGORIES_SUCCESS,
     categories,
   };
 };
 
-export const fetchCategoriesError = (error) => {
+export const getCategoriesError = (error) => {
   return {
-    type: 'FETCH_CATEGORIES_ERROR',
-    error
+    type: FETCH_CATEGORIES_ERROR,
+    error,
   };
 };
 
-export const fetchCategories = (accessToken) => {
-  return (dispatch) => {
-    const request = new Request(
-      `https://api.spotify.com/v1/browse/categories`,
-      {
-        headers: new Headers({
-          Authorization: 'Bearer ' + accessToken,
-        }),
-      }
-    );
-    fetch(request)
-      .then((res) => {
-        return res.json();
-      })
-      .then((res) => {
-        dispatch(fetchCategoriesSuccess(res.categories));
-      })
-      .catch((err) => {
-        dispatch(fetchCategoriesError(err));
-      });
-  };
+export const getCategories = () => (dispatch) => {
+  return apiUserBrowseRequest.fetchCategories().then(
+    (categories) => dispatch(getCategoriesSuccess(categories.categories)),
+    (error) => dispatch(getCategoriesError(error))
+  );
 };
-
-export const fetchFeaturedSuccess = (featured) => {
+///////////////
+export const getFeaturedSuccess = (featured) => {
   return {
-    type: 'FETCH_FEATURED_SUCCESS',
+    type: FETCH_FEATURED_SUCCESS,
     featured,
   };
 };
 
-export const fetchFeaturedError = () => {
+export const getFeaturedError = () => {
   return {
-    type: 'FETCH_FEATURED_ERROR',
+    type: FETCH_FEATURED_ERROR,
   };
 };
 
-export const fetchFeatured = (accessToken) => {
-  return (dispatch) => {
-    const request = new Request(
-      `https://api.spotify.com/v1/browse/featured-playlists`,
-      {
-        headers: new Headers({
-          Authorization: 'Bearer ' + accessToken,
-        }),
-      }
-    );
-    fetch(request)
-      .then((res) => {
-        return res.json();
-      })
-      .then((res) => {
-        dispatch(fetchFeaturedSuccess(res.playlists));
-      })
-      .catch((err) => {
-        dispatch(fetchFeaturedError(err));
-      });
+export const getFeatured = () => (dispatch) => {
+  return apiUserBrowseRequest.fetchFeatured().then(
+    (featured) => dispatch(getFeaturedSuccess(featured.playlists)),
+    (error) => dispatch(getFeaturedError(error))
+  );
+};
+// View type
+
+export const updateCategoryType = (category) => {
+  return {
+    type: UPDATE_CATEGORY_TYPE,
+    category,
   };
 };

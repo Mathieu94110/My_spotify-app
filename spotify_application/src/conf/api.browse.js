@@ -20,4 +20,27 @@ export default {
       .get('browse/new-releases')
       .then((response) => response.data.albums.items);
   },
+
+  fetchCategories: () => {
+    const accessToken = getAccessToken();
+    apiSpotify.interceptors.request.use((req) => {
+      req.headers['Authorization'] = `Bearer ${accessToken}`;
+      return req;
+    });
+
+    return apiSpotify
+      .get('browse/categories')
+      .then((response) => response.data);
+  },
+
+  fetchFeatured: () => {
+    const accessToken = getAccessToken();
+    apiSpotify.interceptors.request.use((req) => {
+      req.headers['Authorization'] = `Bearer ${accessToken}`;
+      return req;
+    });
+    return apiSpotify
+      .get('browse/featured-playlists')
+      .then((response) => response.data);
+  },
 };

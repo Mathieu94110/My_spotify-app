@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 
 export const getBrowseInfos = (state) => state.browse;
 
-export const getNewReleasesListSelector = createSelector(
+export const getBrowseCategoryListSelector = createSelector(
   [getBrowseInfos],
-  (releases) => releases.data
+  (category) => category.view
 );

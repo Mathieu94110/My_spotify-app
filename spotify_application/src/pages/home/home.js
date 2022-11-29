@@ -6,12 +6,18 @@ import {
   lastActivityListSelector,
   userInfosIsLoadingSelector,
   userInfosSelector,
-  getNewReleasesListSelector,
-  selectAccessToken,
+  getBrowseCategoryListSelector,
 } from '../../store/selectors';
-import { fetchRecentlyPlayed, getNewReleases } from '../../store/actions';
-import Recentlyplayed from '../../components/home/recentlyPlayed/recentlyPlayed/RecentlyPlayed';
-import NewReleases from '../../components/home/newReleases/NewReleases';
+import {
+  fetchRecentlyPlayed,
+  getNewReleases,
+  getCategories,
+  getFeatured,
+  updateCategoryType,
+} from '../../store/actions';
+import Recentlyplayed from '../../components/home/recentlyPlayed/RecentlyPlayed';
+import BrowseCategories from '../../components/home/browse/browseCategories/BrowseCategories';
+import BrowseContent from '../../components/home/browse/browseContent/BrowseContent';
 import Loading from '../../components/utils/Loading';
 
 const Home = ({
@@ -19,7 +25,7 @@ const Home = ({
   recentlyPlayed,
   userInfos,
   userInfosIsLoading,
-  newAlbums,
+  view,
   fetchRecentlyPlayed,
   getNewReleases,
 }) => {
@@ -45,7 +51,8 @@ const Home = ({
               <Recentlyplayed songs={recentlyPlayed} />
             </div>
             <div className="home__recent-container">
-              <NewReleases newReleases={newAlbums} />
+              <BrowseCategories />
+              <BrowseContent newReleases={view} />
             </div>
           </div>
         </div>
@@ -60,11 +67,13 @@ export default connect(
     recentlyPlayed: lastActivityListSelector(state),
     userInfos: userInfosSelector(state),
     userInfosIsLoading: userInfosIsLoadingSelector(state),
-    token: selectAccessToken(state),
-    newAlbums: getNewReleasesListSelector(state),
+    view: getBrowseCategoryListSelector(state),
   }),
   {
     fetchRecentlyPlayed,
     getNewReleases,
+    getCategories,
+    getFeatured,
+    updateCategoryType,
   }
 )(Home);
