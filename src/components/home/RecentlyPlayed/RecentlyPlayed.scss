@@ -1,0 +1,36 @@
+.recently-played {
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  &__title {
+    padding: 20px 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+  &__content {
+    background-color: rgba(0, 0, 0, 0.4);
+    overflow: auto;
+    padding: 20px;
+    height: calc(100% - 112px);
+  }
+  &__items {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 500;
+  }
+  &__no-items {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-size: 18px;
+  }
+  &__track-name,
+  &__track-artist,
+  &__track-album {
+    max-width: 100px;
+    word-break: break-word;
+  }
+}

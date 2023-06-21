@@ -1,0 +1,11 @@
+.search-result {
+  height: calc(100% - 115px);
+  flex-grow: 1;
+  margin: 10px 3rem;
+  overflow-y: auto;
+  overflow-x: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: auto;
+  grid-gap: 1rem;
+}
