@@ -28,12 +28,13 @@ code {
 }
 .validate-button {
   padding: 6px;
-  background: green;
+  background: blue;
   color: #fff;
   width: 100%;
   margin: 10px;
   &:hover {
     cursor: pointer;
+    background: green;
   }
 }
 .cancel-button {
