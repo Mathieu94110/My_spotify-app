@@ -16,7 +16,7 @@ const BrowseCategories = ({
   viewType,
 }) => {
   return (
-    <div className="browse-headers"> 
+    <div className="browse-headers">
       <h2 className="header-title">Catégories</h2>
       <div className="browse-headers-title">
         <p
