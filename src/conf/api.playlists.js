@@ -36,8 +36,20 @@ export default {
     return apiSpotify
       .get(`users/${userId}/playlists`)
       .then((response) => response.data.items)
+  },
+
+  getPlaylistItems: (playlist_id) =>{
+    const accessToken = getAccessToken();
+    apiSpotify.interceptors.request.use((req) => {
+      req.headers['Authorization'] = `Bearer ${accessToken}`;
+      return req;
+    });
+    return apiSpotify
+      .get(` /playlists/${playlist_id}/tracks`)
+      .then((response) => response.data.items)
       .then((playlists) => playlists.map(PlaylistsMap));
   },
+
 
   createUserPlaylist: (value) => {
     const { name, description } = value;

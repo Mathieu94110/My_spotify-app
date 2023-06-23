@@ -33,6 +33,7 @@ const Home = ({
     fetchRecentlyPlayed();
     getNewReleases();
   }, []);
+  
   return (
     <>
       {isLoading || userInfosIsLoading ? (
