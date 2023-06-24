@@ -11,3 +11,7 @@ export const getPlaylistsListSelector = createSelector(
   [getUserPLaylistsSelector],
   (playlists) => playlists.data
 );
+export const getPlaylistsItemsListSelector = createSelector(
+  [getUserPLaylistsSelector],
+  (playlists) => playlists.tracks
+);

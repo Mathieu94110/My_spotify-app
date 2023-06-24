@@ -3,6 +3,7 @@ import * as actions from './playlists.actions';
 export default (
   state = {
     data: [],
+    tracks: [],
     isLoading: false,
     error: null,
   },
@@ -32,6 +33,24 @@ export default (
         error: action.error,
       };
     }
+    //
+    case actions.FETCH_USER_PLAYLIST_ITEMS_SUCCESS: {
+      return {
+        ...state,
+        isLoading: false,
+        error: null,
+        tracks: [...action.items],
+      };
+    }
+
+    case actions.FETCH_USER_PLAYLIST_ITEMS_ERROR: {
+      return {
+        ...state,
+        isLoading: false,
+        error: action.error,
+      };
+    }
+    //
     case actions.REQUEST_POST_PLAYLIST: {
       return {
         ...state,

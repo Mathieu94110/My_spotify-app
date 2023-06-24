@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import './SideBar.scss';
 import spotifyLogo from '../../assets/images/spotify-logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -14,9 +13,11 @@ import { getPlaylists } from '../../store/actions';
 import { getPlaylistsListSelector } from '../../store/selectors';
 import { connect } from 'react-redux';
 import Loading from '../../utils/Loading';
+import './SideBar.scss';
 
 function Sidebar(props) {
   const [open, setopen] = useState(true);
+
   const toggleOpen = () => {
     setopen(!open);
   };
@@ -24,6 +25,7 @@ function Sidebar(props) {
   useEffect(() => {
     props.getPlaylists();
   }, []);
+
 
   return (
     <div>
@@ -110,11 +112,18 @@ function Sidebar(props) {
           {props.isLoading ? (
             <Loading />
           ) : (
-            props.userPlaylists?.map((playlist) => (
-              <div className="sidebar__playlists">
-                <p>{playlist.name}</p>
-              </div>
-            ))
+            <ul>
+              {props.userPlaylists?.map((playlist) => (
+                <li key={playlist.id}>
+                <NavLink
+                  className="sidebar__playlists"
+                  to={'/playlistDetails/' + playlist.name + '/'  +playlist.id}
+                >
+                  {playlist.name}
+                </NavLink>
+                </li>
+              ))}
+            </ul>
           )}
         </div>
       </div>

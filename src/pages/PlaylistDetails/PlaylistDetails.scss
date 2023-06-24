@@ -1,0 +1,13 @@
+.playlistDetails {
+  height: calc(100vh - 100px);
+  width: 100%;
+  z-index: 1;
+
+  > h1 {
+    height: 100px;
+  }
+  &__tracks {
+    height: calc(100vh - 200px);
+    overflow-y: scroll;
+  }
+}

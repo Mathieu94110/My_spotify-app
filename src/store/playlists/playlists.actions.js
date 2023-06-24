@@ -1,9 +1,14 @@
 import apiUserPlaylistsRequest from '../../conf/api.playlists';
 
 export const REQUEST_GET_PLAYLISTS = 'request get user playlists';
+export const REQUEST_GET_PLAYLIST_ITEMS = 'request get user playlist items';
 export const FETCH_USER_PLAYLISTS_SUCCESS =
   'request fetch user playlists success';
+export const FETCH_USER_PLAYLIST_ITEMS_SUCCESS =
+  'request fetch user playlist items success';
 export const FETCH_USER_PLAYLISTS_ERROR = 'request fetch user playlists error';
+export const FETCH_USER_PLAYLIST_ITEMS_ERROR =
+  'request fetch user playlist items error';
 export const REQUEST_POST_PLAYLIST = 'request post user playlist';
 export const POST_USER_PLAYLIST_SUCCESS = 'request post user playlist success';
 export const POST_USER_PLAYLIST_ERROR = 'request post user playlist error';
@@ -18,13 +23,25 @@ export const requestGetUserPlaylists = () => ({
   type: REQUEST_GET_PLAYLISTS,
 });
 
+export const requestGetUserPlaylistItems = () => ({
+  type: REQUEST_GET_PLAYLIST_ITEMS,
+});
+
 export const fetchUserPlaylistsSuccess = (userPlaylists) => ({
   type: FETCH_USER_PLAYLISTS_SUCCESS,
   userPlaylists,
 });
+export const fetchUserPlaylistItemsSuccess = (items) => ({
+  type: FETCH_USER_PLAYLIST_ITEMS_SUCCESS,
+  items,
+});
 
 export const fetchUserPlaylistsError = (error) => ({
   type: FETCH_USER_PLAYLISTS_ERROR,
+  error,
+});
+export const fetchUserPlaylistItemsError = (error) => ({
+  type: FETCH_USER_PLAYLIST_ITEMS_ERROR,
   error,
 });
 
@@ -60,6 +77,13 @@ export const getPlaylists = () => (dispatch) => {
   return apiUserPlaylistsRequest.getUserPlaylists().then(
     (userPlaylists) => dispatch(fetchUserPlaylistsSuccess(userPlaylists)),
     (error) => dispatch(fetchUserPlaylistsError(error))
+  );
+};
+export const getPlaylistItems = (id) => (dispatch) => {
+  dispatch(requestGetUserPlaylistItems());
+  return apiUserPlaylistsRequest.getUserPlaylistItems(id).then(
+    (items) => dispatch(fetchUserPlaylistItemsSuccess(items)),
+    (error) => dispatch(fetchUserPlaylistItemsError(error))
   );
 };
 export const createPlaylist = (value) => (dispatch) => {

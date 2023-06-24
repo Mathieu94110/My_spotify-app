@@ -4,6 +4,7 @@ import Home from './pages/Home/Home';
 import Playlists from './pages/Playlists/Playlists';
 import Search from './pages/Search/Search';
 import Sidebar from './components/SideBar/SideBar';
+import PlaylistDetails from './pages/PlaylistDetails/PlaylistDetails';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import { userIsLoggedIn } from './store/selectors';
 import { connect } from 'react-redux';
@@ -16,8 +17,12 @@ function App(props) {
         <div className="App__screens">
           <Routes>
             <Route exact path="/" element={<Authentication />} />
-            <Route exact path="/playlists" element={<Playlists />} />
             <Route exact path="/home" element={<Home />} />
+            <Route exact path="/playlists" element={<Playlists />} />
+            <Route
+              path="/playlistDetails/:name/:id"
+              element={<PlaylistDetails />}
+            />
             <Route exact path="/search" element={<Search />} />
           </Routes>
         </div>

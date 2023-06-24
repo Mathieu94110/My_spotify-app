@@ -35,21 +35,39 @@ export default {
 
     return apiSpotify
       .get(`users/${userId}/playlists`)
-      .then((response) => response.data.items)
+      .then((response) => response.data.items);
   },
 
-  getPlaylistItems: (playlist_id) =>{
-    const accessToken = getAccessToken();
-    apiSpotify.interceptors.request.use((req) => {
-      req.headers['Authorization'] = `Bearer ${accessToken}`;
-      return req;
-    });
-    return apiSpotify
-      .get(` /playlists/${playlist_id}/tracks`)
-      .then((response) => response.data.items)
-      .then((playlists) => playlists.map(PlaylistsMap));
-  },
+  getUserPlaylistItems: async (playlist_id) => {
+    // Try to fix this ! Error 404
+    // const accessToken = getAccessToken();
+    // apiSpotify.interceptors.request.use((req) => {
+    //   req.headers['Authorization'] = `Bearer ${accessToken}`;
+    //   req.headers['Content-Type'] = 'application/json';
+    //   return req;
+    // });
 
+    // return apiSpotify
+    //   .get(` /playlists/${playlist_id}/tracks`)
+    //   .then((response) => response.data.items);
+    try {
+      const response = await fetch(
+        `https://api.spotify.com/v1/playlists/${playlist_id}/tracks`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getAccessToken()}`,
+          },
+        }
+      );
+
+      const result = await response.json();
+      return result.items;
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  },
 
   createUserPlaylist: (value) => {
     const { name, description } = value;
@@ -85,9 +103,8 @@ export default {
       req.headers['Authorization'] = `Bearer ${accessToken}`;
       return req;
     });
-
     return apiSpotify
-      .post(`https://api.spotify.com/v1/playlists/${id}/tracks?uris=${uri}`)
+      .post(`playlists/${id}/tracks?uris=${uri}`)
       .then((response) => response);
   },
 };
