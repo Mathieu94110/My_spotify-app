@@ -1,13 +1,13 @@
-import './App.scss';
-import Authentication from './pages/Authentication/Authentication';
-import Home from './pages/Home/Home';
-import Playlists from './pages/Playlists/Playlists';
-import Search from './pages/Search/Search';
-import Sidebar from './components/SideBar/SideBar';
-import PlaylistDetails from './pages/PlaylistDetails/PlaylistDetails';
-import { HashRouter, Routes, Route } from 'react-router-dom';
-import { userIsLoggedIn } from './store/selectors';
-import { connect } from 'react-redux';
+import "./App.scss";
+import Authentication from "./pages/Login/Login";
+import Home from "./pages/Home/Home";
+import Playlists from "./pages/Playlists/Playlists";
+import Search from "./pages/Search/Search";
+import Sidebar from "./components/SideBar/SideBar";
+import PlaylistDetails from "./pages/PlaylistDetails/PlaylistDetails";
+import { HashRouter, Routes, Route } from "react-router-dom";
+import { userIsLoggedIn } from "./store/selectors";
+import { connect } from "react-redux";
 
 function App(props) {
   return (
