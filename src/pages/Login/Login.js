@@ -43,7 +43,7 @@ const Authentication = (props) => {
           <button
             className="login__button"
             aria-label="Log in using OAuth 2.0"
-            onClick={handleLogin}
+            onClick={() => window.open(handleLogin(), "_self")}
           >
             Se connecter
           </button>
