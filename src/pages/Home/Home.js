@@ -1,24 +1,24 @@
-import { useEffect } from 'react';
-import './Home.scss';
-import { connect } from 'react-redux';
+import { useEffect } from "react";
+import "./Home.scss";
+import { connect } from "react-redux";
 import {
   lastActivityIsLoadingSelector,
   lastActivityListSelector,
   userInfosIsLoadingSelector,
   userInfosSelector,
   getBrowseCategoryListSelector,
-} from '../../store/selectors';
+} from "../../store/selectors";
 import {
   fetchRecentlyPlayed,
   getNewReleases,
   getCategories,
   getFeatured,
   updateCategoryType,
-} from '../../store/actions';
-import Recentlyplayed from '../../components/home/RecentlyPlayed/RecentlyPlayed';
-import BrowseCategories from '../../components/home/browse/BrowseCategories/BrowseCategories';
-import BrowseContent from '../../components/home/browse/BrowseContent/BrowseContent';
-import Loading from '../../utils/Loading';
+} from "../../store/actions";
+import Recentlyplayed from "../../components/home/RecentlyPlayed/RecentlyPlayed";
+import BrowseCategories from "../../components/home/browse/BrowseCategories/BrowseCategories";
+import BrowseContent from "../../components/home/browse/BrowseContent/BrowseContent";
+import Loading from "../../utils/Loading";
 
 const Home = ({
   isLoading,
@@ -47,7 +47,7 @@ const Home = ({
             } vous
             êtes bien connecté sur votre plateforme Spotify `}
           </h1>
-          <div className="home__rubriks-container">
+          <div className="home__categories">
             <div className="home__recent-container">
               <Recentlyplayed songs={recentlyPlayed} />
             </div>

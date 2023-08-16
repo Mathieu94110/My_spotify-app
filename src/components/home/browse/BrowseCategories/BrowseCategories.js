@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 import {
   getCategories,
   getNewReleases,
   getFeatured,
   updateCategoryType,
-} from '../../../../store/actions';
-import { connect } from 'react-redux';
-import './BrowseCategories.scss';
+} from "../../../../store/actions";
+import { connect } from "react-redux";
+import "./BrowseCategories.scss";
 
 const BrowseCategories = ({
   getCategories,
@@ -20,31 +20,31 @@ const BrowseCategories = ({
       <h2 className="header-title">Catégories</h2>
       <div className="browse-headers-title">
         <p
-          className={viewType === 'New Releases' ? 'active' : ''}
+          className={viewType === "New Releases" ? "active" : ""}
           onClick={() => {
             getNewReleases();
-            updateCategoryType('New Releases');
+            updateCategoryType("New Releases");
           }}
         >
-          Nouveautés
+          <h3>Nouveautés</h3>
         </p>
         <p
-          className={viewType === 'Genres' ? 'active' : ''}
+          className={viewType === "Genres" ? "active" : ""}
           onClick={() => {
             getCategories();
-            updateCategoryType('Genres');
+            updateCategoryType("Genres");
           }}
         >
-          Genres
+          <h3>Genres</h3>
         </p>
         <p
-          className={viewType === 'Featured' ? 'active' : ''}
+          className={viewType === "Featured" ? "active" : ""}
           onClick={() => {
             getFeatured();
-            updateCategoryType('Featured');
+            updateCategoryType("Featured");
           }}
         >
-          En partenariat
+          <h3>En partenariat</h3>
         </p>
       </div>
     </div>

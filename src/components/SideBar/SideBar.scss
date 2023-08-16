@@ -90,4 +90,43 @@
     border-style: inset;
     border-width: 1px;
   }
+  ul:last-child {
+    display: block;
+  }
+  hr {
+    display: inline;
+  }
+}
+@media screen and (max-width: 600px) {
+  .sidebar {
+    display: flex;
+    flex-direction: row;
+    height: 100px;
+    width: calc(100% - 20px);
+    padding: 0 10px;
+    &__logo {
+      align-self: center;
+    }
+    &__menu-toggle {
+      display: none;
+    }
+    &__top-links {
+      flex-direction: row;
+      width: 100%;
+    }
+    &__icons {
+      width: 24px;
+      height: 24px;
+    }
+    &__list-items {
+      flex-direction: row;
+      align-items: center;
+      padding: 20px 0;
+      width: 100%;
+      justify-content: space-evenly;
+    }
+  }
+  ul:last-child {
+    display: none;
+  }
 }

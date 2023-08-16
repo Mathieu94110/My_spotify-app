@@ -11,3 +11,12 @@
     width: 100%;
   }
 }
+@media screen and (max-width: 600px) {
+  .App {
+    display: block;
+    &__screens {
+      margin: 0;
+      width: 100%;
+    }
+  }
+}

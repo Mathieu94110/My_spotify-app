@@ -34,3 +34,10 @@
     word-break: break-word;
   }
 }
+@media screen and (max-width: 600px) {
+  .recently-played {
+    &__title {
+      font-size: 1.2rem;
+    }
+  }
+}

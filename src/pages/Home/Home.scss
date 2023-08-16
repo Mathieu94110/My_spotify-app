@@ -24,8 +24,24 @@
     padding: 0 10px;
     align-items: center;
   }
-  &__rubriks-container {
+  &__categories {
     display: flex;
     width: 100%;
+  }
+}
+@media screen and (max-width: 600px) {
+  .home {
+    &__title {
+      font-size: 1rem;
+      height: auto;
+      padding: 30px 0;
+    }
+    &__categories {
+      display: block;
+    }
+    &__recent-container {
+      width: auto;
+      height: 100%;
+    }
   }
 }

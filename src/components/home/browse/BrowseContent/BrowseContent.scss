@@ -19,3 +19,11 @@
     }
   }
 }
+@media screen and (max-width: 600px) {
+  .browse-content {
+    &__album-img {
+      width: 30%;
+      height: auto;
+    }
+  }
+}
