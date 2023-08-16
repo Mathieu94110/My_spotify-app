@@ -1,5 +1,5 @@
 import "./App.scss";
-import Authentication from "./pages/Login/Login";
+import Login from "./pages/Login/Login";
 import Home from "./pages/Home/Home";
 import Playlists from "./pages/Playlists/Playlists";
 import Search from "./pages/Search/Search";
@@ -16,7 +16,7 @@ function App(props) {
         {props.isLoggedIn ? <Sidebar /> : null}
         <div className="App__screens">
           <Routes>
-            <Route exact path="/" element={<Authentication />} />
+            <Route exact path="/" element={<Login />} />
             <Route exact path="/home" element={<Home />} />
             <Route exact path="/playlists" element={<Playlists />} />
             <Route
