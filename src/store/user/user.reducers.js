@@ -1,4 +1,4 @@
-import * as actions from './user.actions';
+import * as actions from "./user.actions";
 
 export default (
   state = {

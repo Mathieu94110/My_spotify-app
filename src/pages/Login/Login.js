@@ -6,7 +6,7 @@ import { getHashParams, removeHashParamsFromUrl } from "../../utils/hashUtils";
 import { Navigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { scopes } from "../../Constants";
-
+import { userInfosSelector } from "../../store/selectors";
 const authEndpoint = "https://accounts.spotify.com/authorize";
 
 export const handleLogin = () => {
@@ -39,7 +39,7 @@ const Authentication = (props) => {
         ? process.env.REACT_APP_DEV_REDIRECT_URI
         : process.env.REACT_APP_PROD_REDIRECT_URI;
     const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
-    return `${authEndpoint}?client_id=${clientId}&scope=${scopes.join(
+    window.location.href = `${authEndpoint}?client_id=${clientId}&scope=${scopes.join(
       "%20"
     )}&response_type=token&show_dialog=true&redirect_uri=${redirectUri}`;
   };
@@ -59,7 +59,7 @@ const Authentication = (props) => {
 
   return (
     <div className="login">
-      {!props.isLoggedIn ? (
+      {!props.isLoggedIn && (
         <>
           <img
             src="https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_CMYK_White.png"
@@ -69,14 +69,13 @@ const Authentication = (props) => {
           <button
             className="login__button"
             aria-label="Log in using OAuth 2.0"
-            onClick={() => window.open(handleLogin(), "_self")}
+            onClick={handleLogin}
           >
             Se connecter
           </button>
         </>
-      ) : (
-        <Navigate replace to="/home" />
       )}
+      {props.userInfos && props.isLoggedIn && <Navigate replace to="/home" />}
     </div>
   );
 };
@@ -84,6 +83,7 @@ const Authentication = (props) => {
 export default connect(
   (state) => ({
     isLoggedIn: userIsLoggedIn(state),
+    userInfos: userInfosSelector(state),
   }),
   {}
 )(Authentication);

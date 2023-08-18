@@ -68,7 +68,12 @@
   &__text-display-none {
     display: none;
   }
-  &__playlists {
+  &__playlist-items {
+    display: block;
+    height: 300px;
+    overflow-y: auto;
+  }
+  &__playlist-item {
     width: 90%;
     margin: auto;
     display: flex;
@@ -89,11 +94,6 @@
     display: block;
     border-style: inset;
     border-width: 1px;
-  }
-  ul:last-child {
-    display: block;
-  }
-  hr {
     display: inline;
   }
 }
@@ -101,11 +101,17 @@
   .sidebar {
     display: flex;
     flex-direction: row;
-    height: 100px;
+    height: 60px;
+    position: sticky;
+    top: 0;
     width: calc(100% - 20px);
     padding: 0 10px;
     &__logo {
       align-self: center;
+    }
+    &__logo-img {
+      width: 50px;
+      height: auto;
     }
     &__menu-toggle {
       display: none;
@@ -125,8 +131,8 @@
       width: 100%;
       justify-content: space-evenly;
     }
-  }
-  ul:last-child {
-    display: none;
+    &__playlist-items {
+      display: none;
+    }
   }
 }

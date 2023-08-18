@@ -117,11 +117,11 @@ function Sidebar(props) {
         {props.isLoading ? (
           <Loading />
         ) : (
-          <ul>
+          <ul className="sidebar__playlist-items">
             {props.userPlaylists?.map((playlist) => (
               <li key={playlist.id}>
                 <NavLink
-                  className="sidebar__playlists"
+                  className="sidebar__playlist-item"
                   to={"/playlistDetails/" + playlist.name + "/" + playlist.id}
                 >
                   {playlist.name}

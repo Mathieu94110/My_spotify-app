@@ -26,7 +26,7 @@ const BrowseCategories = ({
             updateCategoryType("New Releases");
           }}
         >
-          <h3>Nouveautés</h3>
+          Nouveautés
         </p>
         <p
           className={viewType === "Genres" ? "active" : ""}
@@ -35,7 +35,7 @@ const BrowseCategories = ({
             updateCategoryType("Genres");
           }}
         >
-          <h3>Genres</h3>
+          Genres
         </p>
         <p
           className={viewType === "Featured" ? "active" : ""}
@@ -44,7 +44,7 @@ const BrowseCategories = ({
             updateCategoryType("Featured");
           }}
         >
-          <h3>En partenariat</h3>
+          En partenariat
         </p>
       </div>
     </div>

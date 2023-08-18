@@ -1,11 +1,11 @@
-import * as axios from 'axios';
+import * as axios from "axios";
 
 const apiSpotify = axios.create({
-  baseURL: 'https://api.spotify.com/v1/',
+  baseURL: "https://api.spotify.com/v1/",
 });
 const getAccessToken = () => {
-  if (localStorage.getItem('accessToken')) {
-    return localStorage.getItem('accessToken');
+  if (localStorage.getItem("accessToken")) {
+    return localStorage.getItem("accessToken");
   }
 };
 
@@ -19,25 +19,27 @@ export const RecentActivityMap = (item) => ({
 export default {
   setUserProfileAsync: (accessToken) => {
     apiSpotify.interceptors.request.use((req) => {
-      req.headers['Authorization'] = `Bearer ${accessToken}`;
+      req.headers["Authorization"] = `Bearer ${accessToken}`;
       return req;
     });
 
     return apiSpotify
-      .get('me')
+      .get("me")
       .then((response) => response.data)
-      .then((data) => data);
+      .then((data) => {
+        return data;
+      });
   },
 
   getLastActivity: () => {
     const accessToken = getAccessToken();
     apiSpotify.interceptors.request.use((req) => {
-      req.headers['Authorization'] = `Bearer ${accessToken}`;
+      req.headers["Authorization"] = `Bearer ${accessToken}`;
       return req;
     });
 
     return apiSpotify
-      .get('me/player/recently-played')
+      .get("me/player/recently-played")
       .then((response) => response.data.items)
       .then((recentActivity) => recentActivity.map(RecentActivityMap));
   },

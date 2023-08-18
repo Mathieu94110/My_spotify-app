@@ -61,9 +61,19 @@
 
 @media screen and (max-width: 600px) {
   .header-title {
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
   h3 {
     font-size: 0.6rem;
+  }
+  .browse-headers-title {
+    margin-left: 0;
+    > p {
+      font-size: 10px;
+      margin-left: 0;
+    }
+  }
+  .browse-headers-title .active:after {
+    top: 16px;
   }
 }

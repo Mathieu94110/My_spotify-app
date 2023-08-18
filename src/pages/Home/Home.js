@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import {
   lastActivityIsLoadingSelector,
   lastActivityListSelector,
-  userInfosIsLoadingSelector,
+  // userInfosIsLoadingSelector,
   userInfosSelector,
   getBrowseCategoryListSelector,
 } from "../../store/selectors";
@@ -24,7 +24,7 @@ const Home = ({
   isLoading,
   recentlyPlayed,
   userInfos,
-  userInfosIsLoading,
+  /*   userInfosIsLoading, */
   view,
   fetchRecentlyPlayed,
   getNewReleases,
@@ -36,14 +36,14 @@ const Home = ({
 
   return (
     <>
-      {isLoading || userInfosIsLoading ? (
+      {isLoading /* || userInfosIsLoading */ ? (
         <Loading />
       ) : (
         <div className="home">
           <h1 className="home__title">
             {`Bienvenue ${
-              userInfos.display_name.charAt(0).toUpperCase() +
-              userInfos.display_name.slice(1)
+              userInfos?.display_name?.charAt(0).toUpperCase() +
+              userInfos?.display_name?.slice(1)
             } vous
             êtes bien connecté sur votre plateforme Spotify `}
           </h1>
@@ -67,7 +67,7 @@ export default connect(
     isLoading: lastActivityIsLoadingSelector(state),
     recentlyPlayed: lastActivityListSelector(state),
     userInfos: userInfosSelector(state),
-    userInfosIsLoading: userInfosIsLoadingSelector(state),
+    // userInfosIsLoading: userInfosIsLoadingSelector(state),
     view: getBrowseCategoryListSelector(state),
   }),
   {

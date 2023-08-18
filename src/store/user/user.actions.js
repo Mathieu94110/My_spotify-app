@@ -23,8 +23,8 @@ export const getUserProfile = (accessToken) => (dispatch) => {
   dispatch(fetchUserInfos());
   return apiUserRequest.setUserProfileAsync(accessToken).then(
     (userInfos) => {
-      console.log(userInfos);
-      dispatch(fetchUserInfosSuccess(userInfos));
+      localStorage.setItem("userId", userInfos.id);
+      return dispatch(fetchUserInfosSuccess(userInfos));
     },
     (error) => dispatch(fetchUserInfosError(error))
   );

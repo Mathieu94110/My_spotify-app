@@ -12,9 +12,9 @@ import { connect } from "react-redux";
 function App(props) {
   return (
     <HashRouter>
-      <div className="App">
+      <div className="app">
         {props.isLoggedIn ? <Sidebar /> : null}
-        <div className="App__screens">
+        <>
           <Routes>
             <Route exact path="/" element={<Login />} />
             <Route exact path="/home" element={<Home />} />
@@ -25,7 +25,7 @@ function App(props) {
             />
             <Route exact path="/search" element={<Search />} />
           </Routes>
-        </div>
+        </>
       </div>
     </HashRouter>
   );
