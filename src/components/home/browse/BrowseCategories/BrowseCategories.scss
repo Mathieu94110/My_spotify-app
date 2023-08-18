@@ -4,9 +4,10 @@
 }
 .browse-headers-title {
   display: flex;
-  margin: 20px;
+  margin: 20px 0;
   width: 100%;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  padding: 0 20px;
 }
 
 .browse-headers-title p {
@@ -15,7 +16,6 @@
   text-transform: uppercase;
   font-family: "Proxima Thin", Georgia, sans-serif;
   letter-spacing: 1px;
-  margin: 0 20px;
   cursor: pointer;
 }
 

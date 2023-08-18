@@ -47,13 +47,15 @@ const Home = ({
             } vous
             êtes bien connecté sur votre plateforme Spotify `}
           </h1>
-          <div className="home__categories">
-            <div className="home__recent-container">
-              <Recentlyplayed songs={recentlyPlayed} />
-            </div>
-            <div className="home__recent-container">
-              <BrowseCategories />
-              <BrowseContent newReleases={view} />
+          <div className="home__categories-container">
+            <div className="home__categories">
+              <div className="home__categories-items">
+                <Recentlyplayed songs={recentlyPlayed} />
+              </div>
+              <div className="home__categories-items">
+                <BrowseCategories />
+                <BrowseContent newReleases={view} />
+              </div>
             </div>
           </div>
         </div>

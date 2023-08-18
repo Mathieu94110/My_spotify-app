@@ -65,7 +65,7 @@ function Sidebar(props) {
                 className={
                   open && windowSize.current > 600
                     ? "sidebar__text-display"
-                    : "sidebar__text-display-none"
+                    : "sidebar__text-display--none"
                 }
               >
                 Accueil
@@ -84,7 +84,7 @@ function Sidebar(props) {
                 className={
                   open && windowSize.current > 600
                     ? "sidebar__text-display"
-                    : "sidebar__text-display-none"
+                    : "sidebar__text-display--none"
                 }
               >
                 Rechercher
@@ -100,7 +100,7 @@ function Sidebar(props) {
                 className={
                   open && windowSize.current > 600
                     ? "sidebar__text-display"
-                    : "sidebar__text-display-none"
+                    : "sidebar__text-display--none"
                 }
               >
                 Vos playlists
@@ -117,7 +117,13 @@ function Sidebar(props) {
         {props.isLoading ? (
           <Loading />
         ) : (
-          <ul className="sidebar__playlist-items">
+          <ul
+            className={
+              open && windowSize.current > 600
+                ? "sidebar__playlist-items"
+                : "sidebar__playlist-items--none"
+            }
+          >
             {props.userPlaylists?.map((playlist) => (
               <li key={playlist.id}>
                 <NavLink

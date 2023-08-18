@@ -2,6 +2,8 @@
   width: 100%;
   height: 100%;
   color: #fff;
+  display: flex;
+  flex-direction: column;
   &__title {
     padding: 20px 0;
     width: 100%;
@@ -11,13 +13,16 @@
     background-color: rgba(0, 0, 0, 0.4);
     overflow: auto;
     padding: 20px;
-    height: calc(100% - 112px);
+    flex-grow: 1;
   }
   &__items {
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-weight: 500;
+  }
+  &__img {
+    width: 60px;
   }
   &__no-items {
     display: flex;
@@ -41,6 +46,14 @@
     }
     &__content {
       font-size: 1rem;
+      overflow-y: auto;
+      padding: 10px;
+    }
+    &__items {
+      font-size: 10px;
+    }
+    &__img {
+      width: 30px;
     }
     &__no-items {
       font-size: 1rem;

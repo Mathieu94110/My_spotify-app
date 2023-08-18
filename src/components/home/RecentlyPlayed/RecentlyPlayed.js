@@ -1,4 +1,4 @@
-import './RecentlyPlayed.scss';
+import "./RecentlyPlayed.scss";
 
 const RecentlyPlayed = (props) => {
   return (
@@ -12,7 +12,7 @@ const RecentlyPlayed = (props) => {
                 <img
                   src={track.albumArt}
                   alt="{track.album}"
-                  style={{ width: '60px' }}
+                  className="recently-played__img"
                 />
               </p>
               <p className="recently-played__track-name">{track.name}</p>

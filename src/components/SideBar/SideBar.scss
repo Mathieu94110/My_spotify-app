@@ -3,9 +3,7 @@
   color: #b3b3b3;
   display: flex;
   flex-direction: column;
-  height: 100%;
   width: 200px;
-
   &--closed {
     transition: width 0.3s ease-in-out;
     width: 60px;
@@ -64,14 +62,17 @@
 
   &__text-display {
     margin-left: 20px;
-  }
-  &__text-display-none {
-    display: none;
+    &--none {
+      display: none;
+    }
   }
   &__playlist-items {
     display: block;
     height: 300px;
     overflow-y: auto;
+    &--none {
+      display: none;
+    }
   }
   &__playlist-item {
     width: 90%;
@@ -104,7 +105,7 @@
     height: 60px;
     position: sticky;
     top: 0;
-    width: calc(100% - 20px);
+    width: 100%;
     padding: 0 10px;
     &__logo {
       align-self: center;
