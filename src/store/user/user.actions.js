@@ -1,4 +1,4 @@
-import apiUserRequest from "../../conf/api.user";
+import apiUserRequest from "../../api/api.user";
 
 //User login status
 export const REQUEST_FETCH_USER_INFOS = "fetch user infos";

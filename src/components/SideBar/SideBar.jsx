@@ -13,12 +13,12 @@ import { getPlaylists } from "../../store/actions";
 import { getPlaylistsListSelector } from "../../store/selectors";
 import { connect } from "react-redux";
 import Loading from "../../utils/Loading";
+import useWindowDimensions from "../../hooks/getWindowDimensions";
 import "./SideBar.scss";
 
 function Sidebar(props) {
   const [open, setopen] = useState(true);
-  const windowSize = useRef(window.innerWidth);
-
+  const { width } = useWindowDimensions();
   const toggleOpen = () => {
     setopen(!open);
   };
@@ -42,6 +42,7 @@ function Sidebar(props) {
           />
         </div>
         <button
+          data-testid="sidebar-menu-toggle"
           className={
             open
               ? "sidebar__menu-toggle"
@@ -62,8 +63,9 @@ function Sidebar(props) {
                 <FontAwesomeIcon icon={faHome} className="sidebar__icons" />
               </span>
               <span
+                data-testid="sidebar-menu-text"
                 className={
-                  open && windowSize.current > 600
+                  open && width > 600
                     ? "sidebar__text-display"
                     : "sidebar__text-display--none"
                 }
@@ -81,8 +83,9 @@ function Sidebar(props) {
                 />
               </span>
               <span
+                data-testid="sidebar-menu-text"
                 className={
-                  open && windowSize.current > 600
+                  open && width > 600
                     ? "sidebar__text-display"
                     : "sidebar__text-display--none"
                 }
@@ -97,8 +100,9 @@ function Sidebar(props) {
                 <FontAwesomeIcon icon={faFolder} className="sidebar__icons" />
               </span>
               <span
+                data-testid="sidebar-menu-text"
                 className={
-                  open && windowSize.current > 600
+                  open && width > 600
                     ? "sidebar__text-display"
                     : "sidebar__text-display--none"
                 }
@@ -108,7 +112,7 @@ function Sidebar(props) {
             </NavLink>
           </li>
         </ul>
-        {windowSize > 600 && (
+        {width > 600 && (
           <>
             <strong className="sidebar__title"></strong>
             <hr />
@@ -119,7 +123,7 @@ function Sidebar(props) {
         ) : (
           <ul
             className={
-              open && windowSize.current > 600
+              open && width > 600
                 ? "sidebar__playlist-items"
                 : "sidebar__playlist-items--none"
             }

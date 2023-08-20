@@ -1,7 +1,11 @@
-import './SongRow.scss';
-import mysteryImage from '../../../../assets/images/question-mark.jpg';
+import "./SongRow.scss";
+import mysteryImage from "../../../../assets/images/question-mark.jpg";
+import DeleteIcon from "@mui/icons-material/Delete";
+import useWindowDimensions from "../../../../hooks/getWindowDimensions";
+import { colors } from "@mui/material";
 
-function SongRow({ track }) {
+function SongRow({ track, handleDelete }) {
+  const { width } = useWindowDimensions();
   return (
     <div className="song-row">
       <img
@@ -11,13 +15,21 @@ function SongRow({ track }) {
         }
         alt={track.name}
       />
-      <div className="song-row__info">
-        <h1>{track.name}</h1>
-        <p>
-          {track.artists.map((artist) => artist.name).join(', ')} -{' '}
-          {track.album.name}
-        </p>
-      </div>
+
+      <h2> {width < 600 ? track.name.substring(0, 12) + "..." : track.name}</h2>
+      <h3>
+        {width < 600
+          ? track.artists[0].name.substring(0, 12)
+          : track.artists.map((artist) => artist.name).join(", ")}{" "}
+        -{" "}
+        {width < 600
+          ? track.album.name.substring(0, 12) + "..."
+          : track.album.name}
+      </h3>
+      <DeleteIcon
+        onClick={() => handleDelete({ track })}
+        className="song-row__delete-icon"
+      />
     </div>
   );
 }

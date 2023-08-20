@@ -3,27 +3,55 @@
   padding: 20px;
   display: flex;
   align-items: center;
+
   z-index: 100;
   color: white;
+  max-width: 1200px;
   &:hover {
     cursor: pointer;
-    background-color: black;
+    background-color: #000;
     opacity: 0.8;
-  }
-  &__info {
-    margin-left: 20px;
-    > h1 {
-      font-size: 16px;
-      text-align: left;
-    }
-    > p {
-      font-size: 14px;
-      margin-top: 3px;
-      color: gray;
-    }
   }
   &__album {
     height: 40px;
     width: 40px;
+  }
+  &__delete-icon {
+    color: #fff;
+    &:hover {
+      cursor: pointer;
+      color: red;
+      transform: scale(120%);
+    }
+  }
+}
+h2 {
+  padding-left: 20px;
+  text-align: left;
+}
+h3 {
+  font-weight: 500;
+  font-size: 0.8rem;
+  padding: 0 10px;
+  text-align: left;
+}
+
+@media screen and (max-width: 640px) {
+  .song-row {
+    padding: 10px;
+    margin-left: 0px;
+    &__album {
+      height: 30px;
+      width: 30px;
+    }
+  }
+
+  h2 {
+    font-weight: 500;
+    font-size: 0.6rem;
+  }
+  h3 {
+    font-weight: 500;
+    font-size: 0.4rem;
   }
 }

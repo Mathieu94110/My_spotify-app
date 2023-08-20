@@ -1,4 +1,4 @@
-import * as actions from './playlists.actions';
+import * as actions from "./playlists.actions";
 
 export default (
   state = {
@@ -11,7 +11,7 @@ export default (
 ) => {
   switch (action.type) {
     case (actions.REQUEST_GET_PLAYLISTS,
-    actions.REQUEST_POST_TRACK_TO_PLAYLIST): {
+    actions.REQUEST_FETCH_PLAYLIST_IS_LOADING): {
       return {
         ...state,
         isLoading: true,
@@ -72,13 +72,13 @@ export default (
         error: action.error,
       };
     }
-    case actions.POST_TRACK_TO_PLAYLIST_SUCCESS: {
+    case actions.TRACK_TO_PLAYLIST_ACTION_SUCCESS: {
       return {
         ...state,
         isLoading: false,
       };
     }
-    case actions.POST_TRACK_TO_PLAYLIST_ERROR: {
+    case actions.TRACK_TO_PLAYLIST_ACTION_ERROR: {
       return {
         ...state,
         isLoading: false,

@@ -10,7 +10,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   &__modal {
     width: 250px;
     height: 400px;
@@ -22,13 +21,10 @@
     justify-content: space-evenly;
     color: #000;
     z-index: 2;
-    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
+    border-radius: 10px;
   }
   &__title {
     font-size: 1.2rem;
-  }
-  &__subtitle {
-    font-size: 1rem;
   }
 
   &__playlists {
@@ -39,10 +35,40 @@
   &__playlists-items {
     display: flex;
     justify-content: space-between;
-    margin: 0 10px;
+    margin: 4px 10px;
+  }
+  &__playlists-name {
+    font-weight: 600;
+  }
+  &__checkboxes {
+    width: 20px;
+    height: 20px;
+    &:hover {
+      cursor: pointer;
+    }
   }
   &__actions {
     display: flex;
     justify-content: space-evenly;
+  }
+  &__button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: #eee;
+    transition: all 1s;
+    &:hover {
+      cursor: pointer;
+      transform: translateY(2px);
+      opacity: 0.6;
+    }
+    &--cancel {
+      background-color: red;
+      border: 2px solid red;
+    }
+    &--validate {
+      background-color: green;
+      border: 2px solid green;
+    }
   }
 }

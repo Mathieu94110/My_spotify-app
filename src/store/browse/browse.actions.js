@@ -1,12 +1,12 @@
-import apiUserBrowseRequest from '../../conf/api.browse';
+import apiUserBrowseRequest from "../../api/api.browse";
 
-export const FETCH_NEW_RELEASES_SUCCESS = 'request fetch new releases success';
-export const FETCH_NEW_RELEASES_ERROR = 'request fetch new releases error';
-export const FETCH_CATEGORIES_SUCCESS = 'request fetch categories success';
-export const FETCH_CATEGORIES_ERROR = 'request fetch categories error';
-export const FETCH_FEATURED_SUCCESS = 'request fetch featured success';
-export const FETCH_FEATURED_ERROR = 'request fetch featured error';
-export const UPDATE_CATEGORY_TYPE = 'request update categories type';
+export const FETCH_NEW_RELEASES_SUCCESS = "request fetch new releases success";
+export const FETCH_NEW_RELEASES_ERROR = "request fetch new releases error";
+export const FETCH_CATEGORIES_SUCCESS = "request fetch categories success";
+export const FETCH_CATEGORIES_ERROR = "request fetch categories error";
+export const FETCH_FEATURED_SUCCESS = "request fetch featured success";
+export const FETCH_FEATURED_ERROR = "request fetch featured error";
+export const UPDATE_CATEGORY_TYPE = "request update categories type";
 
 //New releases
 export const getNewReleasesSuccess = (newReleases) => {

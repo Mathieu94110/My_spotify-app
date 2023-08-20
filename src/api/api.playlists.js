@@ -1,22 +1,22 @@
-import * as axios from 'axios';
+import * as axios from "axios";
 const apiSpotify = axios.create({
-  baseURL: 'https://api.spotify.com/v1/',
+  baseURL: "https://api.spotify.com/v1/",
 });
 
 const getAccessToken = () => {
-  if (localStorage.getItem('accessToken')) {
-    return localStorage.getItem('accessToken');
+  if (localStorage.getItem("accessToken")) {
+    return localStorage.getItem("accessToken");
   }
 };
 
 const getUserId = () => {
-  if (localStorage.getItem('userId')) {
-    return localStorage.getItem('userId');
+  if (localStorage.getItem("userId")) {
+    return localStorage.getItem("userId");
   }
 };
 
 export const PlaylistsMap = (playlists) => ({
-  image: playlists.images[0]?.url ? playlists.images[0].url : '',
+  image: playlists.images[0]?.url ? playlists.images[0].url : "",
   uri: playlists.uri,
   name: playlists.name,
   description: playlists.description,
@@ -29,7 +29,7 @@ export default {
     const userId = getUserId();
 
     apiSpotify.interceptors.request.use((req) => {
-      req.headers['Authorization'] = `Bearer ${accessToken}`;
+      req.headers["Authorization"] = `Bearer ${accessToken}`;
       return req;
     });
 
@@ -39,33 +39,21 @@ export default {
   },
 
   getUserPlaylistItems: async (playlist_id) => {
-    // Try to fix this ! Error 404
-    // const accessToken = getAccessToken();
-    // apiSpotify.interceptors.request.use((req) => {
-    //   req.headers['Authorization'] = `Bearer ${accessToken}`;
-    //   req.headers['Content-Type'] = 'application/json';
-    //   return req;
-    // });
-
-    // return apiSpotify
-    //   .get(` /playlists/${playlist_id}/tracks`)
-    //   .then((response) => response.data.items);
     try {
       const response = await fetch(
         `https://api.spotify.com/v1/playlists/${playlist_id}/tracks`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             Authorization: `Bearer ${getAccessToken()}`,
           },
         }
       );
-
       const result = await response.json();
       return result.items;
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   },
 
@@ -75,7 +63,7 @@ export default {
     const userId = getUserId();
 
     apiSpotify.interceptors.request.use((req) => {
-      req.headers['Authorization'] = `Bearer ${accessToken}`;
+      req.headers["Authorization"] = `Bearer ${accessToken}`;
       return req;
     });
 
@@ -98,13 +86,36 @@ export default {
 
   addTrackToPlaylist: (infos) => {
     const { uri, id } = infos;
+    const track = {
+      uris: [uri],
+      position: 0,
+    };
     const accessToken = getAccessToken();
     apiSpotify.interceptors.request.use((req) => {
-      req.headers['Authorization'] = `Bearer ${accessToken}`;
+      req.headers["Authorization"] = `Bearer ${accessToken}`;
       return req;
     });
     return apiSpotify
-      .post(`playlists/${id}/tracks?uris=${uri}`)
+      .post(`playlists/${id}/tracks`, track)
+      .then((response) => response);
+  },
+
+  deleteTrackFromPlaylist: (infos) => {
+    const { trackUri, playlistId } = infos;
+    const track = {
+      tracks: [
+        {
+          uri: trackUri,
+        },
+      ],
+    };
+    const accessToken = getAccessToken();
+    apiSpotify.interceptors.request.use((req) => {
+      req.headers["Authorization"] = `Bearer ${accessToken}`;
+      return req;
+    });
+    return apiSpotify
+      .delete(`playlists/${playlistId}/tracks`, { data: track })
       .then((response) => response);
   },
 };

@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import './AddTrackModal.scss';
+import React, { useState } from "react";
+import "./AddTrackModal.scss";
 
 const AddTrackModal = ({ setIsOpen, playlists, track, addTrackToPlaylist }) => {
-  const [checkedPlaylist, setCheckedPlaylist] = useState(false);
+  const [checkedPlaylist, setCheckedPlaylist] = useState(null);
 
   const handleChange = (value) => {
     setCheckedPlaylist(value);
   };
 
-  const AddTrackCallback = () => {
+  const handleClick = () => {
     addTrackToPlaylist(track, checkedPlaylist);
   };
 
@@ -20,18 +20,18 @@ const AddTrackModal = ({ setIsOpen, playlists, track, addTrackToPlaylist }) => {
             <h2 className="add-track-modal__title">
               Ajouter le titre à une playlist
             </h2>
-            <div className="add-track-modal__subtitle">
-              Sélectionner la playlist
-            </div>
           </div>
           <div className="add-track-modal__playlists">
             {playlists &&
               playlists.map((playlist, index) => {
                 return (
                   <div key={index} className="add-track-modal__playlists-items">
-                    <span>{playlist.name}</span>{' '}
+                    <span className="add-track-modal__playlists-name">
+                      {playlist.name}
+                    </span>
                     <input
                       type="checkbox"
+                      className="add-track-modal__checkboxes"
                       value={playlist.id}
                       checked={checkedPlaylist === playlist}
                       onChange={() => handleChange(playlist)}
@@ -43,17 +43,19 @@ const AddTrackModal = ({ setIsOpen, playlists, track, addTrackToPlaylist }) => {
           <div>
             <div className="add-track-modal__actions">
               <button
-                className="cancel-button"
+                className="add-track-modal__button add-track-modal__button--cancel"
                 onClick={() => setIsOpen(false)}
               >
-                Annuler
+                X
               </button>
-              <button
-                className="validate-button"
-                onClick={() => AddTrackCallback()}
-              >
-                Valider
-              </button>
+              {checkedPlaylist && (
+                <button
+                  className="add-track-modal__button add-track-modal__button--validate"
+                  onClick={() => handleClick()}
+                >
+                  &#10003;
+                </button>
+              )}
             </div>
           </div>
         </div>

@@ -5,9 +5,34 @@
 
   > h1 {
     height: 100px;
+    padding: 20px;
+    border-bottom: 1px solid gold;
+    color: gold;
   }
   &__tracks {
     height: calc(100vh - 200px);
     overflow-y: scroll;
+  }
+  &__no-items {
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-top: 20px;
+    text-align: center;
+  }
+}
+@media screen and (max-width: 600px) {
+  .playlistDetails {
+    > h1 {
+      height: 50px;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+    &__no-items {
+      font-size: 1rem;
+    }
   }
 }
