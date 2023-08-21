@@ -1,31 +1,25 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import "./Card.scss";
 
-const Card = (props) => {
-  const { image, uri, name, description, details } = props;
+const Card = ({ image, id, name }) => {
+  const navigate = useNavigate();
+
   const style = {
     background: "url(" + image + ") center center no-repeat",
     maxWidth: "100%",
   };
+
   return (
     <div className="card">
-      <header style={style} id={image} className="card__header"></header>
-      <div className="card__body">
-        <p className="card__date">
-          Lien: <a href={uri}>{uri}</a>
-        </p>
+      <img style={style} src={image} className="card__img" />
 
-        <h2>{name}</h2>
-
-        <p className="card__content">
-          {description ? description : "Aucune description"}
-        </p>
-        {details && (
-          <button className="button card__button-primary">
-            <i className="fa fa-chevron-right"></i> Voir le détail
-          </button>
-        )}
-      </div>
+      <h3>{name}</h3>
+      <VisibilityIcon
+        className="card__link"
+        onClick={() => navigate(`/playlistDetails/${name}/${id}`)}
+      />
     </div>
   );
 };

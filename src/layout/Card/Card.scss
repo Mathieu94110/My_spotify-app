@@ -1,57 +1,47 @@
 .card {
-  width: 280px;
-  display: block;
-  margin: 60px auto;
-  box-shadow: 10px 5px 40px 20px darken(#341cac, 5%);
-  transition: 0.25s;
-  min-height: 410px;
+  display: flex;
+  max-width: 400px;
+  margin: 10px 10px 10px 0;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+  color: #000;
   &:hover {
-    box-shadow: 10px 5px 40px 20px darken(#341cac, 10%);
+    background-color: rgba(38, 38, 38, 0.6);
     cursor: pointer;
-
-    .button-primary {
-      &:hover {
-        cursor: pointer;
-      }
-      transform: translate(10px, 0);
+    > h3 {
+      color: #fff;
     }
   }
-  &__header {
-    height: 150px;
-    width: 100%;
-    width: 100%;
+  &__img {
+    width: 40px;
+    height: "auto";
     background-size: cover;
     color: #fff;
   }
 
-  &__body {
-    padding: 15px 15px 0;
-    background-color: #fff;
-    min-height: 280px;
+  &__link {
+    width: 30px;
+    height: auto;
+    margin: 0 10px;
+    transition: all 1s;
+    &:hover {
+      cursor: "hover";
+      transform: scale(120%);
+    }
   }
-
-  &__date {
-    font-size: 11px;
-    font-weight: 600;
-    color: grey;
-  }
-  &__content {
-    padding-bottom: 40px;
-    font-size: 13px;
-    line-height: 1.8;
-  }
-  &__button-primary {
-    border: none;
-    box-shadow: none;
-    font-family: inherit;
-    background-color: transparent;
-    color: blue;
-    font-size: 15px;
-    transition: 0.25s;
-    padding: 15px 0;
-    font-weight: 600;
-    i {
-      padding-right: 4px;
+}
+@media only screen and (max-width: 800px) {
+  .card {
+    > h3 {
+      font-size: 12px;
+    }
+    &:hover {
+      background-color: rgba(38, 38, 38, 0.6);
+      cursor: pointer;
+      > h3 {
+        color: #fff;
+      }
     }
   }
 }

@@ -62,7 +62,6 @@ export default (
         ...state,
         isLoading: false,
         error: null,
-        data: [...state.data, action.createdPlaylist],
       };
     }
     case actions.POST_USER_PLAYLIST_ERROR: {

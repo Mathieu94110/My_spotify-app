@@ -1,29 +1,10 @@
-import './UserPlaylists.scss';
-import Card from '../../../layout/Card/Card';
+import PlaylistActionContainer from "../../../layout/PlaylistActionContainer/PlaylistActionContainer";
+import UserPlaylistsList from "./Components/UserPlaylistsList";
 
-const UserPlaylists = (props) => {
+export default function UserPlaylists({ playlists }) {
   return (
-    <div className="user-playlists">
-      <div className="user-playlists__title">
-        {' '}
-        <h2>Vos playlists</h2>
-      </div>
-      <div className="user-playlists__content">
-        {props.playlists &&
-          props.playlists.map((item, index) => (
-            <div key={index}>
-              <Card
-                image={item.images}
-                uri={item.uri}
-                name={item.name}
-                description={item.description}
-                details="true"
-              />
-            </div>
-          ))}
-      </div>
-    </div>
+    <PlaylistActionContainer title="Vos playlists">
+      <UserPlaylistsList playlists={playlists} />
+    </PlaylistActionContainer>
   );
-};
-
-export default UserPlaylists;
+}

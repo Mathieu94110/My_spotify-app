@@ -48,9 +48,8 @@ export const requestPostUserPlaylist = () => ({
   type: REQUEST_POST_PLAYLIST,
 });
 
-export const postUserPlaylistsSuccess = (/* createdPlaylist */) => ({
+export const postUserPlaylistsSuccess = () => ({
   type: POST_USER_PLAYLIST_SUCCESS,
-  /*   createdPlaylist, */
 });
 
 export const postUserPlaylistsError = (error) => ({
@@ -88,7 +87,7 @@ export const getPlaylistItems = (id) => (dispatch) => {
 export const createPlaylist = (value) => (dispatch) => {
   dispatch(requestPostUserPlaylist());
   return apiUserPlaylistsRequest.createUserPlaylist(value).then(
-    (playlistCreated) => dispatch(postUserPlaylistsSuccess(playlistCreated)),
+    () => dispatch(postUserPlaylistsSuccess()),
     (error) => dispatch(postUserPlaylistsError(error))
   );
 };

@@ -1,9 +1,7 @@
 .playlists {
-  width: 100%;
-  height: calc(100% - 40px);
+  width: calc(100% - 80px);
   display: flex;
-  margin: 20px 40px;
-  flex-direction: column;
+  padding: 40px;
   justify-content: center;
 
   &__content {
@@ -11,5 +9,24 @@
     height: 100%;
     display: flex;
     justify-content: space-around;
+    align-items: center;
+  }
+  &__items {
+    flex: 1;
+    display: flex;
+    place-content: center;
+  }
+}
+@media only screen and (max-width: 800px) {
+  .playlists {
+    display: block;
+    padding: 20px;
+    width: 100%;
+    &__content {
+      display: block;
+    }
+    &__items {
+      margin-bottom: 20px;
+    }
   }
 }
