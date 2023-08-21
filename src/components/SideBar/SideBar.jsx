@@ -65,7 +65,7 @@ function Sidebar(props) {
               <span
                 data-testid="sidebar-menu-text"
                 className={
-                  open && width > 600
+                  open && width > 830
                     ? "sidebar__text-display"
                     : "sidebar__text-display--none"
                 }
@@ -85,7 +85,7 @@ function Sidebar(props) {
               <span
                 data-testid="sidebar-menu-text"
                 className={
-                  open && width > 600
+                  open && width > 830
                     ? "sidebar__text-display"
                     : "sidebar__text-display--none"
                 }
@@ -102,7 +102,7 @@ function Sidebar(props) {
               <span
                 data-testid="sidebar-menu-text"
                 className={
-                  open && width > 600
+                  open && width > 830
                     ? "sidebar__text-display"
                     : "sidebar__text-display--none"
                 }
