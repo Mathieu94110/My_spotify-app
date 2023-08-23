@@ -33,12 +33,13 @@
     width: 45%;
     height: calc(100vh - 280px);
     align-items: center;
+    background-color: rgba(0, 0, 0, 0.4);
   }
 }
 
 @media screen and (max-width: 800px) {
   .home {
-    height: calc(100% - 80px);
+    height: calc(100vh - 140px);
     &__title {
       font-size: 0.8rem;
       height: auto;
@@ -46,16 +47,16 @@
     }
     &__categories-container {
       width: calc(100% - 20px);
-      height: auto;
       display: block;
       margin: auto;
     }
     &__categories {
       display: block;
+      overflow-y: auto;
+      height: 100%;
     }
     &__categories-items {
       width: auto;
-      height: 100%;
       margin-bottom: 30px;
     }
   }

@@ -3,7 +3,7 @@ import defaultCardImg from "../../../../assets/images/spotify-card-default-img.j
 
 const UserPlaylistsList = ({ playlists }) => {
   return (
-    <>
+    <div style={{ width: "100%" }}>
       {playlists && playlists.length > 0 ? (
         playlists.map((item, index) => (
           <div key={index}>
@@ -19,7 +19,7 @@ const UserPlaylistsList = ({ playlists }) => {
           Vous n'avez pas crée de playlist
         </div>
       )}
-    </>
+    </div>
   );
 };
 export default UserPlaylistsList;
