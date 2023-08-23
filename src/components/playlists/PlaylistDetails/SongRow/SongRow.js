@@ -1,15 +1,21 @@
-import "./SongRow.scss";
+import Button from "../../../songsPlayer/Components/ControlButton";
 import mysteryImage from "../../../../assets/images/question-mark.jpg";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useWindowDimensions from "../../../../hooks/useWindowDimensions";
-import { colors } from "@mui/material";
+import { faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
+import "./SongRow.scss";
 
-function SongRow({ track, handleDelete }) {
+function SongRow({ track, handleDelete, isPlaying, currentIndex, playSong }) {
   const { width } = useWindowDimensions();
-  console.log("track =", track);
-  const playSong = () => {};
+
   return (
-    <div className="song-row" onClick={playSong}>
+    <div className="song-row">
+      <Button
+        className="song-row__player"
+        onClick={() => playSong(currentIndex)}
+        icon={isPlaying ? faPause : faPlay}
+        playBtn
+      />
       <img
         className="song-row__album"
         src={
@@ -28,6 +34,7 @@ function SongRow({ track, handleDelete }) {
           ? track.album.name.substring(0, 12) + "..."
           : track.album.name}
       </h3>
+      <span>0:30</span>
       <DeleteIcon
         onClick={() => handleDelete({ track })}
         className="song-row__delete-icon"

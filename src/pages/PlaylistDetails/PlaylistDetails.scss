@@ -1,5 +1,5 @@
 .playlistDetails {
-  height: calc(100vh - 100px);
+  height: calc(100vh - 80px);
   width: 100%;
   z-index: 1;
 
@@ -21,8 +21,9 @@
     text-align: center;
   }
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
   .playlistDetails {
+    height: calc(100vh - 140px);
     > h1 {
       height: 50px;
       font-size: 1rem;

@@ -7,7 +7,7 @@ import Loading from "../../utils/Loading";
 import { getPlaylists, createPlaylist } from "../../store/actions";
 import {
   getPlaylistsIsLoadingSelector,
-  getPlaylistsListSelector,
+  getPlaylistsSelector,
 } from "../../store/selectors";
 import { connect } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
@@ -60,7 +60,7 @@ const Playlists = (props) => {
 export default connect(
   (state) => ({
     isLoading: getPlaylistsIsLoadingSelector(state),
-    userPlaylists: getPlaylistsListSelector(state),
+    userPlaylists: getPlaylistsSelector(state),
   }),
   {
     getPlaylists,

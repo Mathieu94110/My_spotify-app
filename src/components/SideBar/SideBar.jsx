@@ -1,4 +1,12 @@
 import { useState, useEffect, useRef } from "react";
+import { NavLink } from "react-router-dom";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import { getPlaylists } from "../../store/actions";
+import { getPlaylistsSelector } from "../../store/selectors";
+import { connect } from "react-redux";
+import Loading from "../../utils/Loading";
+import useWindowDimensions from "../../hooks/useWindowDimensions";
 import spotifyLogo from "../../assets/images/spotify-logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -6,14 +14,6 @@ import {
   faMagnifyingGlass,
   faFolder,
 } from "@fortawesome/free-solid-svg-icons";
-import { NavLink } from "react-router-dom";
-import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
-import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
-import { getPlaylists } from "../../store/actions";
-import { getPlaylistsListSelector } from "../../store/selectors";
-import { connect } from "react-redux";
-import Loading from "../../utils/Loading";
-import useWindowDimensions from "../../hooks/useWindowDimensions";
 import "./SideBar.scss";
 
 function Sidebar(props) {
@@ -147,7 +147,7 @@ function Sidebar(props) {
 
 export default connect(
   (state) => ({
-    userPlaylists: getPlaylistsListSelector(state),
+    userPlaylists: getPlaylistsSelector(state),
   }),
   {
     getPlaylists,

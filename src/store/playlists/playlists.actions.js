@@ -17,7 +17,8 @@ export const TRACK_TO_PLAYLIST_ACTION_ERROR =
   "request post track to user playlist error";
 export const REQUEST_FETCH_PLAYLIST_IS_LOADING =
   "request fetch playlist is loading";
-
+export const SET_PLAYLIST_PLAYING_INDEX =
+  "request set current playlist playing index";
 export const requestGetUserPlaylists = () => ({
   type: REQUEST_GET_PLAYLISTS,
 });
@@ -70,6 +71,11 @@ export const trackToPlaylistActionError = (error) => ({
   error,
 });
 
+export const setPlaylistPlayingIndexActionSuccess = (index) => ({
+  type: SET_PLAYLIST_PLAYING_INDEX,
+  index,
+});
+
 export const getPlaylists = () => (dispatch) => {
   dispatch(requestGetUserPlaylists());
   return apiUserPlaylistsRequest.getUserPlaylists().then(
@@ -105,3 +111,6 @@ export const removeTrackFromPlaylist = (infos) => (dispatch) => {
     (error) => dispatch(trackToPlaylistActionError(error))
   );
 };
+
+export const setPlayingIndex = (index) => (dispatch) =>
+  dispatch(setPlaylistPlayingIndexActionSuccess(index));

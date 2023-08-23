@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+import { createSelector } from "reselect";
 
 export const getUserPLaylistsSelector = (state) => state.playlists;
 
@@ -7,11 +7,15 @@ export const getPlaylistsIsLoadingSelector = createSelector(
   (playlists) => playlists.isLoading
 );
 
-export const getPlaylistsListSelector = createSelector(
+export const getPlaylistsSelector = createSelector(
   [getUserPLaylistsSelector],
   (playlists) => playlists.data
 );
-export const getPlaylistsItemsListSelector = createSelector(
+export const getPlaylistItemsSelector = createSelector(
   [getUserPLaylistsSelector],
   (playlists) => playlists.tracks
+);
+export const getPlaylistPLayingIndex = createSelector(
+  [getUserPLaylistsSelector],
+  (playlists) => playlists.playingIndex
 );

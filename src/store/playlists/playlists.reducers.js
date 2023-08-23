@@ -4,6 +4,7 @@ export default (
   state = {
     data: [],
     tracks: [],
+    playingIndex: 0,
     isLoading: false,
     error: null,
   },
@@ -82,6 +83,12 @@ export default (
         ...state,
         isLoading: false,
         error: action.error,
+      };
+    }
+    case actions.SET_PLAYLIST_PLAYING_INDEX: {
+      return {
+        ...state,
+        playingIndex: action.index,
       };
     }
 

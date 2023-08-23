@@ -8,8 +8,8 @@ import {
 } from "../../store/actions";
 import {
   selectAccessToken,
-  getPlaylistsListSelector,
-  getPlaylistsItemsListSelector,
+  getPlaylistsSelector,
+  getPlaylistItemsSelector,
 } from "../../store/selectors";
 import { connect, useSelector, useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
@@ -121,8 +121,8 @@ const Search = (props) => {
 
 export default connect(
   (state) => ({
-    userPlaylists: getPlaylistsListSelector(state),
-    userPlaylistTracks: getPlaylistsItemsListSelector(state),
+    userPlaylists: getPlaylistsSelector(state),
+    userPlaylistTracks: getPlaylistItemsSelector(state),
   }),
   {
     getPlaylists,

@@ -1,18 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
+import { getPlaylistItemsSelector } from "../../store/selectors";
+import SongsPlayer from "../songsPlayer/SongsPlayer";
+import "./Footer.scss";
 
-import SongPlayer from "../songPlayer/SongPlayer";
+const Footer = () => {
+  const [playSong, setPlaySong] = useState(false);
+  const [playing, setPlaying] = useState(false);
+  const [pauseSong, setPauseSong] = useState(false);
 
-const style = {
-  width: "100%",
-  background: "rgb(40, 40, 40)",
-  height: 80,
-  zIndex: 2000,
+  const previousSong = () => {
+    console.log("previousSong");
+  };
+
+  const nextSong = () => {
+    console.log("nextSong");
+  };
+  return (
+    <div className="footer">
+      <SongsPlayer
+        playSong={playSong}
+        playing={playing}
+        pauseSong={pauseSong}
+        previousSong={previousSong}
+        nextSong={nextSong}
+      />
+    </div>
+  );
 };
-
-const Footer = (props) => (
-  <div className="footer" style={style}>
-    <SongPlayer />
-  </div>
-);
 
 export default Footer;
