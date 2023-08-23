@@ -1,4 +1,4 @@
-import Card from "../../../../layout/Card/Card";
+import Card from "../../../card/Card";
 import defaultCardImg from "../../../../assets/images/spotify-card-default-img.jpg";
 
 const UserPlaylistsList = ({ playlists }) => {

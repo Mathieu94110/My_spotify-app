@@ -13,7 +13,7 @@ import { getPlaylists } from "../../store/actions";
 import { getPlaylistsListSelector } from "../../store/selectors";
 import { connect } from "react-redux";
 import Loading from "../../utils/Loading";
-import useWindowDimensions from "../../hooks/getWindowDimensions";
+import useWindowDimensions from "../../hooks/useWindowDimensions";
 import "./SideBar.scss";
 
 function Sidebar(props) {
@@ -112,7 +112,7 @@ function Sidebar(props) {
             </NavLink>
           </li>
         </ul>
-        {width > 600 && (
+        {width > 800 && (
           <>
             <strong className="sidebar__title"></strong>
             <hr />
@@ -123,7 +123,7 @@ function Sidebar(props) {
         ) : (
           <ul
             className={
-              open && width > 600
+              open && width > 800
                 ? "sidebar__playlist-items"
                 : "sidebar__playlist-items--none"
             }

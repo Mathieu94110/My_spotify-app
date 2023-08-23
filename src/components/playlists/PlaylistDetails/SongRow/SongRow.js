@@ -1,13 +1,15 @@
 import "./SongRow.scss";
 import mysteryImage from "../../../../assets/images/question-mark.jpg";
 import DeleteIcon from "@mui/icons-material/Delete";
-import useWindowDimensions from "../../../../hooks/getWindowDimensions";
+import useWindowDimensions from "../../../../hooks/useWindowDimensions";
 import { colors } from "@mui/material";
 
 function SongRow({ track, handleDelete }) {
   const { width } = useWindowDimensions();
+  console.log("track =", track);
+  const playSong = () => {};
   return (
-    <div className="song-row">
+    <div className="song-row" onClick={playSong}>
       <img
         className="song-row__album"
         src={

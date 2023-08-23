@@ -1,5 +1,5 @@
 .search-result {
-  height: calc(100vh - 190px);
+  height: calc(100vh - 270px);
   flex-grow: 1;
   margin: 10px 3rem;
   overflow-y: auto;
@@ -31,5 +31,17 @@
 @media only screen and (max-width: 1060px) and (min-width: 821px) {
   .search-result {
     grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .search-result {
+    height: calc(100vh - 196px);
+  }
+}
+
+@media only screen and (max-width: 800px) and (min-width: 601px) {
+  .search-result {
+    height: calc(100vh - 256px);
   }
 }

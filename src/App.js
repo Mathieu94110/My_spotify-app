@@ -3,18 +3,24 @@ import Login from "./pages/Login/Login";
 import Home from "./pages/Home/Home";
 import Playlists from "./pages/Playlists/Playlists";
 import Search from "./pages/Search/Search";
-import Sidebar from "./components/SideBar/SideBar";
+import SideBar from "./components/sideBar/SideBar";
 import PlaylistDetails from "./pages/PlaylistDetails/PlaylistDetails";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import { userIsLoggedIn } from "./store/selectors";
 import { connect } from "react-redux";
+import Footer from "./components/footer/Footer";
 
 function App(props) {
   return (
     <HashRouter>
       <div className="app">
-        {props.isLoggedIn ? <Sidebar /> : null}
-        <>
+        <div
+          className={
+            !props.isLoggedIn ? "app__body" : "app__body app__body--logged-in"
+          }
+        >
+          {props.isLoggedIn ? <SideBar /> : null}
+
           <Routes>
             <Route exact path="/" element={<Login />} />
             <Route exact path="/home" element={<Home />} />
@@ -25,7 +31,8 @@ function App(props) {
             />
             <Route exact path="/search" element={<Search />} />
           </Routes>
-        </>
+        </div>
+        {props.isLoggedIn ? <Footer /> : null}
       </div>
     </HashRouter>
   );
