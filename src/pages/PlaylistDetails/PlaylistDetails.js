@@ -40,6 +40,7 @@ const PlaylistDetails = (props) => {
 
     intervalRef.current = setInterval(() => {
       if (audioRef.current.ended) {
+        setIsPlaying(!isPlaying);
         console.log("audioRef.current.ended");
       } else {
         setTrackProgress(audioRef.current.currentTime);
@@ -69,7 +70,12 @@ const PlaylistDetails = (props) => {
   }, [isPlaying]);
 
   useEffect(() => {
-    if (props.playlistPlayingIndex) {
+    console.log("props.userPlaylistTracks =", props.userPlaylistTracks);
+    console.log("props.playlistPlayingIndex =", props.playlistPlayingIndex);
+  }, [props.userPlaylistTracks, props.playlistPlayingIndex]);
+
+  useEffect(() => {
+    if (props.playlistPlayingIndex >= 0) {
       console.log(props.userPlaylistTracks[props.playlistPlayingIndex]);
       audioRef.current.pause();
       audioRef.current = new Audio(audioSrc);

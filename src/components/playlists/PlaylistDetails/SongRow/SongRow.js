@@ -3,12 +3,7 @@ import mysteryImage from "../../../../assets/images/question-mark.jpg";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useWindowDimensions from "../../../../hooks/useWindowDimensions";
 import Button from "../../../songsPlayer/Components/ControlButton";
-import {
-  faBackward,
-  faPause,
-  faPlay,
-  faForward,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBan, faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
 
 function SongRow({
   currentIndex,
@@ -22,12 +17,21 @@ function SongRow({
 
   return (
     <div className="song-row">
-      <Button
-        className="song-row__player"
-        onClick={() => playSong(currentIndex)}
-        icon={currentIndex === playingIndex && isPlaying ? faPause : faPlay}
-        playBtn
-      />
+      {track.preview_url ? (
+        <Button
+          className="song-row__player"
+          onClick={() => playSong(currentIndex)}
+          icon={currentIndex === playingIndex && isPlaying ? faPause : faPlay}
+          playBtn
+        />
+      ) : (
+        <Button
+          className="song-row__player"
+          onClick={() => playSong(currentIndex)}
+          icon={faBan}
+        />
+      )}
+
       <img
         className="song-row__album"
         src={
@@ -46,6 +50,7 @@ function SongRow({
           ? track.album.name.substring(0, 12) + "..."
           : track.album.name}
       </h3>
+      <span>0:30</span>
       <DeleteIcon
         onClick={() => handleDelete({ track })}
         className="song-row__delete-icon"
