@@ -1,11 +1,23 @@
-import Button from "../../../songsPlayer/Components/ControlButton";
+import "./SongRow.scss";
 import mysteryImage from "../../../../assets/images/question-mark.jpg";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useWindowDimensions from "../../../../hooks/useWindowDimensions";
-import { faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
-import "./SongRow.scss";
+import Button from "../../../songsPlayer/Components/ControlButton";
+import {
+  faBackward,
+  faPause,
+  faPlay,
+  faForward,
+} from "@fortawesome/free-solid-svg-icons";
 
-function SongRow({ track, handleDelete, isPlaying, currentIndex, playSong }) {
+function SongRow({
+  currentIndex,
+  isPlaying,
+  playSong,
+  track,
+  playingIndex,
+  handleDelete,
+}) {
   const { width } = useWindowDimensions();
 
   return (
@@ -13,7 +25,7 @@ function SongRow({ track, handleDelete, isPlaying, currentIndex, playSong }) {
       <Button
         className="song-row__player"
         onClick={() => playSong(currentIndex)}
-        icon={isPlaying ? faPause : faPlay}
+        icon={currentIndex === playingIndex && isPlaying ? faPause : faPlay}
         playBtn
       />
       <img
@@ -34,7 +46,6 @@ function SongRow({ track, handleDelete, isPlaying, currentIndex, playSong }) {
           ? track.album.name.substring(0, 12) + "..."
           : track.album.name}
       </h3>
-      <span>0:30</span>
       <DeleteIcon
         onClick={() => handleDelete({ track })}
         className="song-row__delete-icon"

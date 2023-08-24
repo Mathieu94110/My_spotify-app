@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
 import SongRow from "../../components/playlists/PlaylistDetails/SongRow/SongRow";
 import { connect, useDispatch } from "react-redux";
@@ -17,21 +17,59 @@ import { toast, ToastContainer } from "react-toastify";
 import "./PlaylistDetails.scss";
 
 const PlaylistDetails = (props) => {
+  const [trackProgress, setTrackProgress] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTrack, setCurrentTrack] = useState({});
-  const [currentIndex, setCurrentIndex] = useState(0);
   const { id: playlistId, name: playlistName } = useParams();
   const dispatch = useDispatch();
 
+  const audioSrc =
+    props.userPlaylistTracks[props.playlistPlayingIndex]?.track?.preview_url;
+  const audioRef = useRef(
+    new Audio(props.userPlaylistTracks[0]?.track?.preview_url)
+  );
+  const isReady = useRef(false);
+  const intervalRef = useRef();
+
+  //Call in order to get userPlaylistTracks
   useEffect(() => {
     props.getPlaylistItems(playlistId);
   }, [playlistId]);
 
-  const audioSrc = props.userPlaylistTracks[currentIndex]?.track.preview_url;
+  const startTimer = () => {
+    clearInterval(intervalRef.current);
 
-  const audioRef = useRef(
-    new Audio(props.userPlaylistTracks[0]?.track.preview_url)
-  );
+    intervalRef.current = setInterval(() => {
+      if (audioRef.current.ended) {
+        console.log("audioRef.current.ended");
+      } else {
+        setTrackProgress(audioRef.current.currentTime);
+      }
+    }, [1000]);
+  };
+
+  useEffect(() => {
+    if (props.playlistPlayingIndex) {
+      console.log(props.userPlaylistTracks[props.playlistPlayingIndex]);
+      audioRef.current.pause();
+      audioRef.current = new Audio(audioSrc);
+
+      setTrackProgress(audioRef.current.currentTime);
+
+      if (isReady.current) {
+        audioRef.current.play();
+        setIsPlaying(true);
+      } else {
+        isReady.current = true;
+      }
+    }
+  }, [props.playlistPlayingIndex]);
+
+  useEffect(() => {
+    return () => {
+      audioRef.current.pause();
+      clearInterval(intervalRef.current);
+    };
+  }, []);
 
   const handleDeleteTrack = (track) => {
     const { uri: trackUri, name: trackName } = track.track;
@@ -49,7 +87,7 @@ const PlaylistDetails = (props) => {
       });
   };
   const playSong = (index) => {
-    setCurrentIndex(index);
+    console.log(index);
     setIsPlaying(!isPlaying);
     props.setPlayingIndex(index);
   };
@@ -62,11 +100,12 @@ const PlaylistDetails = (props) => {
           props.userPlaylistTracks.length > 0 ? (
             props.userPlaylistTracks?.map((item, index) => (
               <SongRow
-                key={item.id}
+                key={index}
                 currentIndex={index}
-                playSong={playSong}
                 isPlaying={isPlaying}
+                playSong={playSong}
                 track={item.track}
+                playingIndex={props.playlistPlayingIndex}
                 handleDelete={handleDeleteTrack}
               />
             ))
