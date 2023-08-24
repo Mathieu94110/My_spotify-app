@@ -48,6 +48,27 @@ const PlaylistDetails = (props) => {
   };
 
   useEffect(() => {
+    if (audioRef.current.src) {
+      if (isPlaying) {
+        audioRef.current.play();
+        startTimer();
+      } else {
+        clearInterval(intervalRef.current);
+        audioRef.current.pause();
+      }
+    } else {
+      if (isPlaying) {
+        audioRef.current = new Audio(audioSrc);
+        audioRef.current.play();
+        startTimer();
+      } else {
+        clearInterval(intervalRef.current);
+        audioRef.current.pause();
+      }
+    }
+  }, [isPlaying]);
+
+  useEffect(() => {
     if (props.playlistPlayingIndex) {
       console.log(props.userPlaylistTracks[props.playlistPlayingIndex]);
       audioRef.current.pause();
@@ -58,6 +79,7 @@ const PlaylistDetails = (props) => {
       if (isReady.current) {
         audioRef.current.play();
         setIsPlaying(true);
+        startTimer();
       } else {
         isReady.current = true;
       }
