@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useLayoutEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import SongRow from "../../components/playlists/PlaylistDetails/SongRow/SongRow";
 import { connect, useDispatch } from "react-redux";
@@ -33,21 +33,26 @@ const PlaylistDetails = (props) => {
   //Call in order to get userPlaylistTracks
   useEffect(() => {
     props.getPlaylistItems(playlistId);
+    console.log(audioRef);
   }, [playlistId]);
 
+  // On startTimer we created a watcher after deleted the previous
+  //to see every second the progression of the track and if he is finished we switch isPlaying to false
   const startTimer = () => {
     clearInterval(intervalRef.current);
-
     intervalRef.current = setInterval(() => {
       if (audioRef.current.ended) {
         setIsPlaying(!isPlaying);
-        console.log("audioRef.current.ended");
       } else {
         setTrackProgress(audioRef.current.currentTime);
       }
     }, [1000]);
   };
-
+  // We watch isPlaying status if it's true and playlist index exist, play song and start timer are launched
+  // If he detect audioRef value but isPlaying status to false, the track is paused.
+  // Else if no audioRef value but isPlaying status is true we assigned audioSrc (which value is set automatiquely depending
+  // of playlistPlayingIndex store value to audioRef src and play song and start timer are launched
+  // Else (no audioRef and isPlaying to false) the track is paused
   useEffect(() => {
     if (audioRef.current.src) {
       if (isPlaying) {
@@ -69,19 +74,15 @@ const PlaylistDetails = (props) => {
     }
   }, [isPlaying]);
 
-  useEffect(() => {
-    console.log("props.userPlaylistTracks =", props.userPlaylistTracks);
-    console.log("props.playlistPlayingIndex =", props.playlistPlayingIndex);
-  }, [props.userPlaylistTracks, props.playlistPlayingIndex]);
-
+  //At each playlistPlayingIndex change (0 at the begining) we stop the previous track with previous index;
+  // We assigned new AudioRef value with audioSrc (which value change with playlistPlayingIndex)
+  // After we check if isReady ref have true value , in order to doesnt play track the first time the page is loaded
+  // If not we set the value to true on next lines at this moment every time isPlaying will be true the song will be played
   useEffect(() => {
     if (props.playlistPlayingIndex >= 0) {
-      console.log(props.userPlaylistTracks[props.playlistPlayingIndex]);
       audioRef.current.pause();
       audioRef.current = new Audio(audioSrc);
-
       setTrackProgress(audioRef.current.currentTime);
-
       if (isReady.current) {
         audioRef.current.play();
         setIsPlaying(true);
@@ -114,8 +115,8 @@ const PlaylistDetails = (props) => {
         });
       });
   };
+  // we passed the index to the store to change the selected track(0 by default)
   const playSong = (index) => {
-    console.log(index);
     setIsPlaying(!isPlaying);
     props.setPlayingIndex(index);
   };
@@ -130,11 +131,11 @@ const PlaylistDetails = (props) => {
               <SongRow
                 key={index}
                 currentIndex={index}
-                isPlaying={isPlaying}
                 playSong={playSong}
+                isPlaying={isPlaying}
                 track={item.track}
-                playingIndex={props.playlistPlayingIndex}
                 handleDelete={handleDeleteTrack}
+                playingIndex={props.playlistPlayingIndex}
               />
             ))
           ) : (

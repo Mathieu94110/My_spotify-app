@@ -3,14 +3,14 @@
   padding: 20px;
   display: flex;
   align-items: center;
-
+  position: relative;
   z-index: 2;
   color: white;
   max-width: 1200px;
   &__player {
     font-size: 20px;
     padding: 0 10px;
-    margin-right: 20px;
+    position: absolute;
     &:hover {
       font-size: 39px;
       cursor: pointer;
@@ -26,12 +26,13 @@
     opacity: 0.8;
   }
   &__album {
+    margin-left: 60px;
     height: 40px;
     width: 40px;
   }
   &__delete-icon {
     color: #fff;
-    margin-left: 20px;
+    margin-left: 60px;
     &:hover {
       cursor: pointer;
       color: red;
