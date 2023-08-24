@@ -16,7 +16,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./SideBar.scss";
 
-function Sidebar(props) {
+function SideBar(props) {
   const [open, setopen] = useState(true);
   const { width } = useWindowDimensions();
   const toggleOpen = () => {
@@ -152,4 +152,4 @@ export default connect(
   {
     getPlaylists,
   }
-)(Sidebar);
+)(SideBar);

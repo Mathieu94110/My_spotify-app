@@ -1,4 +1,4 @@
-import Sidebar from "./SideBar";
+import SideBar from "./SideBar";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Provider } from "react-redux";
@@ -27,7 +27,7 @@ test("should render the data from Redux state", () => {
   render(
     <Router>
       <Provider store={store}>
-        <Sidebar />
+        <SideBar />
       </Provider>
     </Router>
   );
