@@ -5,20 +5,21 @@ export default (
     data: [],
     tracks: [],
     playingIndex: 0,
+    isPlaying: false,
     isLoading: false,
     error: null,
   },
   action
 ) => {
   switch (action.type) {
-    case (actions.REQUEST_GET_PLAYLISTS,
-    actions.REQUEST_FETCH_PLAYLIST_IS_LOADING): {
+    case (actions.REQUEST_GET_USER_PLAYLISTS,
+    actions.GET_USER_PLAYLIST_IS_LOADING): {
       return {
         ...state,
         isLoading: true,
       };
     }
-    case actions.FETCH_USER_PLAYLISTS_SUCCESS: {
+    case actions.GET_USER_PLAYLISTS_SUCCESS: {
       return {
         ...state,
         isLoading: false,
@@ -27,7 +28,7 @@ export default (
       };
     }
 
-    case actions.FETCH_USER_PLAYLISTS_ERROR: {
+    case actions.GET_USER_PLAYLISTS_ERROR: {
       return {
         ...state,
         isLoading: false,
@@ -35,7 +36,7 @@ export default (
       };
     }
     //
-    case actions.FETCH_USER_PLAYLIST_ITEMS_SUCCESS: {
+    case actions.GET_USER_PLAYLIST_ITEMS_SUCCESS: {
       return {
         ...state,
         isLoading: false,
@@ -44,7 +45,7 @@ export default (
       };
     }
 
-    case actions.FETCH_USER_PLAYLIST_ITEMS_ERROR: {
+    case actions.GET_USER_PLAYLIST_ITEMS_ERROR: {
       return {
         ...state,
         isLoading: false,
@@ -52,7 +53,7 @@ export default (
       };
     }
     //
-    case actions.REQUEST_POST_PLAYLIST: {
+    case actions.POST_USER_PLAYLIST: {
       return {
         ...state,
         isLoading: true,
@@ -72,6 +73,12 @@ export default (
         error: action.error,
       };
     }
+    case actions.TRACK_TO_PLAYLIST_ACTION: {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    }
     case actions.TRACK_TO_PLAYLIST_ACTION_SUCCESS: {
       return {
         ...state,
@@ -89,6 +96,12 @@ export default (
       return {
         ...state,
         playingIndex: action.index,
+      };
+    }
+    case actions.SET_IS_PLAYING_ACTION: {
+      return {
+        ...state,
+        isPlaying: action.value,
       };
     }
 

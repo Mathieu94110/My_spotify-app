@@ -19,3 +19,7 @@ export const getPlaylistPLayingIndex = createSelector(
   [getUserPLaylistsSelector],
   (playlists) => playlists.playingIndex
 );
+export const getIsPlaying = createSelector(
+  [getUserPLaylistsSelector],
+  (playlists) => playlists.isPlaying
+);

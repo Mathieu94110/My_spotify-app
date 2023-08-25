@@ -6,11 +6,13 @@ import {
   getPlaylistItems,
   removeTrackFromPlaylist,
   setPlayingIndex,
+  setIsPlaying,
 } from "../../store/actions";
 import {
   getPlaylistsIsLoadingSelector,
   getPlaylistItemsSelector,
   getPlaylistPLayingIndex,
+  getIsPlaying,
 } from "../../store/selectors";
 import Loading from "../../utils/Loading";
 import { toast, ToastContainer } from "react-toastify";
@@ -18,7 +20,7 @@ import "./PlaylistDetails.scss";
 
 const PlaylistDetails = (props) => {
   const [trackProgress, setTrackProgress] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isReady, setIsReady] = useState(false);
   const { id: playlistId, name: playlistName } = useParams();
   const dispatch = useDispatch();
 
@@ -27,7 +29,6 @@ const PlaylistDetails = (props) => {
   const audioRef = useRef(
     new Audio(props.userPlaylistTracks[0]?.track?.preview_url)
   );
-  const isReady = useRef(false);
   const intervalRef = useRef();
 
   //Call in order to get userPlaylistTracks
@@ -42,7 +43,7 @@ const PlaylistDetails = (props) => {
     clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
       if (audioRef.current.ended) {
-        setIsPlaying(!isPlaying);
+        props.setIsPlaying(!props.isPlaying);
       } else {
         setTrackProgress(audioRef.current.currentTime);
       }
@@ -55,7 +56,7 @@ const PlaylistDetails = (props) => {
   // Else (no audioRef and isPlaying to false) the track is paused
   useEffect(() => {
     if (audioRef.current.src) {
-      if (isPlaying) {
+      if (props.isPlaying) {
         audioRef.current.play();
         startTimer();
       } else {
@@ -63,7 +64,7 @@ const PlaylistDetails = (props) => {
         audioRef.current.pause();
       }
     } else {
-      if (isPlaying) {
+      if (props.isPlaying) {
         audioRef.current = new Audio(audioSrc);
         audioRef.current.play();
         startTimer();
@@ -72,23 +73,23 @@ const PlaylistDetails = (props) => {
         audioRef.current.pause();
       }
     }
-  }, [isPlaying]);
+  }, [props.isPlaying]);
 
   //At each playlistPlayingIndex change (0 at the begining) we stop the previous track with previous index;
   // We assigned new AudioRef value with audioSrc (which value change with playlistPlayingIndex)
-  // After we check if isReady ref have true value , in order to doesnt play track the first time the page is loaded
+  // After we check if isReady is true , in order to doesnt play track the first time the page is loaded
   // If not we set the value to true on next lines at this moment every time isPlaying will be true the song will be played
   useEffect(() => {
     if (props.playlistPlayingIndex >= 0) {
       audioRef.current.pause();
       audioRef.current = new Audio(audioSrc);
       setTrackProgress(audioRef.current.currentTime);
-      if (isReady.current) {
+      if (isReady) {
         audioRef.current.play();
-        setIsPlaying(true);
+        props.setIsPlaying(true);
         startTimer();
       } else {
-        isReady.current = true;
+        setIsReady(true);
       }
     }
   }, [props.playlistPlayingIndex]);
@@ -117,7 +118,7 @@ const PlaylistDetails = (props) => {
   };
   // we passed the index to the store to change the selected track(0 by default)
   const playSong = (index) => {
-    setIsPlaying(!isPlaying);
+    props.setIsPlaying(!props.isPlaying);
     props.setPlayingIndex(index);
   };
 
@@ -132,7 +133,7 @@ const PlaylistDetails = (props) => {
                 key={index}
                 currentIndex={index}
                 playSong={playSong}
-                isPlaying={isPlaying}
+                isPlaying={props.isPlaying}
                 track={item.track}
                 handleDelete={handleDeleteTrack}
                 playingIndex={props.playlistPlayingIndex}
@@ -157,9 +158,11 @@ export default connect(
     isLoading: getPlaylistsIsLoadingSelector(state),
     userPlaylistTracks: getPlaylistItemsSelector(state),
     playlistPlayingIndex: getPlaylistPLayingIndex(state),
+    isPlaying: getIsPlaying(state),
   }),
   {
     getPlaylistItems,
     setPlayingIndex,
+    setIsPlaying,
   }
 )(PlaylistDetails);

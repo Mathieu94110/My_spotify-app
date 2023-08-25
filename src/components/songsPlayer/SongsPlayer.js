@@ -15,18 +15,21 @@ const SongsPlayer = (props) => {
         <Button
           className="songs-player__button"
           icon={faBackward}
+          color={"#fff"}
           onClick={props.previousSong}
         />
         <Button
           className="songs-player__button"
           onClick={props.playing ? props.pauseSong : props.playSong}
           icon={props.playing ? faPause : faPlay}
+          color={"#fff"}
           playBtn
         />
         <Button
           className="songs-player__button"
           icon={faForward}
           onClick={props.nextSong}
+          color={"#fff"}
         />
       </div>
     </div>

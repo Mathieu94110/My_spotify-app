@@ -7,6 +7,21 @@
   z-index: 2;
   color: white;
   max-width: 1200px;
+  &:hover {
+    cursor: pointer;
+    background-color: #000;
+    opacity: 0.8;
+  }
+  &--active {
+    background-color: #fff;
+    opacity: 0.8;
+    color: #000;
+    &:hover {
+      cursor: pointer;
+      background-color: #fff;
+      opacity: 0.8;
+    }
+  }
   &__player {
     font-size: 20px;
     padding: 0 10px;
@@ -20,23 +35,23 @@
       margin: 0px 0px;
     }
   }
-  &:hover {
-    cursor: pointer;
-    background-color: #000;
-    opacity: 0.8;
-  }
   &__album {
     margin-left: 60px;
     height: 40px;
     width: 40px;
   }
   &__delete-icon {
-    color: #fff;
     margin-left: 60px;
     &:hover {
       cursor: pointer;
       color: red;
       transform: scale(120%);
+    }
+    &--white {
+      color: "#fff";
+    }
+    &--black {
+      color: "#000";
     }
   }
 }

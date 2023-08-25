@@ -16,20 +16,23 @@ function SongRow({
   const { width } = useWindowDimensions();
 
   return (
-    <div className="song-row">
+    <div
+      className={
+        currentIndex === playingIndex && isPlaying
+          ? "song-row song-row--active"
+          : "song-row"
+      }
+    >
       {track.preview_url ? (
         <Button
           className="song-row__player"
           onClick={() => playSong(currentIndex)}
           icon={currentIndex === playingIndex && isPlaying ? faPause : faPlay}
           playBtn
+          color={currentIndex === playingIndex && isPlaying ? "#000" : "#fff"}
         />
       ) : (
-        <Button
-          className="song-row__player"
-          onClick={() => playSong(currentIndex)}
-          icon={faBan}
-        />
+        <Button className="song-row__player" icon={faBan} />
       )}
 
       <img
@@ -53,7 +56,11 @@ function SongRow({
       <span>0:30</span>
       <DeleteIcon
         onClick={() => handleDelete({ track })}
-        className="song-row__delete-icon"
+        className={
+          currentIndex === playingIndex && isPlaying
+            ? "song-row__delete-icon song-row__delete-icon--black"
+            : "song-row__delete-icon song-row__delete-icon--white"
+        }
       />
     </div>
   );

@@ -1,116 +1,126 @@
 import apiUserPlaylistsRequest from "../../api/api.playlists";
 
-export const REQUEST_GET_PLAYLISTS = "request get user playlists";
-export const FETCH_USER_PLAYLISTS_SUCCESS =
+export const REQUEST_GET_USER_PLAYLISTS = "request get user playlists";
+export const GET_USER_PLAYLISTS_SUCCESS =
   "request fetch user playlists success";
-export const FETCH_USER_PLAYLIST_ITEMS_SUCCESS =
+export const GET_USER_PLAYLIST_ITEMS_SUCCESS =
   "request fetch user playlist items success";
-export const FETCH_USER_PLAYLISTS_ERROR = "request fetch user playlists error";
-export const FETCH_USER_PLAYLIST_ITEMS_ERROR =
+export const GET_USER_PLAYLISTS_ERROR = "request fetch user playlists error";
+export const GET_USER_PLAYLIST_ITEMS_ERROR =
   "request fetch user playlist items error";
-export const REQUEST_POST_PLAYLIST = "request post user playlist";
+export const POST_USER_PLAYLIST = "request post user playlist";
 export const POST_USER_PLAYLIST_SUCCESS = "request post user playlist success";
 export const POST_USER_PLAYLIST_ERROR = "request post user playlist error";
+export const TRACK_TO_PLAYLIST_ACTION =
+  "request add or remove track to playlist";
 export const TRACK_TO_PLAYLIST_ACTION_SUCCESS =
   "request post track to user playlist success";
 export const TRACK_TO_PLAYLIST_ACTION_ERROR =
   "request post track to user playlist error";
-export const REQUEST_FETCH_PLAYLIST_IS_LOADING =
-  "request fetch playlist is loading";
+export const GET_USER_PLAYLIST_IS_LOADING = "request fetch playlist is loading";
 export const SET_PLAYLIST_PLAYING_INDEX =
   "request set current playlist playing index";
-export const requestGetUserPlaylists = () => ({
-  type: REQUEST_GET_PLAYLISTS,
+export const SET_IS_PLAYING_ACTION = "request set is playing status";
+
+export const getUserPlaylistsAction = () => ({
+  type: REQUEST_GET_USER_PLAYLISTS,
 });
 
-export const requestGetUserPlaylistItems = () => ({
-  type: REQUEST_FETCH_PLAYLIST_IS_LOADING,
-});
-
-export const fetchUserPlaylistsSuccess = (userPlaylists) => ({
-  type: FETCH_USER_PLAYLISTS_SUCCESS,
+export const getUserPlaylistsActionSuccess = (userPlaylists) => ({
+  type: GET_USER_PLAYLISTS_SUCCESS,
   userPlaylists,
 });
-export const fetchUserPlaylistItemsSuccess = (items) => ({
-  type: FETCH_USER_PLAYLIST_ITEMS_SUCCESS,
+export const getUserPlaylistsActionError = (error) => ({
+  type: GET_USER_PLAYLISTS_ERROR,
+  error,
+});
+
+export const getUserPlaylistItemsAction = () => ({
+  type: GET_USER_PLAYLIST_IS_LOADING,
+});
+
+export const getUserPlaylistItemsActionSuccess = (items) => ({
+  type: GET_USER_PLAYLIST_ITEMS_SUCCESS,
   items,
 });
-
-export const fetchUserPlaylistsError = (error) => ({
-  type: FETCH_USER_PLAYLISTS_ERROR,
-  error,
-});
-export const fetchUserPlaylistItemsError = (error) => ({
-  type: FETCH_USER_PLAYLIST_ITEMS_ERROR,
+export const getUserPlaylistItemsActionError = (error) => ({
+  type: GET_USER_PLAYLIST_ITEMS_ERROR,
   error,
 });
 
-export const requestPostUserPlaylist = () => ({
-  type: REQUEST_POST_PLAYLIST,
+export const postUserPlaylistAction = () => ({
+  type: POST_USER_PLAYLIST,
 });
 
-export const postUserPlaylistsSuccess = () => ({
+export const postUserPlaylistsActionSuccess = () => ({
   type: POST_USER_PLAYLIST_SUCCESS,
 });
 
-export const postUserPlaylistsError = (error) => ({
+export const postUserPlaylistsActionError = (error) => ({
   type: POST_USER_PLAYLIST_ERROR,
   error,
 });
 
-export const requestTrackActionToUserPlaylist = () => ({
-  type: REQUEST_FETCH_PLAYLIST_IS_LOADING,
+export const trackToUserPlaylistActions = () => ({
+  type: TRACK_TO_PLAYLIST_ACTION,
 });
 
-export const trackToPlaylistActionSuccess = () => ({
+export const trackToUserPlaylistActionSuccess = () => ({
   type: TRACK_TO_PLAYLIST_ACTION_SUCCESS,
 });
 
-export const trackToPlaylistActionError = (error) => ({
+export const trackToUserPlaylistActionError = (error) => ({
   type: TRACK_TO_PLAYLIST_ACTION_ERROR,
   error,
 });
 
-export const setPlaylistPlayingIndexActionSuccess = (index) => ({
+export const setPlaylistPlayingIndexAction = (index) => ({
   type: SET_PLAYLIST_PLAYING_INDEX,
   index,
 });
+export const setIsPlayingAction = (value) => ({
+  type: SET_IS_PLAYING_ACTION,
+  value: value,
+});
 
 export const getPlaylists = () => (dispatch) => {
-  dispatch(requestGetUserPlaylists());
+  dispatch(getUserPlaylistsAction());
   return apiUserPlaylistsRequest.getUserPlaylists().then(
-    (userPlaylists) => dispatch(fetchUserPlaylistsSuccess(userPlaylists)),
-    (error) => dispatch(fetchUserPlaylistsError(error))
+    (userPlaylists) => dispatch(getUserPlaylistsActionSuccess(userPlaylists)),
+    (error) => dispatch(getUserPlaylistsActionError(error))
   );
 };
 export const getPlaylistItems = (id) => (dispatch) => {
-  dispatch(requestGetUserPlaylistItems());
+  dispatch(getUserPlaylistItemsAction());
   return apiUserPlaylistsRequest.getUserPlaylistItems(id).then(
-    (items) => dispatch(fetchUserPlaylistItemsSuccess(items)),
-    (error) => dispatch(fetchUserPlaylistItemsError(error))
+    (items) => dispatch(getUserPlaylistItemsActionSuccess(items)),
+    (error) => dispatch(getUserPlaylistItemsActionError(error))
   );
 };
 export const createPlaylist = (value) => (dispatch) => {
-  dispatch(requestPostUserPlaylist());
+  dispatch(postUserPlaylistAction());
   return apiUserPlaylistsRequest.createUserPlaylist(value).then(
-    () => dispatch(postUserPlaylistsSuccess()),
-    (error) => dispatch(postUserPlaylistsError(error))
+    () => dispatch(postUserPlaylistsActionSuccess()),
+    (error) => dispatch(postUserPlaylistsActionError(error))
   );
 };
 export const addTrackToPlaylist = (infos) => (dispatch) => {
-  dispatch(requestTrackActionToUserPlaylist());
+  dispatch(trackToUserPlaylistActions());
   return apiUserPlaylistsRequest.addTrackToPlaylist(infos).then(
-    () => dispatch(trackToPlaylistActionSuccess()),
-    (error) => dispatch(trackToPlaylistActionError(error))
+    () => dispatch(trackToUserPlaylistActionSuccess()),
+    (error) => dispatch(trackToUserPlaylistActionError(error))
   );
 };
 export const removeTrackFromPlaylist = (infos) => (dispatch) => {
-  dispatch(requestTrackActionToUserPlaylist());
+  dispatch(trackToUserPlaylistActions());
   return apiUserPlaylistsRequest.deleteTrackFromPlaylist(infos).then(
-    () => dispatch(trackToPlaylistActionSuccess()),
-    (error) => dispatch(trackToPlaylistActionError(error))
+    () => dispatch(trackToUserPlaylistActionSuccess()),
+    (error) => dispatch(trackToUserPlaylistActionError(error))
   );
 };
 
+export const setIsPlaying = (value) => (dispatch) =>
+  dispatch(setIsPlayingAction(value));
+
 export const setPlayingIndex = (index) => (dispatch) =>
-  dispatch(setPlaylistPlayingIndexActionSuccess(index));
+  dispatch(setPlaylistPlayingIndexAction(index));
