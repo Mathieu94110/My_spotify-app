@@ -77,19 +77,21 @@ body {
     width: 100%;
     display: flex;
     &--logged-in {
-      height: calc(100vh - 80px);
+      height: 100vh;
       display: flex;
     }
   }
 }
 @media screen and (max-width: 800px) {
   .app {
-    display: block;
+    display: flex;
+    flex-direction: column;
     height: 100%;
     &__body {
       &--logged-in {
         height: auto;
-        display: block;
+        display: flex;
+        flex-direction: column;
       }
     }
   }

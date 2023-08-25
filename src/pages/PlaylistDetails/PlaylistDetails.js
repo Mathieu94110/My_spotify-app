@@ -16,6 +16,7 @@ import {
 } from "../../store/selectors";
 import Loading from "../../utils/Loading";
 import { toast, ToastContainer } from "react-toastify";
+import Footer from "../../components/footer/Footer";
 import "./PlaylistDetails.scss";
 
 const PlaylistDetails = (props) => {
@@ -34,7 +35,6 @@ const PlaylistDetails = (props) => {
   //Call in order to get userPlaylistTracks
   useEffect(() => {
     props.getPlaylistItems(playlistId);
-    console.log(audioRef);
   }, [playlistId]);
 
   // On startTimer we created a watcher after deleted the previous
@@ -148,6 +148,7 @@ const PlaylistDetails = (props) => {
           <Loading />
         )}
       </div>
+      <Footer />
       {/* Tag below is necessary to display toast message*/}
       <ToastContainer />
     </div>

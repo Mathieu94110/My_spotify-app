@@ -1,5 +1,5 @@
 .playlistDetails {
-  height: calc(100vh - 80px);
+  height: 100%;
   width: 100%;
   z-index: 1;
 
@@ -10,7 +10,7 @@
     color: gold;
   }
   &__tracks {
-    height: calc(100vh - 280px);
+    height: calc(100vh - 180px);
     overflow-y: scroll;
   }
   &__no-items {

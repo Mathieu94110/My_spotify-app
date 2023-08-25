@@ -20,10 +20,9 @@
 }
 @media only screen and (max-width: 800px) {
   .playlists {
-    display: block;
     padding: 20px;
     width: 100%;
-    height: calc(100vh - 140px);
+    height: calc(100vh - 60px);
     &__content {
       display: flex;
       flex-direction: column;

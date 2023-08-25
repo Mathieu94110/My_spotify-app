@@ -8,7 +8,6 @@ import PlaylistDetails from "./pages/PlaylistDetails/PlaylistDetails";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import { userIsLoggedIn } from "./store/selectors";
 import { connect } from "react-redux";
-import Footer from "./components/footer/Footer";
 
 function App(props) {
   return (
@@ -32,7 +31,6 @@ function App(props) {
             <Route exact path="/search" element={<Search />} />
           </Routes>
         </div>
-        {props.isLoggedIn ? <Footer /> : null}
       </div>
     </HashRouter>
   );

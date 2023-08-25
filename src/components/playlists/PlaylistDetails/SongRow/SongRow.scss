@@ -41,7 +41,8 @@
     width: 40px;
   }
   &__delete-icon {
-    margin-left: 60px;
+    position: absolute;
+    right: 20px;
     &:hover {
       cursor: pointer;
       color: red;
