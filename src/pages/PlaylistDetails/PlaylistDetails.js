@@ -30,20 +30,22 @@ const PlaylistDetails = (props) => {
   const audioRef = useRef(
     new Audio(props.userPlaylistTracks[0]?.track?.preview_url)
   );
+  const { duration } = audioRef.current;
+
+  const currentPercentage = duration ? (trackProgress / duration) * 100 : 0;
   const intervalRef = useRef();
 
   //Call in order to get userPlaylistTracks
   useEffect(() => {
     props.getPlaylistItems(playlistId);
   }, [playlistId]);
-
   // On startTimer we created a watcher after deleted the previous
-  //to see every second the progression of the track and if he is finished we switch isPlaying to false
+  //to see every second the progression of the track and if he is finished we continue playing with next track
   const startTimer = () => {
     clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
       if (audioRef.current.ended) {
-        props.setIsPlaying(!props.isPlaying);
+        handleNext();
       } else {
         setTrackProgress(audioRef.current.currentTime);
       }
@@ -98,6 +100,7 @@ const PlaylistDetails = (props) => {
     return () => {
       audioRef.current.pause();
       clearInterval(intervalRef.current);
+      props.isPlaying && props.setIsPlaying(!props.isPlaying);
     };
   }, []);
 
@@ -120,6 +123,18 @@ const PlaylistDetails = (props) => {
   const playSong = (index) => {
     props.setIsPlaying(!props.isPlaying);
     props.setPlayingIndex(index);
+  };
+
+  const handleNext = () => {
+    if (props.playlistPlayingIndex < props.userPlaylistTracks.length - 1) {
+      props.setPlayingIndex(props.playlistPlayingIndex + 1);
+    } else props.setPlayingIndex(0);
+  };
+
+  const handlePrev = () => {
+    if (props.playlistPlayingIndex - 1 < 0)
+      props.setPlayingIndex(props.userPlaylistTracks.length - 1);
+    else props.setPlayingIndex(props.playlistPlayingIndex - 1);
   };
 
   return (
@@ -148,7 +163,16 @@ const PlaylistDetails = (props) => {
           <Loading />
         )}
       </div>
-      <Footer />
+      {!props.isLoading && props.userPlaylistTracks.length > 0 && (
+        <Footer
+          trackInfo={props.userPlaylistTracks[props.playlistPlayingIndex]}
+          playingIndex={props.playlistPlayingIndex}
+          isPlaying={props.isPlaying}
+          playSong={playSong}
+          handlePrev={handlePrev}
+          handleNext={handleNext}
+        />
+      )}
       {/* Tag below is necessary to display toast message*/}
       <ToastContainer />
     </div>
