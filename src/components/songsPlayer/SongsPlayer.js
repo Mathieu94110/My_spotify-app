@@ -1,12 +1,12 @@
 import React from "react";
 import Button from "./Components/ControlButton";
+import { convertMsToMinutesSeconds } from "../../utils/convertMsToMinutesSeconds";
 import {
   faBackward,
   faPause,
   faPlay,
   faForward,
 } from "@fortawesome/free-solid-svg-icons";
-import { convertMsToMinutesSeconds } from "../../utils/convertMsToMinutesSeconds";
 import "./SongsPlayer.scss";
 
 const SongsPlayer = (props) => {

@@ -1,0 +1,31 @@
+.side-bar-playlists {
+  display: block;
+  height: 300px;
+  overflow-y: auto;
+  &--none {
+    display: none;
+  }
+  &__item {
+    width: 90%;
+    margin: auto;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    height: 30px;
+    color: grey;
+    transition: 200ms color ease-in;
+    font-size: 14px;
+    text-decoration: none;
+    &:hover {
+      cursor: pointer;
+      color: #fff;
+    }
+  }
+}
+@media screen and (max-width: 800px) {
+  .side-bar-playlists {
+    &--none {
+      display: none;
+    }
+  }
+}

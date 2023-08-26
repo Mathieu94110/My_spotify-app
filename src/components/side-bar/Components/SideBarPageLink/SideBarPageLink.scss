@@ -1,0 +1,18 @@
+.side-bar-page-link {
+  height: 100%;
+  width: 100%;
+  &__text-display {
+    margin-left: 20px;
+    &--none {
+      display: none;
+    }
+  }
+}
+@media screen and (max-width: 800px) {
+  .side-bar-page-link {
+    &__icons {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}

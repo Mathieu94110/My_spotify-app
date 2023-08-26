@@ -6,6 +6,10 @@
   align-items: center;
   height: 40px;
   color: #000;
+
+  > h3 {
+    font-size: 1rem;
+  }
   &:hover {
     background-color: rgba(38, 38, 38, 0.6);
     cursor: pointer;

@@ -11,7 +11,7 @@
   &__buttons {
     display: flex;
     width: 240px;
-    height: 50px;
+    height: 40px;
     justify-content: space-between;
     align-items: center;
     position: relative;
@@ -54,19 +54,100 @@
     }
   }
   &__track-info {
-    height: 30px;
+    height: 40px;
     width: auto;
     display: flex;
     justify-content: center;
-
+    align-items: center;
+    line-height: 0.8rem;
     > span {
       padding: 0 6px;
       font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
       &:nth-child(even) {
         color: gold;
       }
       &:nth-child(odd) {
+        display: flex;
         color: #fff;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .songs-player {
+    justify-content: center;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    &__content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 0.8rem;
+    }
+    &__buttons {
+      display: flex;
+      width: 240px;
+      height: 40px;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+    &__button {
+      padding: 0 10px;
+      font-size: 25px;
+      padding: 0 10px;
+      &:hover {
+        font-size: 30px;
+        cursor: pointer;
+      }
+      &:active {
+        font-size: 35px;
+        margin: 0px 0px;
+      }
+      &--prev {
+        top: 10px;
+        left: 10px;
+        position: absolute;
+        &:hover {
+          top: 5px;
+        }
+      }
+      &--play {
+        top: 10px;
+        left: 100px;
+        position: absolute;
+        &:hover {
+          top: 5px;
+        }
+      }
+      &--next {
+        top: 10px;
+        right: 20px;
+        position: absolute;
+        &:hover {
+          top: 5px;
+        }
+      }
+    }
+    &__track-info {
+      height: 40px;
+      width: auto;
+      display: flex;
+      justify-content: center;
+      font-size: 0.7rem;
+      > span {
+        padding: 0 6px;
+        font-weight: 600;
+        &:nth-child(even) {
+          color: #fff;
+        }
+        &:nth-child(odd) {
+          display: none;
+        }
       }
     }
   }

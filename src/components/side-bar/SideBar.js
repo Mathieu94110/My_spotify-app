@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import { getPlaylists } from "../../store/actions";
@@ -8,13 +7,14 @@ import { connect } from "react-redux";
 import Loading from "../../utils/Loading";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import spotifyLogo from "../../assets/images/spotify-logo.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
   faMagnifyingGlass,
   faFolder,
 } from "@fortawesome/free-solid-svg-icons";
 import "./SideBar.scss";
+import SideBarPlaylists from "./Components/SideBarPlaylists/SideBarPlaylists";
+import SideBarPageLink from "./Components/SideBarPageLink/SideBarPageLink";
 
 function SideBar(props) {
   const [open, setopen] = useState(true);
@@ -26,6 +26,24 @@ function SideBar(props) {
   useEffect(() => {
     props.getPlaylists();
   }, []);
+
+  const pageLinks = [
+    { link: "/home", title: "Accueil", open, windowWidth: width, icon: faHome },
+    {
+      link: "/search",
+      title: "Rechercher",
+      open,
+      windowWidth: width,
+      icon: faMagnifyingGlass,
+    },
+    {
+      link: "/playlists",
+      title: "Vos playlists",
+      open,
+      windowWidth: width,
+      icon: faFolder,
+    },
+  ];
 
   return (
     <div className={open ? "sidebar" : "sidebar sidebar--closed"}>
@@ -57,88 +75,34 @@ function SideBar(props) {
           )}
         </button>
         <ul className="sidebar__list-items">
-          <li>
-            <NavLink to="/home">
-              <span>
-                <FontAwesomeIcon icon={faHome} className="sidebar__icons" />
-              </span>
-              <span
-                data-testid="sidebar-menu-text"
-                className={
-                  open && width > 830
-                    ? "sidebar__text-display"
-                    : "sidebar__text-display--none"
-                }
-              >
-                Accueil
-              </span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/search">
-              <span>
-                <FontAwesomeIcon
-                  icon={faMagnifyingGlass}
-                  className="sidebar__icons"
+          {pageLinks.map((link, index) => {
+            return (
+              <li key={index}>
+                <SideBarPageLink
+                  link={link.link}
+                  title={link.title}
+                  open={link.open}
+                  windowWidth={link.windowWidth}
+                  icon={link.icon}
                 />
-              </span>
-              <span
-                data-testid="sidebar-menu-text"
-                className={
-                  open && width > 830
-                    ? "sidebar__text-display"
-                    : "sidebar__text-display--none"
-                }
-              >
-                Rechercher
-              </span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/playlists">
-              <span>
-                <FontAwesomeIcon icon={faFolder} className="sidebar__icons" />
-              </span>
-              <span
-                data-testid="sidebar-menu-text"
-                className={
-                  open && width > 830
-                    ? "sidebar__text-display"
-                    : "sidebar__text-display--none"
-                }
-              >
-                Vos playlists
-              </span>
-            </NavLink>
-          </li>
+              </li>
+            );
+          })}
         </ul>
         {width > 800 && (
           <>
-            <strong className="sidebar__title"></strong>
+            <strong></strong>
             <hr />
           </>
         )}
         {props.isLoading ? (
           <Loading />
         ) : (
-          <ul
-            className={
-              open && width > 800
-                ? "sidebar__playlist-items"
-                : "sidebar__playlist-items--none"
-            }
-          >
-            {props.userPlaylists?.map((playlist) => (
-              <li key={playlist.id}>
-                <NavLink
-                  className="sidebar__playlist-item"
-                  to={"/playlistDetails/" + playlist.name + "/" + playlist.id}
-                >
-                  {playlist.name}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
+          <SideBarPlaylists
+            userPlaylists={props.userPlaylists}
+            windowWidth={width}
+            open={open}
+          />
         )}
       </div>
     </div>

@@ -10,7 +10,7 @@
     color: gold;
   }
   &__tracks {
-    height: calc(100vh - 180px);
+    height: calc(100vh - 10px);
     overflow-y: scroll;
   }
   &__no-items {
@@ -31,6 +31,9 @@
       align-items: center;
       justify-content: center;
       padding: 0;
+    }
+    &__tracks {
+      height: calc(100vh - 190px);
     }
     &__no-items {
       font-size: 1rem;
