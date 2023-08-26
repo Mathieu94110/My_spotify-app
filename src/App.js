@@ -3,7 +3,7 @@ import Login from "./pages/Login/Login";
 import Home from "./pages/Home/Home";
 import Playlists from "./pages/Playlists/Playlists";
 import Search from "./pages/Search/Search";
-import SideBar from "./components/sideBar/SideBar";
+// import SideBar from "./components/sideBar/SideBar";
 import PlaylistDetails from "./pages/PlaylistDetails/PlaylistDetails";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import { userIsLoggedIn } from "./store/selectors";
@@ -18,7 +18,7 @@ function App(props) {
             !props.isLoggedIn ? "app__body" : "app__body app__body--logged-in"
           }
         >
-          {props.isLoggedIn ? <SideBar /> : null}
+          {/* {props.isLoggedIn ? <SideBar /> : null} */}
 
           <Routes>
             <Route exact path="/" element={<Login />} />
