@@ -1,11 +1,54 @@
-# My_spotify-app
+# Spotify React application on web client
 
-In order to test the project locally yo have to :
+Spotify Web Client using [Spotify Web API](https://developer.spotify.com/documentation/web-api/)
 
-1: Having a spotify account and go to your admin dashboard and copy your spotify id.
-2: Clone the project using git clone.
-3: go to My_spotify-app/spotify_application and run npm install or yarn.
-4: In .env file replace my REACT_APP_SPOTIFY_CLIENT_ID by yours and possibly change REACT_APP_REDIRECT_URI if it not the same as on your admin dashboard settings.
-5:### `Run npm start or yarn start`
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+
+## Features
+
+- Play full audio tracks.
+- Add playlists.
+- See your recently played tracks and your top artists.
+- Add or remove tracks from your library.
+- Search tracks, albums, artists and playlists.
+
+## Try it out
+
+https://my-spotify-app-theta.vercel.app/
+
+**Warning:** Spotify Playback requires users to authenticate with spotify credentials.
+
+## How to Run locally
+
+First you need a [Spotify Client ID](https://developer.spotify.com/dashboard/applications).
+
+```bash
+$ git clone https://github.com/francoborrelli/spotify-react-web-client.git
+$ cd My_spotify-app
+$ npm start
+```
+
+You will have to define a '.env' file and set the following variables:
+
+```
+REACT_APP_SPOTIFY_CLIENT_ID="YOUR_SPOTIFY_CLIENT_ID"
+REACT_APP_DEV_REDIRECT_URI=http://localhost:3000/
+```
+
+Do not forget to indicate redirect uri on your spotify account dashboard
+
+Now run:
+
+```bash
+$ npm start
+```
+
+and visit http://localhost:3000.
+
+## Screenshots
+
+![browse](src/assets/images/spotify-login-screen.PNG?raw=true "Login")
+![browse](src/assets/images/spotify-home-screen.PNG?raw=true "Home")
+![playlist](src/assets/images/spotify-search-screen.PNG?raw=true "Search")
+![artist](src/assets/images/spotify-playlists-screen.PNG?raw=true "Playlists")
+![devices](src/assets/images/spotify-playlist-details-screen.PNG?raw=true "laylistDetails")
