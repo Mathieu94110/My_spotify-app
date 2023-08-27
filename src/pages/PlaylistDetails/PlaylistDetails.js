@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import SongRow from "../../components/playlists/PlaylistDetails/SongRow/SongRow";
 import { connect, useDispatch } from "react-redux";
 import {
@@ -18,27 +18,78 @@ import Loading from "../../utils/Loading";
 import { toast, ToastContainer } from "react-toastify";
 import Footer from "../../components/footer/Footer";
 import "./PlaylistDetails.scss";
-
 const PlaylistDetails = (props) => {
   const [trackProgress, setTrackProgress] = useState(0);
   const [isReady, setIsReady] = useState(false);
   const { id: playlistId, name: playlistName } = useParams();
   const dispatch = useDispatch();
-
-  const audioSrc =
+  const location = useLocation();
+  let audioSrc =
     props.userPlaylistTracks[props.playlistPlayingIndex]?.track?.preview_url;
   const audioRef = useRef(
     new Audio(props.userPlaylistTracks[0]?.track?.preview_url)
   );
-  const { duration } = audioRef.current;
-
-  const currentPercentage = duration ? (trackProgress / duration) * 100 : 0;
   const intervalRef = useRef();
-
   //Call in order to get userPlaylistTracks
   useEffect(() => {
     props.getPlaylistItems(playlistId);
   }, [playlistId]);
+
+  // Here we reset isReady and isPlaying to false on onmounting to prevent first track loading when we navigate between playlists
+  useEffect(() => {
+    return () => {
+      setIsReady(false);
+      props.setIsPlaying(false);
+    };
+  }, [location]);
+
+  // We watch isPlaying status if it's true and audio source exist, play song and start timer are launched
+  // If he detect audioRef value but isPlaying status to false, the track is paused.
+  // Else if no audioRef value but isPlaying status is true we assigned audioSrc (which value is set automatiquely depending
+  // of playlistPlayingIndex store value to audioRef src and play song and start timer are launched
+  // Else (no audioRef and isPlaying to false) the track is paused
+  useEffect(() => {
+    if (audioRef.current.src && isReady) {
+      if (props.isPlaying) {
+        audioRef.current.play();
+        startTimer();
+      } else {
+        clearInterval(intervalRef.current);
+        audioRef.current.pause();
+      }
+    } else {
+      if (props.isPlaying && isReady) {
+        audioRef.current = new Audio(audioSrc);
+        audioRef.current.play();
+        startTimer();
+      } else {
+        clearInterval(intervalRef.current);
+        audioRef.current.pause();
+      }
+    }
+  }, [props.isPlaying]);
+
+  useEffect(() => {
+    configurePlayMode();
+  }, [props.playlistPlayingIndex, props.userPlaylistTracks]); //audioSrc depending on those 2 values
+
+  //At each playlistPlayingIndex change (0 at the begining) we stop the previous track with previous index;
+  // We assigned new AudioRef value with audioSrc (which value change with playlistPlayingIndex)
+  // After we check if isReady is true , in order to doesnt play track the first time the page is loaded
+  // If not we set the value to true on next lines at this moment every time isPlaying will be true the song will be played
+  const configurePlayMode = () => {
+    audioRef.current.pause();
+    audioRef.current = new Audio(audioSrc);
+    setTrackProgress(audioRef.current.currentTime);
+    if (isReady) {
+      audioRef.current.play();
+      props.setIsPlaying(true);
+      startTimer();
+    } else {
+      setIsReady(true);
+    }
+  };
+
   // On startTimer we created a watcher after deleted the previous
   //to see every second the progression of the track and if he is finished we continue playing with next track
   const startTimer = () => {
@@ -51,58 +102,6 @@ const PlaylistDetails = (props) => {
       }
     }, [1000]);
   };
-  // We watch isPlaying status if it's true and playlist index exist, play song and start timer are launched
-  // If he detect audioRef value but isPlaying status to false, the track is paused.
-  // Else if no audioRef value but isPlaying status is true we assigned audioSrc (which value is set automatiquely depending
-  // of playlistPlayingIndex store value to audioRef src and play song and start timer are launched
-  // Else (no audioRef and isPlaying to false) the track is paused
-  useEffect(() => {
-    if (audioRef.current.src) {
-      if (props.isPlaying) {
-        audioRef.current.play();
-        startTimer();
-      } else {
-        clearInterval(intervalRef.current);
-        audioRef.current.pause();
-      }
-    } else {
-      if (props.isPlaying) {
-        audioRef.current = new Audio(audioSrc);
-        audioRef.current.play();
-        startTimer();
-      } else {
-        clearInterval(intervalRef.current);
-        audioRef.current.pause();
-      }
-    }
-  }, [props.isPlaying]);
-
-  //At each playlistPlayingIndex change (0 at the begining) we stop the previous track with previous index;
-  // We assigned new AudioRef value with audioSrc (which value change with playlistPlayingIndex)
-  // After we check if isReady is true , in order to doesnt play track the first time the page is loaded
-  // If not we set the value to true on next lines at this moment every time isPlaying will be true the song will be played
-  useEffect(() => {
-    if (props.playlistPlayingIndex >= 0) {
-      audioRef.current.pause();
-      audioRef.current = new Audio(audioSrc);
-      setTrackProgress(audioRef.current.currentTime);
-      if (isReady) {
-        audioRef.current.play();
-        props.setIsPlaying(true);
-        startTimer();
-      } else {
-        setIsReady(true);
-      }
-    }
-  }, [props.playlistPlayingIndex]);
-
-  useEffect(() => {
-    return () => {
-      audioRef.current.pause();
-      clearInterval(intervalRef.current);
-      props.isPlaying && props.setIsPlaying(!props.isPlaying);
-    };
-  }, []);
 
   const handleDeleteTrack = (track) => {
     const { uri: trackUri, name: trackName } = track.track;
@@ -119,6 +118,7 @@ const PlaylistDetails = (props) => {
         });
       });
   };
+
   // we passed the index to the store to change the selected track(0 by default)
   const playSong = (index) => {
     props.setIsPlaying(!props.isPlaying);
