@@ -8,27 +8,31 @@ import PlaylistDetails from "./pages/PlaylistDetails/PlaylistDetails";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import { userIsLoggedIn } from "./store/selectors";
 import { connect } from "react-redux";
+import { useEffect } from "react";
+import { selectUserInfos } from "./store/user/userSlice";
+import { useSelector } from "react-redux";
 
-function App(props) {
+function App() {
+  const isUserInfos = useSelector(selectUserInfos);
   return (
     <HashRouter>
       <div className="app">
         <div
           className={
-            !props.isLoggedIn ? "app__body" : "app__body app__body--logged-in"
+            !isUserInfos ? "app__body" : "app__body app__body--logged-in"
           }
         >
-          {props.isLoggedIn ? <SideBar /> : null}
+          {/* {isUserInfos ? <SideBar /> : null} */}
 
           <Routes>
             <Route exact path="/" element={<Login />} />
             <Route exact path="/home" element={<Home />} />
-            <Route exact path="/playlists" element={<Playlists />} />
+            {/*             <Route exact path="/playlists" element={<Playlists />} />
             <Route
               path="/playlistDetails/:name/:id"
               element={<PlaylistDetails />}
             />
-            <Route exact path="/search" element={<Search />} />
+            <Route exact path="/search" element={<Search />} />  */}
           </Routes>
         </div>
       </div>
@@ -36,9 +40,4 @@ function App(props) {
   );
 }
 
-export default connect(
-  (state) => ({
-    isLoggedIn: userIsLoggedIn(state),
-  }),
-  {}
-)(App);
+export default App;

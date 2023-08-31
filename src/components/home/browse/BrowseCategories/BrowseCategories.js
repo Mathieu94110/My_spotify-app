@@ -1,20 +1,17 @@
 import React from "react";
 import {
-  getCategories,
-  getNewReleases,
   getFeatured,
+  getNewReleases,
+  getCategories,
   updateCategoryType,
-} from "../../../../store/actions";
-import { connect } from "react-redux";
+  selectViewType,
+} from "../../../../store/browse/browseSlice";
+import { useDispatch, useSelector } from "react-redux";
 import "./BrowseCategories.scss";
 
-const BrowseCategories = ({
-  getCategories,
-  getNewReleases,
-  getFeatured,
-  updateCategoryType,
-  viewType,
-}) => {
+const BrowseCategories = () => {
+  const dispatch = useDispatch();
+  const viewType = useSelector(selectViewType);
   return (
     <div className="browse-headers">
       <h2 className="header-title">Catégories</h2>
@@ -22,8 +19,8 @@ const BrowseCategories = ({
         <p
           className={viewType === "New Releases" ? "active" : ""}
           onClick={() => {
-            getNewReleases();
-            updateCategoryType("New Releases");
+            dispatch(getNewReleases());
+            dispatch(updateCategoryType("New Releases"));
           }}
         >
           Nouveautés
@@ -31,8 +28,8 @@ const BrowseCategories = ({
         <p
           className={viewType === "Genres" ? "active" : ""}
           onClick={() => {
-            getCategories();
-            updateCategoryType("Genres");
+            dispatch(getCategories());
+            dispatch(updateCategoryType("Genres"));
           }}
         >
           Genres
@@ -40,8 +37,8 @@ const BrowseCategories = ({
         <p
           className={viewType === "Featured" ? "active" : ""}
           onClick={() => {
-            getFeatured();
-            updateCategoryType("Featured");
+            dispatch(getFeatured());
+            dispatch(updateCategoryType("Featured"));
           }}
         >
           En partenariat
@@ -51,14 +48,4 @@ const BrowseCategories = ({
   );
 };
 
-export default connect(
-  (state) => ({
-    viewType: state.browse.viewType,
-  }),
-  {
-    getCategories,
-    getNewReleases,
-    updateCategoryType,
-    getFeatured,
-  }
-)(BrowseCategories);
+export default BrowseCategories;

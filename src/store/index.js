@@ -1,13 +1,20 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
-import reducers from './reducers';
-import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
-import thunkMiddleware from 'redux-thunk';
+import { configureStore } from "@reduxjs/toolkit";
+import { authenticationSlice } from "./authentication/authenticationSlice";
+import { userSlice } from "./user/userSlice";
+import { browseSlice } from "./browse/browseSlice";
 
-const appReducer = combineReducers(reducers);
+// Automatically adds the thunk middleware and the Redux DevTools extension
+export const store = configureStore({
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 
-const middlewares = [thunkMiddleware];
-
-export const store = createStore(
-  appReducer,
-  composeWithDevTools(applyMiddleware(...middlewares))
-);
+  // Automatically calls `combineReducers`
+  reducer: {
+    authentication: authenticationSlice.reducer,
+    user: userSlice.reducer,
+    browse: browseSlice.reducer,
+    // artists: artistsReducer,
+  },
+});

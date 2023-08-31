@@ -7,10 +7,11 @@ import {
   getPlaylistItems,
 } from "../../store/actions";
 import {
-  selectAccessToken,
   getPlaylistsSelector,
   getPlaylistItemsSelector,
 } from "../../store/selectors";
+import { selectAccessToken } from "../../store/authentication/authenticationSlice";
+
 import { connect, useSelector, useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import apiUserSearchRequest from "../../api/api.search";

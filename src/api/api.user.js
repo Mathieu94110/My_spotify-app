@@ -23,12 +23,7 @@ export default {
       return req;
     });
 
-    return apiSpotify
-      .get("me")
-      .then((response) => response.data)
-      .then((data) => {
-        return data;
-      });
+    return apiSpotify.get("me").then((response) => response.data);
   },
 
   getLastActivity: () => {

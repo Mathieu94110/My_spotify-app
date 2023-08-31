@@ -1,42 +1,39 @@
 import { useEffect } from "react";
-import "./Home.scss";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  lastActivityIsLoadingSelector,
-  lastActivityListSelector,
-  // userInfosIsLoadingSelector,
-  userInfosSelector,
-  getBrowseCategoryListSelector,
-} from "../../store/selectors";
+  getUserRecentlyPlayed,
+  selectRecentlyPlayed,
+  selectUserIsLoading,
+  selectUserInfos,
+} from "../../store/user/userSlice";
 import {
-  fetchRecentlyPlayed,
   getNewReleases,
-  getCategories,
-  getFeatured,
-  updateCategoryType,
-} from "../../store/actions";
+  selectView,
+  selectIsBrowseLoading,
+} from "../../store/browse/browseSlice";
 import Recentlyplayed from "../../components/home/RecentlyPlayed/RecentlyPlayed";
 import BrowseCategories from "../../components/home/browse/BrowseCategories/BrowseCategories";
 import BrowseContent from "../../components/home/browse/BrowseContent/BrowseContent";
 import Loading from "../../utils/Loading";
+import "./Home.scss";
 
-const Home = ({
-  isLoading,
-  recentlyPlayed,
-  userInfos,
-  /*   userInfosIsLoading, */
-  view,
-  fetchRecentlyPlayed,
-  getNewReleases,
-}) => {
+const Home = () => {
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    fetchRecentlyPlayed();
-    getNewReleases();
+    dispatch(getUserRecentlyPlayed());
+    dispatch(getNewReleases());
   }, []);
+
+  const isLoading = useSelector(selectUserIsLoading);
+  const browseIsLoading = useSelector(selectIsBrowseLoading);
+  const userInfos = useSelector(selectUserInfos);
+  const recentlyPlayed = useSelector(selectRecentlyPlayed);
+  const view = useSelector(selectView);
 
   return (
     <>
-      {isLoading /* || userInfosIsLoading */ ? (
+      {isLoading || browseIsLoading || !recentlyPlayed || !view ? (
         <Loading />
       ) : (
         <div className="home">
@@ -64,19 +61,4 @@ const Home = ({
   );
 };
 
-export default connect(
-  (state) => ({
-    isLoading: lastActivityIsLoadingSelector(state),
-    recentlyPlayed: lastActivityListSelector(state),
-    userInfos: userInfosSelector(state),
-    // userInfosIsLoading: userInfosIsLoadingSelector(state),
-    view: getBrowseCategoryListSelector(state),
-  }),
-  {
-    fetchRecentlyPlayed,
-    getNewReleases,
-    getCategories,
-    getFeatured,
-    updateCategoryType,
-  }
-)(Home);
+export default Home;

@@ -1,12 +1,16 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { getUserProfile, setTokenInfo } from "../../store/actions";
-import { userIsLoggedIn } from "../../store/selectors";
-import { getHashParams, removeHashParamsFromUrl } from "../../utils/hashUtils";
+import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { connect } from "react-redux";
+import {
+  selectUserInfos,
+  selectIsUserLoggedIn,
+  getUserProfile,
+} from "../../store/user/userSlice";
+import { setUserTokenInfos } from "../../store/authentication/authenticationSlice";
+import { getHashParams, removeHashParamsFromUrl } from "../../utils/hashUtils";
 import { scopes } from "../../Constants";
-import { userInfosSelector } from "../../store/selectors";
+import "./Login.scss";
+
 const authEndpoint = "https://accounts.spotify.com/authorize";
 
 export const handleLogin = () => {
@@ -20,8 +24,6 @@ export const handleLogin = () => {
   )}&response_type=token&show_dialog=true&redirect_uri=${redirectUri}`;
 };
 
-import "./Login.scss";
-
 // Here we register url values when getAuthorizeHref get the data from spotify api
 const hashParams = getHashParams();
 const access_token_params = hashParams.access_token;
@@ -30,6 +32,8 @@ const expires_in_params = hashParams.expires_in;
 removeHashParamsFromUrl();
 
 const Authentication = (props) => {
+  const isUserLoggedIn = useSelector(selectIsUserLoggedIn);
+  const isUserInfos = useSelector(selectUserInfos);
   const dispatch = useDispatch();
   const authEndpoint = "https://accounts.spotify.com/authorize";
 
@@ -52,7 +56,12 @@ const Authentication = (props) => {
         tokenExpirationTime = new Date(tokenExpirationSec * 1000);
       localStorage.setItem("accessToken", access_token_params);
       localStorage.setItem("spotifyExpiresIn", tokenExpirationTime);
-      dispatch(setTokenInfo(access_token_params, tokenExpirationTime));
+      dispatch(
+        setUserTokenInfos({
+          token: access_token_params,
+          expireDate: tokenExpirationTime,
+        })
+      );
       dispatch(getUserProfile(access_token_params));
     }
   }, []);
@@ -75,15 +84,9 @@ const Authentication = (props) => {
           </button>
         </>
       )}
-      {props.userInfos && props.isLoggedIn && <Navigate replace to="/home" />}
+      {isUserLoggedIn && isUserInfos && <Navigate replace to="/home" />}
     </div>
   );
 };
 
-export default connect(
-  (state) => ({
-    isLoggedIn: userIsLoggedIn(state),
-    userInfos: userInfosSelector(state),
-  }),
-  {}
-)(Authentication);
+export default Authentication;
