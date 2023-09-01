@@ -33,7 +33,7 @@ removeHashParamsFromUrl();
 
 const Authentication = (props) => {
   const isUserLoggedIn = useSelector(selectIsUserLoggedIn);
-  const isUserInfos = useSelector(selectUserInfos);
+  const UserInfos = useSelector(selectUserInfos);
   const dispatch = useDispatch();
   const authEndpoint = "https://accounts.spotify.com/authorize";
 
@@ -84,7 +84,7 @@ const Authentication = (props) => {
           </button>
         </>
       )}
-      {isUserLoggedIn && isUserInfos && <Navigate replace to="/home" />}
+      {isUserLoggedIn && UserInfos && <Navigate replace to="/home" />}
     </div>
   );
 };

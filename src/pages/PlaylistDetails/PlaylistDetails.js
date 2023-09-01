@@ -1,45 +1,48 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import SongRow from "../../components/playlists/PlaylistDetails/SongRow/SongRow";
-import { connect, useDispatch } from "react-redux";
-import {
-  getPlaylistItems,
-  removeTrackFromPlaylist,
-  setPlayingIndex,
-  setIsPlaying,
-} from "../../store/actions";
-import {
-  getPlaylistsIsLoadingSelector,
-  getPlaylistItemsSelector,
-  getPlaylistPLayingIndex,
-  getIsPlaying,
-} from "../../store/selectors";
+import { useDispatch, useSelector } from "react-redux";
+import Footer from "../../components/footer/Footer";
 import Loading from "../../utils/Loading";
 import { toast, ToastContainer } from "react-toastify";
-import Footer from "../../components/footer/Footer";
+import {
+  getPlaylistItems,
+  selectIsPlaying,
+  selectIsPlaylistsLoading,
+  selectUserPlaylistsTracks,
+  selectPlayingIndex,
+  setPlayingIndex,
+  setIsPlaying,
+  removeTrackFromPlaylist,
+} from "../../store/playlists/playlistsSlice";
 import "./PlaylistDetails.scss";
-const PlaylistDetails = (props) => {
+
+const PlaylistDetails = () => {
   const [trackProgress, setTrackProgress] = useState(0);
   const [isReady, setIsReady] = useState(false);
   const { id: playlistId, name: playlistName } = useParams();
+  const intervalRef = useRef();
   const dispatch = useDispatch();
   const location = useLocation();
-  let audioSrc =
-    props.userPlaylistTracks[props.playlistPlayingIndex]?.track?.preview_url;
-  const audioRef = useRef(
-    new Audio(props.userPlaylistTracks[0]?.track?.preview_url)
-  );
-  const intervalRef = useRef();
+  const isPlaying = useSelector(selectIsPlaying);
+  const isLoading = useSelector(selectIsPlaylistsLoading);
+  const userPlaylistTracks = useSelector(selectUserPlaylistsTracks);
+  const playlistPlayingIndex = useSelector(selectPlayingIndex);
+  let audioSrc = userPlaylistTracks[playlistPlayingIndex]?.track?.preview_url;
+  const audioRef = useRef(new Audio(userPlaylistTracks[0]?.track?.preview_url));
+
   //Call in order to get userPlaylistTracks
   useEffect(() => {
-    props.getPlaylistItems(playlistId);
+    dispatch(getPlaylistItems(playlistId));
   }, [playlistId]);
 
   // Here we reset isReady and isPlaying to false on onmounting to prevent first track loading when we navigate between playlists
   useEffect(() => {
     return () => {
+      // when user leave the page the music is paused and index go back to 0
       setIsReady(false);
-      props.setIsPlaying(false);
+      dispatch(setPlayingIndex(0));
+      dispatch(setIsPlaying(false));
     };
   }, [location]);
 
@@ -50,7 +53,7 @@ const PlaylistDetails = (props) => {
   // Else (no audioRef and isPlaying to false) the track is paused
   useEffect(() => {
     if (audioRef.current.src && isReady) {
-      if (props.isPlaying) {
+      if (isPlaying) {
         audioRef.current.play();
         startTimer();
       } else {
@@ -58,7 +61,7 @@ const PlaylistDetails = (props) => {
         audioRef.current.pause();
       }
     } else {
-      if (props.isPlaying && isReady) {
+      if (isPlaying && isReady) {
         audioRef.current = new Audio(audioSrc);
         audioRef.current.play();
         startTimer();
@@ -67,11 +70,11 @@ const PlaylistDetails = (props) => {
         audioRef.current.pause();
       }
     }
-  }, [props.isPlaying]);
+  }, [isPlaying]);
 
   useEffect(() => {
     configurePlayMode();
-  }, [props.playlistPlayingIndex, props.userPlaylistTracks]); //audioSrc depending on those 2 values
+  }, [playlistPlayingIndex, userPlaylistTracks]); //audioSrc depending on those 2 values
 
   //At each playlistPlayingIndex change (0 at the begining) we stop the previous track with previous index;
   // We assigned new AudioRef value with audioSrc (which value change with playlistPlayingIndex)
@@ -83,7 +86,7 @@ const PlaylistDetails = (props) => {
     setTrackProgress(audioRef.current.currentTime);
     if (isReady) {
       audioRef.current.play();
-      props.setIsPlaying(true);
+      dispatch(setIsPlaying(true));
       startTimer();
     } else {
       setIsReady(true);
@@ -107,7 +110,7 @@ const PlaylistDetails = (props) => {
     const { uri: trackUri, name: trackName } = track.track;
     dispatch(removeTrackFromPlaylist({ trackUri, playlistId }))
       .then(() => {
-        props.getPlaylistItems(playlistId);
+        dispatch(getPlaylistItems(playlistId));
         toast.success(`${trackName} a bien été supprimé de ${playlistName} !`, {
           position: toast.POSITION.TOP_RIGHT,
         });
@@ -121,37 +124,37 @@ const PlaylistDetails = (props) => {
 
   // we passed the index to the store to change the selected track(0 by default)
   const playSong = (index) => {
-    props.setIsPlaying(!props.isPlaying);
-    props.setPlayingIndex(index);
+    dispatch(setIsPlaying(!isPlaying));
+    dispatch(setPlayingIndex(index));
   };
 
   const handleNext = () => {
-    if (props.playlistPlayingIndex < props.userPlaylistTracks.length - 1) {
-      props.setPlayingIndex(props.playlistPlayingIndex + 1);
-    } else props.setPlayingIndex(0);
+    if (playlistPlayingIndex < userPlaylistTracks.length - 1) {
+      dispatch(setPlayingIndex(playlistPlayingIndex + 1));
+    } else dispatch(setPlayingIndex(0));
   };
 
   const handlePrev = () => {
-    if (props.playlistPlayingIndex - 1 < 0)
-      props.setPlayingIndex(props.userPlaylistTracks.length - 1);
-    else props.setPlayingIndex(props.playlistPlayingIndex - 1);
+    if (playlistPlayingIndex - 1 < 0)
+      dispatch(setPlayingIndex(userPlaylistTracks.length - 1));
+    else dispatch(setPlayingIndex(playlistPlayingIndex - 1));
   };
 
   return (
     <div className="playlistDetails">
       <h1>{playlistName}</h1>
       <div className="playlistDetails__tracks">
-        {!props.isLoading ? (
-          props.userPlaylistTracks.length > 0 ? (
-            props.userPlaylistTracks?.map((item, index) => (
+        {!isLoading ? (
+          userPlaylistTracks.length > 0 ? (
+            userPlaylistTracks?.map((item, index) => (
               <SongRow
                 key={index}
                 currentIndex={index}
                 playSong={playSong}
-                isPlaying={props.isPlaying}
+                isPlaying={isPlaying}
                 track={item.track}
                 handleDelete={handleDeleteTrack}
-                playingIndex={props.playlistPlayingIndex}
+                playingIndex={playlistPlayingIndex}
               />
             ))
           ) : (
@@ -163,11 +166,11 @@ const PlaylistDetails = (props) => {
           <Loading />
         )}
       </div>
-      {!props.isLoading && props.userPlaylistTracks.length > 0 && (
+      {!isLoading && userPlaylistTracks.length > 0 && (
         <Footer
-          trackInfo={props.userPlaylistTracks[props.playlistPlayingIndex]}
-          playingIndex={props.playlistPlayingIndex}
-          isPlaying={props.isPlaying}
+          trackInfo={userPlaylistTracks[playlistPlayingIndex]}
+          playingIndex={playlistPlayingIndex}
+          isPlaying={isPlaying}
           playSong={playSong}
           handlePrev={handlePrev}
           handleNext={handleNext}
@@ -178,16 +181,5 @@ const PlaylistDetails = (props) => {
     </div>
   );
 };
-export default connect(
-  (state) => ({
-    isLoading: getPlaylistsIsLoadingSelector(state),
-    userPlaylistTracks: getPlaylistItemsSelector(state),
-    playlistPlayingIndex: getPlaylistPLayingIndex(state),
-    isPlaying: getIsPlaying(state),
-  }),
-  {
-    getPlaylistItems,
-    setPlayingIndex,
-    setIsPlaying,
-  }
-)(PlaylistDetails);
+
+export default PlaylistDetails;

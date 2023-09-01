@@ -1,29 +1,30 @@
-import { useState, useEffect } from "react";
-import "./Playlists.scss";
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import UserPlaylists from "../../components/playlists/UserPlaylists/UserPlaylists";
 import CreatePlaylist from "../../components/playlists/CreatePlaylist/CreatePlaylist";
 import Loading from "../../utils/Loading";
-import { getPlaylists, createPlaylist } from "../../store/actions";
-import {
-  getPlaylistsIsLoadingSelector,
-  getPlaylistsSelector,
-} from "../../store/selectors";
-import { connect } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
+import {
+  getPlaylists,
+  createPlaylist,
+  selectUserPlaylists,
+  selectIsPlaylistsLoading,
+} from "../../store/playlists/playlistsSlice";
 import "react-toastify/dist/ReactToastify.css";
+import "./Playlists.scss";
 
-const Playlists = (props) => {
+const Playlists = () => {
   const dispatch = useDispatch();
-
+  const isLoading = useSelector(selectIsPlaylistsLoading);
+  const userPlaylists = useSelector(selectUserPlaylists);
   useEffect(() => {
-    props.getPlaylists();
+    dispatch(getPlaylists());
   }, []);
 
   const confirmPlaylistCreation = (formJson) => {
     dispatch(createPlaylist(formJson))
       .then(() => {
-        props.getPlaylists();
+        dispatch(getPlaylists());
         toast.success("La playlist a bien été créee !", {
           position: toast.POSITION.TOP_RIGHT,
         });
@@ -38,7 +39,7 @@ const Playlists = (props) => {
   return (
     <div className="playlists">
       <div className="playlists__content">
-        {props.isLoading ? (
+        {isLoading ? (
           <Loading />
         ) : (
           <>
@@ -46,7 +47,7 @@ const Playlists = (props) => {
               <CreatePlaylist createPlayList={confirmPlaylistCreation} />
             </div>
             <div className="playlists__items">
-              <UserPlaylists playlists={props.userPlaylists} />
+              <UserPlaylists playlists={userPlaylists} />
             </div>
           </>
         )}
@@ -57,12 +58,4 @@ const Playlists = (props) => {
   );
 };
 
-export default connect(
-  (state) => ({
-    isLoading: getPlaylistsIsLoadingSelector(state),
-    userPlaylists: getPlaylistsSelector(state),
-  }),
-  {
-    getPlaylists,
-  }
-)(Playlists);
+export default Playlists;

@@ -1,33 +1,29 @@
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import SearchResult from "../../components/search/SearchResult/SearchResult";
 import AddTrackModal from "../../components/modal/AddTrackModal";
+import { selectAccessToken } from "../../store/authentication/authenticationSlice";
 import {
   getPlaylists,
-  addTrackToPlaylist,
   getPlaylistItems,
-} from "../../store/actions";
-import {
-  getPlaylistsSelector,
-  getPlaylistItemsSelector,
-} from "../../store/selectors";
-import { selectAccessToken } from "../../store/authentication/authenticationSlice";
-
-import { connect, useSelector, useDispatch } from "react-redux";
+  selectUserPlaylists,
+  addTrackToPlaylist,
+} from "../../store/playlists/playlistsSlice";
 import { ToastContainer, toast } from "react-toastify";
 import apiUserSearchRequest from "../../api/api.search";
 import "./Search.scss";
 import "react-toastify/dist/ReactToastify.css";
 
-const Search = (props) => {
+const Search = () => {
   const accessToken = useSelector(selectAccessToken);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [track, setTrack] = useState("");
   const dispatch = useDispatch();
-
+  const userPlaylists = useSelector(selectUserPlaylists);
   useEffect(() => {
-    props.getPlaylists();
+    dispatch(getPlaylists());
   }, []);
 
   useEffect(() => {
@@ -41,6 +37,7 @@ const Search = (props) => {
       },
     };
     apiUserSearchRequest.searchTracks(config).then((res) => {
+      console.log(res);
       setSearchResults(
         res.data.tracks.items.map((track) => {
           const smallestAlbumImage = track.album.images.reduce(
@@ -71,8 +68,8 @@ const Search = (props) => {
   const addTrack = async (track, checkedPlaylist) => {
     const { title, uri } = track;
     const { id, name } = checkedPlaylist;
-    const currentPlaylistTracks = await props.getPlaylistItems(id);
-    if (currentPlaylistTracks.items.some(isTrackExistOnPlaylist)) {
+    const currentPlaylistTracks = await dispatch(getPlaylistItems(id));
+    if (currentPlaylistTracks.payload.some(isTrackExistOnPlaylist)) {
       toast.error(`Ce titre existe déjà dans la playlist ${name} !`, {
         position: toast.POSITION.TOP_CENTER,
       });
@@ -108,8 +105,7 @@ const Search = (props) => {
       {isOpen && (
         <AddTrackModal
           setIsOpen={isModalOpen}
-          playlists={props.userPlaylists}
-          // trackUri={trackUri}
+          playlists={userPlaylists}
           track={track}
           addTrackToPlaylist={addTrack}
         />
@@ -120,13 +116,4 @@ const Search = (props) => {
   );
 };
 
-export default connect(
-  (state) => ({
-    userPlaylists: getPlaylistsSelector(state),
-    userPlaylistTracks: getPlaylistItemsSelector(state),
-  }),
-  {
-    getPlaylists,
-    getPlaylistItems,
-  }
-)(Search);
+export default Search;

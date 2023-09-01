@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import SideBarPlaylists from "./Components/SideBarPlaylists/SideBarPlaylists";
+import SideBarPageLink from "./Components/SideBarPageLink/SideBarPageLink";
+import {
+  selectUserPlaylists,
+  getPlaylists,
+} from "../../store/playlists/playlistsSlice";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
-import { getPlaylists } from "../../store/actions";
-import { getPlaylistsSelector } from "../../store/selectors";
-import { connect } from "react-redux";
-import Loading from "../../utils/Loading";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import spotifyLogo from "../../assets/images/spotify-logo.png";
 import {
@@ -13,18 +16,17 @@ import {
   faFolder,
 } from "@fortawesome/free-solid-svg-icons";
 import "./SideBar.scss";
-import SideBarPlaylists from "./Components/SideBarPlaylists/SideBarPlaylists";
-import SideBarPageLink from "./Components/SideBarPageLink/SideBarPageLink";
 
-function SideBar(props) {
+function SideBar() {
   const [open, setopen] = useState(true);
   const { width } = useWindowDimensions();
   const toggleOpen = () => {
     setopen(!open);
   };
-
+  const dispatch = useDispatch();
+  const userPlaylists = useSelector(selectUserPlaylists);
   useEffect(() => {
-    props.getPlaylists();
+    dispatch(getPlaylists());
   }, []);
 
   const pageLinks = [
@@ -95,25 +97,14 @@ function SideBar(props) {
             <hr />
           </>
         )}
-        {props.isLoading ? (
-          <Loading />
-        ) : (
-          <SideBarPlaylists
-            userPlaylists={props.userPlaylists}
-            windowWidth={width}
-            open={open}
-          />
-        )}
+        <SideBarPlaylists
+          userPlaylists={userPlaylists}
+          windowWidth={width}
+          open={open}
+        />
       </div>
     </div>
   );
 }
 
-export default connect(
-  (state) => ({
-    userPlaylists: getPlaylistsSelector(state),
-  }),
-  {
-    getPlaylists,
-  }
-)(SideBar);
+export default SideBar;

@@ -52,6 +52,7 @@ export const userSlice = createSlice({
         state.isLoading = false;
         state.isUserLoggedIn = true;
         state.error = false;
+        localStorage.setItem("userId", action.payload.id);
       })
       .addMatcher(isAnyOf(getUserProfile.rejected), (state, action) => {
         console.log(JSON.stringify(state), action);
