@@ -20,7 +20,6 @@ export const getPlaylists = createAsyncThunk(
   "playlists/getPlaylists",
   async () => {
     const response = await apiUserPlaylistsRequest.getUserPlaylists();
-    console.log(response);
     return response;
   }
 );
@@ -29,7 +28,6 @@ export const getPlaylistItems = createAsyncThunk(
   "playlists/getPlaylistItems",
   async (id) => {
     const response = await apiUserPlaylistsRequest.getUserPlaylistItems(id);
-    console.log(response);
     return response;
   }
 );
@@ -38,7 +36,6 @@ export const createPlaylist = createAsyncThunk(
   "playlists/createPlaylist",
   async (value) => {
     const response = await apiUserPlaylistsRequest.createUserPlaylist(value);
-    console.log(response);
     return response;
   }
 );
@@ -47,7 +44,6 @@ export const addTrackToPlaylist = createAsyncThunk(
   "playlists/addTrackToPlaylist",
   async (infos) => {
     const response = await apiUserPlaylistsRequest.addTrackToPlaylist(infos);
-    console.log(response);
     return response;
   }
 );
@@ -58,7 +54,6 @@ export const removeTrackFromPlaylist = createAsyncThunk(
     const response = await apiUserPlaylistsRequest.deleteTrackFromPlaylist(
       infos
     );
-    console.log(response);
     return response;
   }
 );

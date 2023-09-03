@@ -6,11 +6,11 @@ import SideBar from "./components/side-bar/SideBar";
 import PlaylistDetails from "./pages/PlaylistDetails/PlaylistDetails";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import { selectIsUserLoggedIn } from "./store/user/userSlice";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "./store/hooks";
 import "./App.scss";
 
 function App() {
-  const isUserLoggedIn = useSelector(selectIsUserLoggedIn);
+  const isUserLoggedIn = useAppSelector(selectIsUserLoggedIn);
   return (
     <HashRouter>
       <div className="app">

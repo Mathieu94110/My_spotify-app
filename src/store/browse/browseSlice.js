@@ -21,7 +21,6 @@ export const getNewReleases = createAsyncThunk(
   "browse/getNewReleases",
   async () => {
     const response = await apiUserBrowseRequest.fetchNewReleases();
-    console.log(response);
     return response;
   }
 );
@@ -30,14 +29,12 @@ export const getCategories = createAsyncThunk(
   "browse/getCategories",
   async () => {
     const response = await apiUserBrowseRequest.fetchCategories();
-    console.log(response);
     return response;
   }
 );
 
 export const getFeatured = createAsyncThunk("browse/getFeatured", async () => {
   const response = await apiUserBrowseRequest.fetchFeatured();
-  console.log(response);
   return response;
 });
 
@@ -46,7 +43,6 @@ export const browseSlice = createSlice({
   name: "browse",
   reducers: {
     updateCategoryType(state, action) {
-      console.log(action);
       // "Mutating" update syntax thanks to Immer, and no `return` needed
       state.viewType = action.payload;
     },
@@ -57,7 +53,6 @@ export const browseSlice = createSlice({
         state.isLoading = true;
       }) // Pass the generated action creators to `.addMatcher()`
       .addMatcher(isAnyOf(getNewReleases.fulfilled), (state, action) => {
-        console.log(action.payload);
         state.view = action.payload;
         state.newReleasesError = false;
         state.isLoading = false;
@@ -70,7 +65,6 @@ export const browseSlice = createSlice({
         state.isLoading = true;
       })
       .addMatcher(isAnyOf(getCategories.fulfilled), (state, action) => {
-        console.log(action.payload);
         state.isLoading = false;
         state.categoriesError = false;
         state.view = action.payload;
@@ -83,7 +77,6 @@ export const browseSlice = createSlice({
         state.isLoading = true;
       })
       .addMatcher(isAnyOf(getFeatured.fulfilled), (state, action) => {
-        console.log(action.payload);
         state.isLoading = false;
         state.view = action.payload;
         state.featuredError = false;

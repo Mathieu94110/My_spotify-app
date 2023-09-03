@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import SideBarPlaylists from "./Components/SideBarPlaylists/SideBarPlaylists";
 import SideBarPageLink from "./Components/SideBarPageLink/SideBarPageLink";
 import {
@@ -23,8 +23,8 @@ function SideBar() {
   const toggleOpen = () => {
     setopen(!open);
   };
-  const dispatch = useDispatch();
-  const userPlaylists = useSelector(selectUserPlaylists);
+  const dispatch = useAppDispatch();
+  const userPlaylists = useAppSelector(selectUserPlaylists);
   useEffect(() => {
     dispatch(getPlaylists());
   }, []);

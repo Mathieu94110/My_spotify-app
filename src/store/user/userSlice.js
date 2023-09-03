@@ -27,7 +27,6 @@ export const getUserRecentlyPlayed = createAsyncThunk(
   "user/getRecentlyPlayed",
   async () => {
     const response = await apiUserRequest.getLastActivity();
-    console.log(response);
     return response;
   }
 );
@@ -55,7 +54,6 @@ export const userSlice = createSlice({
         localStorage.setItem("userId", action.payload.id);
       })
       .addMatcher(isAnyOf(getUserProfile.rejected), (state, action) => {
-        console.log(JSON.stringify(state), action);
         state.isLoading = false;
       })
       .addMatcher(isAnyOf(getUserRecentlyPlayed.pending), (state, action) => {

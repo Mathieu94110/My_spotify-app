@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import UserPlaylists from "../../components/playlists/UserPlaylists/UserPlaylists";
 import CreatePlaylist from "../../components/playlists/CreatePlaylist/CreatePlaylist";
 import Loading from "../../utils/Loading";
@@ -14,9 +14,9 @@ import "react-toastify/dist/ReactToastify.css";
 import "./Playlists.scss";
 
 const Playlists = () => {
-  const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsPlaylistsLoading);
-  const userPlaylists = useSelector(selectUserPlaylists);
+  const dispatch = useAppDispatch();
+  const isLoading = useAppSelector(selectIsPlaylistsLoading);
+  const userPlaylists = useAppSelector(selectUserPlaylists);
   useEffect(() => {
     dispatch(getPlaylists());
   }, []);

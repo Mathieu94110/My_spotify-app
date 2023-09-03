@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { Navigate } from "react-router-dom";
 import {
   selectUserInfos,
@@ -32,9 +32,9 @@ const expires_in_params = hashParams.expires_in;
 removeHashParamsFromUrl();
 
 const Authentication = (props) => {
-  const isUserLoggedIn = useSelector(selectIsUserLoggedIn);
-  const UserInfos = useSelector(selectUserInfos);
-  const dispatch = useDispatch();
+  const isUserLoggedIn = useAppSelector(selectIsUserLoggedIn);
+  const UserInfos = useAppSelector(selectUserInfos);
+  const dispatch = useAppDispatch();
   const authEndpoint = "https://accounts.spotify.com/authorize";
 
   const handleLogin = () => {
@@ -49,9 +49,7 @@ const Authentication = (props) => {
   };
 
   useEffect(() => {
-    if (!access_token_params || !expires_in_params) {
-      console.error("There was an error during the authentication");
-    } else {
+    if (access_token_params && expires_in_params) {
       const tokenExpirationSec = new Date().getTime() / 1000 + 3600,
         tokenExpirationTime = new Date(tokenExpirationSec * 1000);
       localStorage.setItem("accessToken", access_token_params);

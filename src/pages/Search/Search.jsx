@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import SearchResult from "../../components/search/SearchResult/SearchResult";
 import AddTrackModal from "../../components/modal/AddTrackModal";
 import { selectAccessToken } from "../../store/authentication/authenticationSlice";
@@ -15,18 +15,18 @@ import "./Search.scss";
 import "react-toastify/dist/ReactToastify.css";
 
 const Search = () => {
-  const accessToken = useSelector(selectAccessToken);
-  const [search, setSearch] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
-  const [track, setTrack] = useState("");
-  const dispatch = useDispatch();
-  const userPlaylists = useSelector(selectUserPlaylists);
-  useEffect(() => {
+  const [search, setSearch] = React.useState("");
+  const [searchResults, setSearchResults] = React.useState([]);
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [track, setTrack] = React.useState("");
+  const dispatch = useAppDispatch();
+  const accessToken = useAppSelector(selectAccessToken);
+  const userPlaylists = useAppSelector(selectUserPlaylists);
+  React.useEffect(() => {
     dispatch(getPlaylists());
   }, []);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!search) return setSearchResults([]);
 
     let config = {
@@ -37,7 +37,6 @@ const Search = () => {
       },
     };
     apiUserSearchRequest.searchTracks(config).then((res) => {
-      console.log(res);
       setSearchResults(
         res.data.tracks.items.map((track) => {
           const smallestAlbumImage = track.album.images.reduce(

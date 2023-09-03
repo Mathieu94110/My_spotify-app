@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
   getUserRecentlyPlayed,
   selectRecentlyPlayed,
@@ -18,22 +18,22 @@ import Loading from "../../utils/Loading";
 import "./Home.scss";
 
 const Home = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getUserRecentlyPlayed());
     dispatch(getNewReleases());
   }, []);
 
-  const isLoading = useSelector(selectUserIsLoading);
-  const browseIsLoading = useSelector(selectIsBrowseLoading);
-  const userInfos = useSelector(selectUserInfos);
-  const recentlyPlayed = useSelector(selectRecentlyPlayed);
-  const view = useSelector(selectView);
+  const isLoading = useAppSelector(selectUserIsLoading);
+  const browseIsLoading = useAppSelector(selectIsBrowseLoading);
+  const userInfos = useAppSelector(selectUserInfos);
+  const recentlyPlayed = useAppSelector(selectRecentlyPlayed);
+  const view = useAppSelector(selectView);
 
   return (
     <>
-      {isLoading || browseIsLoading || !recentlyPlayed || !view ? (
+      {isLoading || browseIsLoading || !view ? (
         <Loading />
       ) : (
         <div className="home">

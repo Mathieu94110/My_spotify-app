@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import SongRow from "../../components/playlists/PlaylistDetails/SongRow/SongRow";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import Footer from "../../components/footer/Footer";
 import Loading from "../../utils/Loading";
 import { toast, ToastContainer } from "react-toastify";
@@ -22,12 +22,12 @@ const PlaylistDetails = () => {
   const [isReady, setIsReady] = useState(false);
   const { id: playlistId, name: playlistName } = useParams();
   const intervalRef = useRef();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
-  const isPlaying = useSelector(selectIsPlaying);
-  const isLoading = useSelector(selectIsPlaylistsLoading);
-  const userPlaylistTracks = useSelector(selectUserPlaylistsTracks);
-  const playlistPlayingIndex = useSelector(selectPlayingIndex);
+  const isPlaying = useAppSelector(selectIsPlaying);
+  const isLoading = useAppSelector(selectIsPlaylistsLoading);
+  const userPlaylistTracks = useAppSelector(selectUserPlaylistsTracks);
+  const playlistPlayingIndex = useAppSelector(selectPlayingIndex);
   let audioSrc = userPlaylistTracks[playlistPlayingIndex]?.track?.preview_url;
   const audioRef = useRef(new Audio(userPlaylistTracks[0]?.track?.preview_url));
 

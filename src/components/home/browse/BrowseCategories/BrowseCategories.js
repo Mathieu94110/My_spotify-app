@@ -6,12 +6,12 @@ import {
   updateCategoryType,
   selectViewType,
 } from "../../../../store/browse/browseSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import "./BrowseCategories.scss";
 
 const BrowseCategories = () => {
-  const dispatch = useDispatch();
-  const viewType = useSelector(selectViewType);
+  const dispatch = useAppDispatch();
+  const viewType = useAppSelector(selectViewType);
   return (
     <div className="browse-headers">
       <h2 className="header-title">Catégories</h2>
