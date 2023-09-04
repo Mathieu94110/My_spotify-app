@@ -34,12 +34,7 @@ export const getUserRecentlyPlayed = createAsyncThunk(
 export const userSlice = createSlice({
   initialState,
   name: "user",
-  reducers: {
-    setUserInfos(state, action) {
-      // "Mutating" update syntax thanks to Immer, and no `return` needed
-      state.user = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     // Use `extraReducers` to handle actions that were generated in getUserProfile and getUserRecentlyPlayed
     builder
@@ -70,7 +65,6 @@ export const userSlice = createSlice({
       });
   },
 });
-export const { setUserInfos } = userSlice.actions;
 
 export default userSlice.reducer;
 

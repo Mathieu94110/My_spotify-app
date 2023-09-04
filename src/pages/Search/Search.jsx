@@ -91,7 +91,7 @@ const Search = () => {
   };
 
   return (
-    <div className="search">
+    <div className="search" role="heading">
       <input
         className="search__input"
         type="search"
@@ -99,7 +99,11 @@ const Search = () => {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
-      <SearchResult searchResults={searchResults} modalCallback={isModalOpen} />
+      <SearchResult
+        searchResults={searchResults}
+        modalCallback={isModalOpen}
+        role="listitem"
+      />
 
       {isOpen && (
         <AddTrackModal
