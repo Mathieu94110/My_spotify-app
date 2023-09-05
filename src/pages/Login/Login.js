@@ -23,9 +23,8 @@ export const handleLogin = () => {
     "%20"
   )}&response_type=token&show_dialog=true&redirect_uri=${redirectUri}`;
 };
-
 // Here we register url values when getAuthorizeHref get the data from spotify api
-const hashParams = getHashParams();
+const hashParams = getHashParams(window.location.hash);
 const access_token_params = hashParams.access_token;
 const expires_in_params = hashParams.expires_in;
 // We clean hash

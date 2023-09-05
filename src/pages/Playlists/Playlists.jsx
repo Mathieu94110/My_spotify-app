@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import UserPlaylists from "../../components/playlists/UserPlaylists/UserPlaylists";
 import CreatePlaylist from "../../components/playlists/CreatePlaylist/CreatePlaylist";
-import Loading from "../../utils/Loading";
+import Loading from "../../layout/Loading/Loading";
 import { ToastContainer, toast } from "react-toastify";
 import {
   getPlaylists,

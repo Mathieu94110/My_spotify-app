@@ -1,5 +1,5 @@
-export const getHashParams = () => {
-  return window.location.hash
+export const getHashParams = (hash) => {
+  return hash
     .substring(1)
     .split("&")
     .reduce(function (initial, item) {

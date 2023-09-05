@@ -14,7 +14,7 @@ import {
 import Recentlyplayed from "../../components/home/RecentlyPlayed/RecentlyPlayed";
 import BrowseCategories from "../../components/home/browse/BrowseCategories/BrowseCategories";
 import BrowseContent from "../../components/home/browse/BrowseContent/BrowseContent";
-import Loading from "../../utils/Loading";
+import Loading from "../../layout/Loading/Loading";
 import "./Home.scss";
 
 const Home = () => {

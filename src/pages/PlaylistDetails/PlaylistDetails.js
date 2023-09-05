@@ -3,7 +3,7 @@ import { useParams, useLocation } from "react-router-dom";
 import SongRow from "../../components/playlists/PlaylistDetails/SongRow/SongRow";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import Footer from "../../components/footer/Footer";
-import Loading from "../../utils/Loading";
+import Loading from "../../layout/Loading/Loading";
 import { toast, ToastContainer } from "react-toastify";
 import {
   getPlaylistItems,
