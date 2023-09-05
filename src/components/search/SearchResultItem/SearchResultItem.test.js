@@ -1,6 +1,6 @@
 import SearchResultItem from "./SearchResultItem";
 import { renderWithProviders } from "../../../utils/test-utils";
-import { fireEvent, screen } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 
 const handleClick = jest.fn();
 
@@ -19,11 +19,10 @@ describe("SearchResult", () => {
       uri: "test.uri",
       albumUrl: "test-url.jpg",
     };
-    renderWithProviders(
+    const { getByText } = renderWithProviders(
       <SearchResultItem track={searchedResult} modalCallback={handleClick} />
     );
-    expect(screen.getByText(/sfina/i)).toBeInTheDocument();
-    screen.debug();
+    expect(getByText(/sfina/i)).toBeInTheDocument();
   });
 
   it("should call parentCallBack on button click", async () => {

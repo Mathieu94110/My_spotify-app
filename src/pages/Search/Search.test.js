@@ -15,12 +15,11 @@ const setup = () => {
   };
 };
 
-test("Uses preloaded state to render", async () => {
-  const { input } = setup();
-  expect(input).toBeInTheDocument();
-});
-
-describe("search input value updating correctly", () => {
+describe("Search", () => {
+  test("Uses preloaded state to render", async () => {
+    const { input } = setup();
+    expect(input).toBeInTheDocument();
+  });
   it("updates on change", () => {
     const { input } = setup();
     fireEvent.change(input, { target: { value: "despacito" } });

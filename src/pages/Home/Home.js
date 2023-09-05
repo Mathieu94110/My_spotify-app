@@ -32,11 +32,13 @@ const Home = () => {
   const view = useAppSelector(selectView);
 
   return (
-    <>
+    <div className="home">
       {isLoading || browseIsLoading || !view ? (
-        <Loading />
+        <div className="home__loading">
+          <Loading />
+        </div>
       ) : (
-        <div className="home">
+        <>
           <h1 className="home__title">
             {`Bienvenue ${
               userInfos?.display_name?.charAt(0).toUpperCase() +
@@ -55,9 +57,9 @@ const Home = () => {
               </div>
             </div>
           </div>
-        </div>
+        </>
       )}
-    </>
+    </div>
   );
 };
 

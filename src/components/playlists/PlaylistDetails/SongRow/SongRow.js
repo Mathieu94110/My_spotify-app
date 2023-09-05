@@ -38,7 +38,7 @@ function SongRow({
       <img
         className="song-row__album"
         src={
-          track.album.images[0]?.url ? track.album.images[0].url : mysteryImage
+          track.album?.images[0]?.url ? track.album.images[0].url : mysteryImage
         }
         alt={track.name}
       />

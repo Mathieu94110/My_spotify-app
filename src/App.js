@@ -4,7 +4,7 @@ import Playlists from "./pages/Playlists/Playlists";
 import Search from "./pages/Search/Search";
 import SideBar from "./components/side-bar/SideBar";
 import PlaylistDetails from "./pages/PlaylistDetails/PlaylistDetails";
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { selectIsUserLoggedIn } from "./store/user/userSlice";
 import { useAppSelector } from "./store/hooks";
 import "./App.scss";
@@ -12,7 +12,7 @@ import "./App.scss";
 function App() {
   const isUserLoggedIn = useAppSelector(selectIsUserLoggedIn);
   return (
-    <HashRouter>
+    <BrowserRouter>
       <div className="app">
         <div
           className={
@@ -33,7 +33,7 @@ function App() {
           </Routes>
         </div>
       </div>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 

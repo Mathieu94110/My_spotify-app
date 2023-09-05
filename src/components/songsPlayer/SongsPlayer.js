@@ -9,7 +9,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./SongsPlayer.scss";
 
-const SongsPlayer = (props) => {
+const SongsPlayer = ({
+  handleNext,
+  handlePrev,
+  isPlaying,
+  playSong,
+  playingIndex,
+  trackInfo,
+}) => {
   return (
     <div className="songs-player">
       <div className="songs-player__content">
@@ -18,36 +25,38 @@ const SongsPlayer = (props) => {
             className="songs-player__button songs-player__button--prev"
             icon={faBackward}
             color={"#fff"}
-            onClick={props.previousSong}
+            onClick={handlePrev}
           />
           <Button
             className="songs-player__button songs-player__button--play"
-            onClick={() => props.playSong(props.playingIndex)}
-            icon={props.isPlaying ? faPause : faPlay}
+            onClick={() => playSong(playingIndex)}
+            icon={isPlaying ? faPause : faPlay}
             color={"#fff"}
             playBtn
           />
           <Button
             className="songs-player__button songs-player__button--next"
             icon={faForward}
-            onClick={props.nextSong}
+            onClick={handleNext}
             color={"#fff"}
           />
         </div>
-        {props.isPlaying && (
+        {isPlaying ? (
           <div className="songs-player__track-info">
             <span>Titre:</span>
-            <span>{props.trackInfo?.track?.name}</span>
+            <span data-testid="player-track-name">
+              {trackInfo?.track?.name}
+            </span>
             <span>Artiste:</span>{" "}
-            <span>{props.trackInfo?.track?.artists[0]?.name}</span>
+            <span>{trackInfo?.track?.artists[0]?.name}</span>
             <span>Durée: </span>
             <span>
-              {convertMsToMinutesSeconds(props.trackInfo?.track?.duration_ms)}
+              {convertMsToMinutesSeconds(trackInfo?.track?.duration_ms)}
             </span>
             <span>Album:</span>
-            <span>{props.trackInfo?.track?.album?.name}</span>
+            <span>{trackInfo?.track?.album?.name}</span>
           </div>
-        )}
+        ) : null}
       </div>
     </div>
   );

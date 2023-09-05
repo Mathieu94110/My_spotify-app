@@ -1,15 +1,15 @@
 import React from "react";
-import "./Loading";
+import "./Loading.scss";
 
 const Loading = () => {
   return (
-    <div className="loading">
+    <>
       <img
         alt="loading gif"
         src="https://i.redd.it/ounq1mw5kdxy.gif"
-        className="loading__img"
+        className="loading"
       />
-    </div>
+    </>
   );
 };
 export default Loading;
