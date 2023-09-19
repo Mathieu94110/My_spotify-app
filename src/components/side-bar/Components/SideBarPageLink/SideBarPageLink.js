@@ -1,7 +1,9 @@
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./SideBarPageLink.scss";
-const SideBarPageLink = ({ link, open, title, windowWidth, icon }) => {
+
+const SideBarPageLink = (props) => {
+  const { link, open, title, windowWidth, icon } = props;
   return (
     <>
       <NavLink to={link}>

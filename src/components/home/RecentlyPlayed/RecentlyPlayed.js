@@ -1,3 +1,4 @@
+import { memo } from "react";
 import "./RecentlyPlayed.scss";
 
 const RecentlyPlayed = (props) => {
@@ -30,5 +31,5 @@ const RecentlyPlayed = (props) => {
     </div>
   );
 };
-
-export default RecentlyPlayed;
+// memo is used in order to avoid useless getUserRecentlyPlayed call when new categories item is clicked on Home
+export default memo(RecentlyPlayed);

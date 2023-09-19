@@ -9,7 +9,7 @@ import apiUserBrowseRequest from "../../api/api.browse";
 const browseAdapter = createEntityAdapter();
 const initialState = browseAdapter.getInitialState({
   isLoading: false,
-  view: [],
+  view: null,
   newReleasesError: false,
   categoriesError: false,
   featuredError: false,
@@ -94,4 +94,3 @@ export default browseSlice.reducer;
 //Selectors
 export const selectViewType = (state) => state.browse.viewType;
 export const selectView = (state) => state.browse.view;
-export const selectIsBrowseLoading = (state) => state.browse.isLoading;

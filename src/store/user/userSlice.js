@@ -9,7 +9,7 @@ import apiUserRequest from "../../api/api.user";
 const userAdapter = createEntityAdapter();
 const initialState = userAdapter.getInitialState({
   userInfos: {},
-  lastActivityList: [],
+  lastActivityList: null,
   isUserLoggedIn: false,
   isLoading: false,
   error: null,
@@ -72,4 +72,3 @@ export default userSlice.reducer;
 export const selectUserInfos = (state) => state.user.userInfos;
 export const selectIsUserLoggedIn = (state) => state.user.isUserLoggedIn;
 export const selectRecentlyPlayed = (state) => state.user.lastActivityList;
-export const selectUserIsLoading = (state) => state.user.isLoading;

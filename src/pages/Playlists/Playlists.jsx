@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import UserPlaylists from "../../components/playlists/UserPlaylists/UserPlaylists";
 import CreatePlaylist from "../../components/playlists/CreatePlaylist/CreatePlaylist";
@@ -17,9 +16,6 @@ const Playlists = () => {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectIsPlaylistsLoading);
   const userPlaylists = useAppSelector(selectUserPlaylists);
-  useEffect(() => {
-    dispatch(getPlaylists());
-  }, []);
 
   const confirmPlaylistCreation = (formJson) => {
     dispatch(createPlaylist(formJson))
@@ -35,7 +31,6 @@ const Playlists = () => {
         });
       });
   };
-
   return (
     <div className="playlists">
       <div className="playlists__content">

@@ -3,14 +3,9 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
   getUserRecentlyPlayed,
   selectRecentlyPlayed,
-  selectUserIsLoading,
   selectUserInfos,
 } from "../../store/user/userSlice";
-import {
-  getNewReleases,
-  selectView,
-  selectIsBrowseLoading,
-} from "../../store/browse/browseSlice";
+import { getNewReleases, selectView } from "../../store/browse/browseSlice";
 import Recentlyplayed from "../../components/home/RecentlyPlayed/RecentlyPlayed";
 import BrowseCategories from "../../components/home/browse/BrowseCategories/BrowseCategories";
 import BrowseContent from "../../components/home/browse/BrowseContent/BrowseContent";
@@ -25,15 +20,13 @@ const Home = () => {
     dispatch(getNewReleases());
   }, []);
 
-  const isLoading = useAppSelector(selectUserIsLoading);
-  const browseIsLoading = useAppSelector(selectIsBrowseLoading);
   const userInfos = useAppSelector(selectUserInfos);
   const recentlyPlayed = useAppSelector(selectRecentlyPlayed);
   const view = useAppSelector(selectView);
 
   return (
     <div className="home">
-      {isLoading || browseIsLoading || !view ? (
+      {!recentlyPlayed || !view ? (
         <div className="home__loading">
           <Loading />
         </div>

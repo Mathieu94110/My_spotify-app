@@ -1,10 +1,9 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import SearchResult from "../../components/search/SearchResult/SearchResult";
 import AddTrackModal from "../../components/modal/AddTrackModal";
 import { selectAccessToken } from "../../store/authentication/authenticationSlice";
 import {
-  getPlaylists,
   getPlaylistItems,
   selectUserPlaylists,
   addTrackToPlaylist,
@@ -15,46 +14,43 @@ import "./Search.scss";
 import "react-toastify/dist/ReactToastify.css";
 
 const Search = () => {
-  const [search, setSearch] = React.useState("");
-  const [searchResults, setSearchResults] = React.useState([]);
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [track, setTrack] = React.useState("");
+  const [search, setSearch] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [track, setTrack] = useState("");
   const dispatch = useAppDispatch();
   const accessToken = useAppSelector(selectAccessToken);
   const userPlaylists = useAppSelector(selectUserPlaylists);
-  React.useEffect(() => {
-    dispatch(getPlaylists());
-  }, []);
 
-  React.useEffect(() => {
-    if (!search) return setSearchResults([]);
-
-    let config = {
-      headers: { Authorization: `Bearer ${accessToken}` },
-      params: {
-        q: search,
-        type: "track",
-      },
-    };
-    apiUserSearchRequest.searchTracks(config).then((res) => {
-      setSearchResults(
-        res.data.tracks.items.map((track) => {
-          const smallestAlbumImage = track.album.images.reduce(
-            (smallest, image) => {
-              if (image.height < smallest.height) return image;
-              return smallest;
-            },
-            track.album.images[0]
-          );
-          return {
-            artist: track.artists[0].name,
-            title: track.name,
-            uri: track.uri,
-            albumUrl: smallestAlbumImage.url,
-          };
-        })
-      );
-    });
+  useEffect(() => {
+    if (search) {
+      let config = {
+        headers: { Authorization: `Bearer ${accessToken}` },
+        params: {
+          q: search,
+          type: "track",
+        },
+      };
+      apiUserSearchRequest.searchTracks(config).then((res) => {
+        setSearchResults(
+          res.data.tracks.items.map((track) => {
+            const smallestAlbumImage = track.album.images.reduce(
+              (smallest, image) => {
+                if (image.height < smallest.height) return image;
+                return smallest;
+              },
+              track.album.images[0]
+            );
+            return {
+              artist: track.artists[0].name,
+              title: track.name,
+              uri: track.uri,
+              albumUrl: smallestAlbumImage.url,
+            };
+          })
+        );
+      });
+    }
   }, [search]);
 
   const isModalOpen = (value) => {
@@ -91,6 +87,12 @@ const Search = () => {
   };
 
   return (
+    // <>
+    //   {!selectUserPlaylists ? (
+    //     <div className="home__loading">
+    //       <Loading />
+    //     </div>
+    //   ) : (
     <div className="search" role="heading">
       <input
         className="search__input"
@@ -116,6 +118,8 @@ const Search = () => {
       {/* Tag below is necessary to display toast message*/}
       <ToastContainer />
     </div>
+    // )}
+    // </>
   );
 };
 

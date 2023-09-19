@@ -8,7 +8,6 @@ const Card = ({ image, id, name }) => {
     background: "url(" + image + ") center center no-repeat",
     maxWidth: "100%",
   };
-
   return (
     <div className="card">
       <img style={style} src={image} className="card__img" />

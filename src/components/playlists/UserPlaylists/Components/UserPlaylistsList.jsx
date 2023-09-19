@@ -1,9 +1,9 @@
 import Card from "../../../card/Card";
 import defaultCardImg from "../../../../assets/images/spotify-card-default-img.jpg";
-
+import "./UserPlaylistsList.scss";
 const UserPlaylistsList = ({ playlists }) => {
   return (
-    <div style={{ width: "100%" }}>
+    <div className="user-playlist-list">
       {playlists && playlists.length > 0 ? (
         playlists.map((item, index) => (
           <div key={index}>
@@ -15,7 +15,7 @@ const UserPlaylistsList = ({ playlists }) => {
           </div>
         ))
       ) : (
-        <div style={{ color: "#fff", fontWeight: "600" }}>
+        <div className="user-playlist-list-empty">
           Vous n'avez pas crée de playlist
         </div>
       )}

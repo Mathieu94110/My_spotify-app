@@ -9,14 +9,15 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./SongsPlayer.scss";
 
-const SongsPlayer = ({
-  handleNext,
-  handlePrev,
-  isPlaying,
-  playSong,
-  playingIndex,
-  trackInfo,
-}) => {
+const SongsPlayer = (props) => {
+  const {
+    handleNext,
+    handlePrev,
+    isPlaying,
+    playSong,
+    playingIndex,
+    trackInfo,
+  } = props;
   return (
     <div className="songs-player">
       <div className="songs-player__content">

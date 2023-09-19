@@ -73,7 +73,9 @@ const PlaylistDetails = () => {
   }, [isPlaying]);
 
   useEffect(() => {
-    configurePlayMode();
+    if (playlistPlayingIndex && userPlaylistTracks) {
+      configurePlayMode();
+    }
   }, [playlistPlayingIndex, userPlaylistTracks]); //audioSrc depending on those 2 values
 
   //At each playlistPlayingIndex change (0 at the begining) we stop the previous track with previous index;
@@ -126,6 +128,7 @@ const PlaylistDetails = () => {
   const playSong = (index) => {
     dispatch(setIsPlaying(!isPlaying));
     dispatch(setPlayingIndex(index));
+    if (!isPlaying) configurePlayMode();
   };
 
   const handleNext = () => {

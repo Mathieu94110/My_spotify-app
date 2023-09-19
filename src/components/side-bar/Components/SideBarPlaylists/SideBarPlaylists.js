@@ -2,7 +2,8 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import "./SideBarPlaylists.scss";
 
-const SideBarPlaylists = ({ userPlaylists, windowWidth, open }) => {
+const SideBarPlaylists = (props) => {
+  const {userPlaylists, windowWidth, open} = props;
   return (
     <ul
       className={
