@@ -12,30 +12,24 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Add or remove tracks from your library.
 - Search tracks, albums, artists and playlists.
 
-## Try it out
-
-https://my-spotify-app-theta.vercel.app/
-
-**Warning:** Spotify Playback requires users to authenticate with spotify credentials.
-
 ## How to Run locally
 
 First you need a [Spotify Client ID](https://developer.spotify.com/dashboard/applications).
+If you haven't create an app.
+After that go to Settings, now you have to indicates Redirect URIS, in our cases http://localhost:3000/
+Now you should have your Client ID and your Redirect URIS listed
 
 ```bash
-$ git clone https://github.com/francoborrelli/spotify-react-web-client.git
+$ git clone https://github.com/Mathieu94110/My_spotify-app.git
 $ cd My_spotify-app
-$ npm start
 ```
 
-You will have to define a '.env' file and set the following variables:
+You will have to define a '.env' file on the root and set the following variables:
 
 ```
-REACT_APP_SPOTIFY_CLIENT_ID="YOUR_SPOTIFY_CLIENT_ID"
+REACT_APP_SPOTIFY_CLIENT_ID=YOUR_SPOTIFY_CLIENT_ID
 REACT_APP_DEV_REDIRECT_URI=http://localhost:3000/
 ```
-
-Do not forget to indicate redirect uri on your spotify account dashboard
 
 Now run:
 
@@ -52,3 +46,5 @@ and visit http://localhost:3000.
 ![playlist](src/assets/images/spotify-search-screen.PNG?raw=true "Search")
 ![artist](src/assets/images/spotify-playlists-screen.PNG?raw=true "Playlists")
 ![devices](src/assets/images/spotify-playlist-details-screen.PNG?raw=true "laylistDetails")
+
+**Warning:** Spotify Playback requires users to authenticate with spotify credentials.

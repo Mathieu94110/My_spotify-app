@@ -87,12 +87,6 @@ const Search = () => {
   };
 
   return (
-    // <>
-    //   {!selectUserPlaylists ? (
-    //     <div className="home__loading">
-    //       <Loading />
-    //     </div>
-    //   ) : (
     <div className="search" role="heading">
       <input
         className="search__input"
@@ -118,8 +112,6 @@ const Search = () => {
       {/* Tag below is necessary to display toast message*/}
       <ToastContainer />
     </div>
-    // )}
-    // </>
   );
 };
 
